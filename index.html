@@ -18,14 +18,16 @@
 :root{
   --orange:#FF5F00;
   --orange-15:rgba(255,95,0,.15);
-  --peach:#FBE6D8;
+  --peach:#FBE6D8;     /* активный чипс, линии, накрытая плашка */
   --cream:#FFF6EF;      /* фон карты */
   --white:#FFFFFF;
-  --ink:#2F201E;        /* имена, вопросы, карточки приютов */
+  --ink:#682B00;        /* имена, вопросы, карточки приютов */
+  --ink-50:rgba(104,43,0,.5); /* описания в «почему» и ответы FAQ */
+  --art:#2F201E;        /* линия рисунков */
   --brown:#682B00;      /* H3 */
   --text:#795E47;       /* наборный текст */
   --purple:#8F6BB7;     /* только в лиде */
-  --line:#F1DCCB;
+  --line:#FBE6D8;
   --dots:#F5D9C7;
   --map:#EDE6DC;
   --f-display:"Dodo Narrow","Arial Narrow",Impact,sans-serif;
@@ -37,6 +39,7 @@
   --name:calc(25*var(--u));  --meta:calc(18.8*var(--u)); --desc:calc(15*var(--u));   --chip:calc(19.7*var(--u));
   --q:calc(17*var(--u));     --a:calc(16*var(--u));
   --sh-name:calc(20*var(--u)); --sh-addr:calc(15*var(--u)); --sh-tag:calc(14*var(--u)); --btn:calc(16*var(--u));
+  --nav:calc(22*var(--u));
   --title-top:calc(48*var(--u));
   color-scheme:light;
 }
@@ -56,7 +59,7 @@ body{margin:0;background:var(--white);color:var(--text);font-family:var(--f-text
 img{display:block;max-width:none}
 button{font:inherit;color:inherit}
 :focus{outline:none}
-:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:6px}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
 .fr{position:relative;width:calc(390*var(--u));margin-inline:auto}
 @media (min-width:900px){.fr{width:calc(1495*var(--u))}}
 
@@ -76,13 +79,13 @@ button{font:inherit;color:inherit}
 .logo{position:absolute;left:calc(16*var(--u));top:calc(15*var(--u));width:calc(80*var(--u));z-index:6}
 .logo img{width:100%;height:auto}
 .nav{display:none}
-.burger{position:absolute;left:calc(326*var(--u));top:calc(20*var(--u));width:calc(48*var(--u));height:calc(48*var(--u));border-radius:50%;border:0;background:rgba(255,255,255,.92);display:grid;place-items:center;cursor:pointer;z-index:6}
-.burger i{display:block;width:calc(20*var(--u));height:calc(3*var(--u));border-radius:2px;background:var(--orange);box-shadow:0 calc(7*var(--u)) 0 var(--orange);transform:translateY(calc(-3.5*var(--u)))}
+.burger{position:absolute;left:calc(326*var(--u));top:calc(20*var(--u));width:calc(48*var(--u));height:calc(48*var(--u));padding:0;border-radius:50%;border:0;-webkit-tap-highlight-color:transparent;background:rgba(255,255,255,.92);display:grid;place-items:center;cursor:pointer;z-index:6}
+.burger i{display:block;width:calc(20*var(--u));height:calc(10*var(--u));border-top:calc(3*var(--u)) solid var(--orange);border-bottom:calc(3*var(--u)) solid var(--orange);box-sizing:border-box}
 /* белая плашка */
 .plate{position:absolute;left:calc(181.5*var(--u));top:calc(192.5*var(--u));width:calc(241*var(--u));height:calc(46*var(--u));translate:-50% -50%;rotate:var(--pr);--pr:-7deg;display:flex;align-items:center;justify-content:center;
-  border-radius:calc(15*var(--u));background:var(--white);color:var(--orange);font-family:var(--f-display);font-size:calc(38.8*var(--u));line-height:.8;letter-spacing:-.03em;white-space:nowrap;text-transform:lowercase;z-index:5}
+  border-radius:calc(15*var(--u));background:var(--white);color:var(--orange);font-family:var(--f-display);font-size:calc(38.8*var(--u));line-height:.8;letter-spacing:-.03em;white-space:nowrap;text-transform:lowercase;z-index:4;padding-bottom:calc(5.3*var(--u))}
 /* оранжевый бабл: единая фигура (Union) из Figma + текст поверх */
-.obub{position:absolute;inset:0;z-index:4;transform-origin:calc(159*var(--u)) calc(382*var(--u));pointer-events:none}
+.obub{position:absolute;inset:0;z-index:5;transform-origin:calc(159*var(--u)) calc(382*var(--u));pointer-events:none}
 .union{position:absolute;left:calc(112.6*var(--u));top:calc(204.7*var(--u));width:calc(267.1*var(--u));height:auto}
 .ut{position:absolute;left:calc(249*var(--u));top:calc(279.7*var(--u));translate:-50% -50%;rotate:3.6deg;font-family:var(--f-display);font-size:calc(85.8*var(--u));line-height:.76;letter-spacing:-.03em;color:var(--white);text-align:center;text-transform:lowercase;white-space:nowrap}
 @media (min-width:900px){
@@ -92,41 +95,42 @@ button{font:inherit;color:inherit}
   .logo{left:calc(36*var(--u));top:calc(24*var(--u));width:calc(93*var(--u))}
   .burger{display:none}
   .nav{display:flex;position:absolute;right:calc(35*var(--u));top:calc(34*var(--u));gap:calc(59*var(--u));z-index:6}
-  .nav a{font-weight:900;font-size:calc(25.6*var(--u));line-height:.86;letter-spacing:-.03em;color:var(--orange);text-decoration:none}
+  .nav a{font-weight:900;font-size:var(--nav);line-height:.86;letter-spacing:-.03em;color:var(--orange);text-decoration:none}
   .nav a:hover{text-decoration:underline;text-underline-offset:calc(6*var(--u))}
-  .plate{left:calc(1000.6*var(--u));top:calc(198.2*var(--u));width:calc(533*var(--u));height:calc(103.6*var(--u));border-radius:calc(34*var(--u));font-size:calc(85.9*var(--u));--pr:-6.7deg}
+  .plate{left:calc(1000.6*var(--u));top:calc(198.2*var(--u));width:calc(533*var(--u));height:calc(103.6*var(--u));border-radius:calc(34*var(--u));font-size:calc(85.9*var(--u));--pr:-6.7deg;padding-bottom:calc(11.6*var(--u))}
   .obub{transform-origin:calc(951*var(--u)) calc(618*var(--u))}
   .union{left:calc(848*var(--u));top:calc(226.3*var(--u));width:calc(589*var(--u))}
   .ut{left:calc(1148.5*var(--u));top:calc(391.6*var(--u));font-size:calc(188.9*var(--u))}
 }
 .js .plate,.js .obub{opacity:0}
 .go .plate{animation:pop .7s cubic-bezier(.34,1.56,.64,1) .25s both}
-.go .obub{animation:rise .9s cubic-bezier(.34,1.4,.64,1) .75s both, sway 5s ease-in-out 1.8s infinite alternate}
+.go .obub{animation:rise .9s cubic-bezier(.34,1.4,.64,1) .75s both}
 @keyframes pop{from{opacity:0;scale:.6;rotate:-16deg}to{opacity:1;scale:1;rotate:var(--pr)}}
 @keyframes rise{from{opacity:0;translate:0 calc(80*var(--u));scale:.5}to{opacity:1;translate:0 0;scale:1}}
-@keyframes sway{from{rotate:0deg}to{rotate:1.2deg}}
 
 /* ---------- 02 · текст на снегу ---------- */
 .lead-sec{position:relative;height:calc(540*var(--u))}
-.lead{position:absolute;left:calc(18*var(--u));top:calc(110*var(--u));width:calc(358*var(--u));margin:0;font-family:var(--f-display);font-size:var(--lead);line-height:.9;letter-spacing:-.01em;color:var(--orange);text-align:center;text-transform:lowercase}
+.lead{position:absolute;left:calc(25*var(--u));top:calc(112*var(--u));width:calc(340*var(--u));margin:0;font-family:var(--f-display);font-size:var(--lead);line-height:.9;letter-spacing:-.01em;color:var(--orange);text-align:center;text-transform:lowercase}
 .lead .p2{color:var(--purple)}
 .lead .w{transition:opacity .35s ease}
 .js .lead .w{opacity:.16}
 .js .lead .w.on{opacity:1}
-.dd{position:absolute;height:auto;transition:clip-path .55s cubic-bezier(.6,.05,.3,1),transform .09s linear}
+.dd{position:absolute;height:auto;transition:clip-path .55s cubic-bezier(.6,.05,.3,1)}
 .js .dd{clip-path:inset(0 100% 0 0)}
-.dd.show{clip-path:inset(0 0 0 0)}
-.dl1{left:calc(14*var(--u));top:calc(70*var(--u));width:calc(60*var(--u))}
-.dl2{left:calc(4*var(--u));top:calc(96*var(--u));width:calc(75*var(--u));rotate:12deg}
-.dr1{left:calc(266*var(--u));top:calc(450*var(--u));width:calc(68*var(--u));transition-delay:.1s}
-.dr2{left:calc(278*var(--u));top:calc(476*var(--u));width:calc(45*var(--u));rotate:12deg;transition-delay:.25s}
+.dd.show{clip-path:inset(0 0 0 0);animation:boil .42s steps(1,end) .7s infinite}
+.dr1.show,.dr2.show{animation-delay:.9s}
+@keyframes boil{0%{transform:none}33%{transform:translate(.6px,-.8px) rotate(1.4deg)}66%{transform:translate(-.7px,.5px) rotate(-1.2deg)}}
+.dl1{left:calc(63.5*var(--u));top:calc(51.5*var(--u));width:calc(52*var(--u));rotate:9.5deg}
+.dl2{left:calc(39*var(--u));top:calc(71*var(--u));width:calc(60*var(--u));rotate:-13.6deg}
+.dr1{left:calc(291.5*var(--u));top:calc(446*var(--u));width:calc(66*var(--u));rotate:-9.3deg;transition-delay:.1s}
+.dr2{left:calc(279*var(--u));top:calc(463*var(--u));width:calc(42*var(--u));transition-delay:.25s}
 @media (min-width:900px){
   .lead-sec{height:calc(760*var(--u))}
   .lead{left:calc(369*var(--u));top:calc(134*var(--u));width:calc(757*var(--u))}
-  .dl1{left:calc(248*var(--u));top:calc(124*var(--u));width:calc(110*var(--u))}
-  .dl2{left:calc(205*var(--u));top:calc(202*var(--u));width:calc(137*var(--u))}
-  .dr1{left:calc(1145*var(--u));top:calc(512*var(--u));width:calc(124*var(--u))}
-  .dr2{left:calc(1135*var(--u));top:calc(562*var(--u));width:calc(81*var(--u))}
+  .dl1{left:calc(248*var(--u));top:calc(124*var(--u));width:calc(110*var(--u));rotate:0deg}
+  .dl2{left:calc(205*var(--u));top:calc(202*var(--u));width:calc(137*var(--u));rotate:0deg}
+  .dr1{left:calc(1145*var(--u));top:calc(512*var(--u));width:calc(124*var(--u));rotate:0deg}
+  .dr2{left:calc(1135*var(--u));top:calc(562*var(--u));width:calc(81*var(--u));rotate:0deg}
 }
 
 /* ---------- 03 · почему это важно (компактно) ---------- */
@@ -145,7 +149,8 @@ button{font:inherit;color:inherit}
 .say svg{position:absolute;height:auto;translate:-50% -50%}
 .say b{position:absolute;translate:-50% -50%;font-weight:400;font-family:var(--f-display);line-height:.76;letter-spacing:-.03em;text-align:center;text-transform:lowercase;white-space:nowrap;color:var(--white)}
 .why-item .h3{margin-top:calc(18*var(--u));font-size:var(--h3w);transition:color .25s ease}
-.why-item .body{margin-top:calc(10*var(--u));max-width:calc(310*var(--u));font-size:var(--bw)}
+.why-item .body{margin-top:calc(10*var(--u));max-width:calc(310*var(--u));font-size:var(--bw);color:var(--ink-50)}
+@media (max-width:899px){.why-item:nth-child(2){text-align:center}.why-item:nth-child(2) .tile{margin-inline:auto}.why-item:nth-child(2) .body{margin-inline:auto}}
 @media (min-width:900px){
   .why{--T:calc(240*var(--u));--h3w:calc(41*var(--u));--bw:calc(21.5*var(--u))}
   .why .fr{height:calc(1130*var(--u));padding:0}
@@ -171,7 +176,7 @@ button{font:inherit;color:inherit}
 .bar{position:relative;margin-top:calc(25*var(--u));display:flex;justify-content:center;align-items:center}
 .chips{display:flex;justify-content:center;gap:calc(8*var(--u))}
 .chip{border:0;background:none;cursor:pointer;font-weight:600;font-size:var(--chip);line-height:1.08;letter-spacing:-.03em;color:var(--text);padding:calc(8*var(--u)) calc(12*var(--u));border-radius:calc(20*var(--u))}
-.chip[aria-pressed="true"]{background:var(--orange-15);color:var(--orange)}
+.chip[aria-pressed="true"]{background:var(--peach);color:var(--orange)}
 .arrows{display:none}
 .rail{display:flex;gap:calc(12*var(--u));overflow-x:auto;scroll-snap-type:x mandatory;margin-top:calc(4*var(--u));padding:calc(40*var(--u)) calc(18*var(--u)) calc(20*var(--u));scroll-padding-inline:calc(18*var(--u));scrollbar-width:none;overscroll-behavior-x:contain}
 .rail::-webkit-scrollbar{display:none}
@@ -181,8 +186,8 @@ button{font:inherit;color:inherit}
 .photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 .name{margin:calc(13*var(--u)) 0 0;font-family:var(--f-display);font-weight:400;font-size:var(--name);line-height:1;color:var(--ink);text-transform:lowercase}
 .meta{margin:calc(6*var(--u)) 0 0;font-weight:500;font-size:var(--meta);line-height:1.15;color:var(--ink)}
-.desc{margin:calc(10*var(--u)) 0 0;font-weight:500;font-size:var(--desc);line-height:1.28;color:var(--text);max-width:calc(262*var(--u))}
-.where{display:inline-flex;align-items:center;gap:calc(6*var(--u));margin-top:calc(10*var(--u));font-weight:600;font-size:calc(14*var(--u));color:var(--orange);text-decoration:none}
+.desc{margin:calc(10*var(--u)) 0 0;font-weight:500;font-size:var(--desc);line-height:1.28;color:var(--ink);max-width:calc(262*var(--u))}
+.where{display:inline-flex;align-items:center;gap:calc(6*var(--u));margin-top:calc(10*var(--u));font-weight:600;font-size:calc(14*var(--u));color:var(--ink);text-decoration:none}
 .where:hover{text-decoration:underline}
 /* стикер: один на фото, ~105 в макете; вылезает только вверх или сидит внутри фото — текст не трогает */
 .sticker{position:absolute;width:var(--sw);height:var(--sw);z-index:3;pointer-events:none;opacity:0;scale:.3;rotate:-25deg;transition:opacity .25s ease,scale .5s cubic-bezier(.34,1.56,.64,1),rotate .5s cubic-bezier(.34,1.56,.64,1)}
@@ -202,7 +207,8 @@ button{font:inherit;color:inherit}
   .chip{padding:calc(11*var(--u)) calc(16*var(--u));border-radius:calc(26*var(--u))}
   .arrows{display:flex;gap:calc(16*var(--u));position:absolute;right:calc(77*var(--u));top:50%;translate:0 -50%}
   .arrow{width:calc(56*var(--u));height:calc(56*var(--u));border-radius:50%;border:0;cursor:pointer;background:var(--orange);color:var(--white);display:grid;place-items:center;transition:transform .2s}
-  .arrow:hover{transform:scale(1.06)}
+  .arrow:hover:not(:disabled){transform:scale(1.06)}
+  .arrow:disabled{background:var(--cream);color:var(--orange);cursor:default}
   .arrow svg{width:calc(24*var(--u));height:calc(24*var(--u))}
   .rail{gap:calc(14*var(--u));margin-top:calc(6*var(--u));padding:calc(50*var(--u)) calc(40*var(--u)) calc(24*var(--u));scroll-padding-inline:calc(40*var(--u))}
   .card{flex-basis:calc(347*var(--u));--sw:calc(105*var(--u))}
@@ -213,7 +219,8 @@ button{font:inherit;color:inherit}
   .dots{display:none}
 }
 @media (hover:hover) and (pointer:fine){
-  .card:hover .sticker{rotate:calc(var(--sr) + 10deg);scale:1.08}
+  .card.on .sticker{opacity:0;scale:.3;rotate:-25deg}
+  .card:hover .sticker{opacity:1;scale:1;rotate:var(--sr)}
   .card:hover .photo img{transform:scale(1.04)}
 }
 
@@ -233,7 +240,7 @@ button{font:inherit;color:inherit}
 .opts li[aria-selected="true"]::after{content:"✓"}
 @keyframes drop{from{opacity:0;translate:-50% calc(-6*var(--u))}to{opacity:1;translate:-50% 0}}
 .map-grid{margin-top:calc(20*var(--u));padding:0 calc(16*var(--u))}
-.mapbox{position:relative;height:calc(300*var(--u));border-radius:calc(24*var(--u));overflow:hidden;background:var(--map)}
+.mapbox{position:relative;height:auto;aspect-ratio:1;border-radius:calc(24*var(--u));overflow:hidden;background:var(--map)}
 .mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .fake{position:absolute;inset:0;background:
   linear-gradient(transparent 46%,#fff 46%,#fff 54%,transparent 54%) 0 0/100% calc(120*var(--u)),
@@ -247,7 +254,7 @@ button{font:inherit;color:inherit}
 .shelter{background:var(--white);border-radius:calc(22*var(--u));padding:calc(20*var(--u)) calc(22*var(--u));display:grid;gap:calc(6*var(--u));cursor:pointer;border:2px solid transparent}
 .shelter.active{border-color:var(--orange)}
 .shelter b{font-weight:900;font-size:var(--sh-name);color:var(--ink);line-height:1.2}
-.shelter .addr{font-weight:500;font-size:var(--sh-addr);color:var(--text);line-height:1.2}
+.shelter .addr{font-weight:500;font-size:var(--sh-addr);color:var(--ink);line-height:1.2}
 .shelter .tag{font-weight:600;font-size:var(--sh-tag);color:var(--orange)}
 .shelter .acts{display:none;flex-wrap:wrap;align-items:center;gap:calc(8*var(--u)) calc(16*var(--u));margin-top:calc(6*var(--u))}
 .shelter.active .acts{display:flex}
@@ -261,7 +268,7 @@ button{font:inherit;color:inherit}
   .pill{padding:calc(14*var(--u)) calc(28*var(--u))}
   .opts{min-width:max(100%,calc(300*var(--u)))}
   .map-grid{margin-top:calc(81*var(--u));padding:0 calc(60*var(--u));display:grid;grid-template-columns:calc(440*var(--u)) calc(880*var(--u));gap:calc(55*var(--u));align-items:start}
-  .mapbox{order:2;height:calc(640*var(--u));border-radius:calc(36*var(--u))}
+  .mapbox{order:2;aspect-ratio:auto;height:calc(640*var(--u));border-radius:calc(36*var(--u))}
   .shelters{order:1;margin:0;gap:calc(16*var(--u))}
   .shelter{border-radius:calc(28*var(--u));padding:calc(24*var(--u));gap:calc(8*var(--u))}
   .btn{height:calc(50*var(--u));width:auto}
@@ -279,16 +286,19 @@ button{font:inherit;color:inherit}
 .sp.in{opacity:1;transform:translateY(0) rotate(var(--r))}
 .sp .h3{color:var(--white);font-size:calc(29*var(--u))}
 .sp p{margin:calc(10*var(--u)) 0 0;font-weight:600;font-size:calc(14.5*var(--u));line-height:1.3;letter-spacing:-.02em}
+.sp.under{background:var(--peach);color:var(--ink)}.sp.under .h3{color:var(--orange)}
+.sp{transition:transform .9s cubic-bezier(.3,1.3,.5,1),opacity .25s ease,background .35s ease,color .35s ease}
 .sp1{--r:-2deg}.sp2{--r:1.6deg;translate:calc(4*var(--u)) calc(-6*var(--u))}.sp3{--r:-1deg;translate:calc(-3*var(--u)) calc(-12*var(--u))}
 @media (min-width:900px){
   .safe-track{height:320vh}
-  .safe-ill{top:50%;translate:-50% -50%;width:calc(780*var(--u));max-height:94%;width:auto;max-width:calc(780*var(--u))}
+  .safe-ill{top:calc(4*var(--u));translate:-50% 0;width:auto;max-width:calc(720*var(--u));max-height:calc(100% - calc(200*var(--u)))}
+  .sp.under{background:var(--orange);color:var(--white)}.sp.under .h3{color:var(--white)}
   .sp{left:auto;right:auto;bottom:auto;width:calc(320*var(--u));padding:calc(22*var(--u)) calc(26*var(--u)) calc(24*var(--u));border-radius:calc(28*var(--u));translate:none}
   .sp .h3{font-size:calc(36*var(--u))}
   .sp p{font-size:calc(17*var(--u));margin-top:calc(12*var(--u))}
-  .sp1{left:calc(64*var(--u));top:10%}
-  .sp2{right:calc(64*var(--u));top:30%}
-  .sp3{left:calc(100*var(--u));bottom:8%}
+  .sp1{left:calc(50% - calc(640*var(--u)));top:12%}
+  .sp2{left:calc(50% + calc(320*var(--u)));top:32%}
+  .sp3{left:calc(50% - calc(160*var(--u)));bottom:calc(14*var(--u))}
 }
 
 /* ---------- 07 · FAQ ---------- */
@@ -296,7 +306,7 @@ button{font:inherit;color:inherit}
 .faq-list{margin:calc(28*var(--u)) calc(16*var(--u)) 0;border-top:2px solid var(--line)}
 .q{border-bottom:2px solid var(--line)}
 .q button{display:grid;grid-template-columns:1fr calc(32*var(--u));gap:calc(16*var(--u));align-items:center;width:100%;background:none;border:0;padding:calc(18*var(--u)) 0;text-align:left;cursor:pointer;font-weight:600;font-size:var(--q);line-height:1.25;color:var(--ink)}
-.ic{width:calc(32*var(--u));height:calc(32*var(--u));border-radius:50%;background:var(--peach);display:grid;place-items:center;transition:background .2s}
+.ic{width:calc(32*var(--u));height:calc(32*var(--u));border-radius:50%;background:var(--cream);display:grid;place-items:center;transition:background .2s}
 .ic svg{width:44%;height:44%}
 .ic .v{transition:opacity .2s}
 .ic path{stroke:var(--orange)}
@@ -308,7 +318,7 @@ button{font:inherit;color:inherit}
 .q.open .a{grid-template-rows:1fr}
 .a>div{overflow:hidden}
 /* ответ не заходит под иконку: ширина = строка вопроса минус иконка и зазор */
-.a p{margin:0;padding:0 0 calc(18*var(--u));width:calc(100% - var(--icw,calc(48*var(--u))));font-weight:500;font-size:var(--a);line-height:1.35;color:var(--text)}
+.a p{margin:0;padding:0 0 calc(18*var(--u));width:calc(100% - var(--icw,calc(48*var(--u))));font-weight:500;font-size:var(--a);line-height:1.35;color:var(--ink-50)}
 @media (min-width:900px){
   .faq .fr{padding-bottom:calc(140*var(--u))}
   .faq-list{width:calc(1080*var(--u));margin:calc(80*var(--u)) auto 0}
@@ -356,11 +366,11 @@ button{font:inherit;color:inherit}
 .dog{width:calc(150*var(--u))}.cat{width:calc(118*var(--u))}
 @media (min-width:900px){.dog{width:calc(250*var(--u))}.cat{width:calc(195*var(--u))}.actor{bottom:calc(18*var(--u))}}
 .gs{position:absolute;left:12%;right:12%;bottom:calc(-6*var(--u));height:calc(10*var(--u));border-radius:50%;background:#C94600;opacity:.45}
-.lo{stroke:var(--ink);fill:none;stroke-linecap:round}
+.lo{stroke:var(--art);fill:none;stroke-linecap:round}
 .li{stroke:var(--cream);fill:none;stroke-linecap:round}
-.fill{fill:var(--cream);stroke:var(--ink);stroke-width:2.6;stroke-linejoin:round}
-.ink{fill:var(--ink)}
-.ln{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.fill{fill:var(--cream);stroke:var(--art);stroke-width:2.6;stroke-linejoin:round}
+.ink{fill:var(--art)}
+.ln{fill:none;stroke:var(--art);stroke-width:2;stroke-linecap:round}
 .tail{animation:wag .5s ease-in-out infinite alternate}
 .run .tail{animation-duration:.18s}
 .cat .tail{animation:swish 1.6s ease-in-out infinite alternate}
@@ -378,10 +388,12 @@ button{font:inherit;color:inherit}
 @keyframes jump{0%{translate:0 0;rotate:0deg}45%{translate:0 -46px;rotate:-12deg}100%{translate:0 0;rotate:0deg}}
 
 /* меню (мобайл) */
+.idx{flex:none;width:calc(18*var(--u));height:calc(25*var(--u));margin-top:calc(4*var(--u));overflow:visible;filter:url(#rough)}
+.idx path{fill:none;stroke:var(--white);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 .menu{position:fixed;inset:0;z-index:50;background:var(--orange);display:flex;flex-direction:column;padding:calc(calc(20*var(--u)) + env(safe-area-inset-top,0px)) calc(16*var(--u)) calc(calc(32*var(--u)) + env(safe-area-inset-bottom,0px))}
 .menu .x{align-self:flex-end;width:calc(48*var(--u));height:calc(48*var(--u));border-radius:50%;border:0;background:var(--white);color:var(--orange);font-size:calc(28*var(--u));line-height:1;cursor:pointer}
 .menu nav{margin-top:auto;display:grid;gap:calc(8*var(--u))}
-.menu nav a{font-family:var(--f-display);font-size:calc(75*var(--u));line-height:.9;color:var(--white);text-decoration:none;text-transform:lowercase}
+.menu nav a{display:flex;align-items:flex-start;gap:calc(8*var(--u));white-space:nowrap;font-family:var(--f-display);font-size:calc(68*var(--u));line-height:.9;color:var(--white);text-decoration:none;text-transform:lowercase}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -418,17 +430,17 @@ button{font:inherit;color:inherit}
   <section class="lead-sec" aria-label="О проекте">
     <div class="fr" style="height:100%" id="top">
       <img class="dd dl1" src="assets/doodle-b.png" alt="">
-      <img class="dd dl2" src="assets/doodle-a.png" alt="">
-      <p class="lead" id="lead"><span class="p1">хвостики из приюта зовут <br class="d-only">в гости: собаки готовы <br class="d-only">к прогулке, коты — <br class="d-only">к почёсыванию за ушком.</span><br><br><span class="p2">выбирайте друга по душе <br class="d-only">и назначайте встречу</span></p>
-      <img class="dd dr1" src="assets/doodle-a.png" alt="">
-      <img class="dd dr2" src="assets/doodle-a.png" alt="">
+      <picture><source media="(min-width:900px)" srcset="assets/doodle-a.png"><img class="dd dl2" src="assets/doodle-b.png" alt=""></picture>
+      <p class="lead" id="lead"><span class="p1">хвостики из приюта <br class="m-only">зовут <br class="d-only">в гости: <br class="m-only">собаки готовы <br class="d-only">к прогулке, коты — <br>к почёсыванию <br class="m-only">за ушком.</span><br><br><span class="p2">выбирайте <br class="m-only">друга по душе <br>и назначайте встречу</span></p>
+      <picture><source media="(min-width:900px)" srcset="assets/doodle-a.png"><img class="dd dr1" src="assets/doodle-b.png" alt=""></picture>
+      <picture><source media="(min-width:900px)" srcset="assets/doodle-a.png"><img class="dd dr2" src="assets/doodle-b.png" alt=""></picture>
     </div>
   </section>
 </div>
 
 <div class="menu" id="menu" hidden>
   <button class="x" id="menuClose" aria-label="Закрыть меню">×</button>
-  <nav aria-label="Разделы"><a href="#pets">хвостики</a><a href="#map">приюты</a><a href="#faq">вопросы</a><a href="#footer">как помочь</a></nav>
+  <nav aria-label="Разделы"><a href="#map"><svg class="idx" viewBox="0 0 22 30" aria-hidden="true"><path d="M5 9 L12 3 L11.5 27"/></svg>приюты</a><a href="#faq"><svg class="idx" viewBox="0 0 22 30" aria-hidden="true"><path d="M4 10 C5 2 17 1 17 9 C17 15 9 20 4 26 L19 25"/></svg>вопросы</a><a href="#footer"><svg class="idx" viewBox="0 0 22 30" aria-hidden="true"><path d="M4 6 C10 1 18 3 16 9 C15 12 11 13 9 13 C16 13 19 17 17 22 C15 27 7 27 4 24"/></svg>как помочь</a></nav>
 </div>
 
 <section class="why" aria-labelledby="why-h">
@@ -437,13 +449,13 @@ button{font:inherit;color:inherit}
     <ul class="why-list">
       <li class="why-item">
         <div class="tile"><div class="ph" style="--r:-3deg"><img src="assets/why-1.webp" alt="Пёс нюхает камеру на заснеженной поляне" loading="lazy"></div>
-          <p class="say" aria-label="о, свежие новости"><svg viewBox="0 0 168 96" style="left:66.5%;top:20.9%;width:55.2%" aria-hidden="true"><path d="M158.682 22.3836C164.222 23.2424 168.017 28.4291 167.159 33.9688L163.832 55.4342C162.973 60.9741 157.786 64.7696 152.247 63.9113L148.326 63.3036L145.439 81.9299C144.58 87.4698 139.394 91.2654 133.854 90.407L67.7569 80.1635L46.3866 95.7987C46.3866 95.7987 48.4944 86.7968 47.8538 81.7532C47.6622 80.2442 47.1959 78.5398 46.6399 76.8908L17.0227 72.3008C11.4827 71.4422 7.68721 66.2545 8.54579 60.7145L11.4325 42.0882L8.59716 41.6488C3.05738 40.79 -0.737364 35.6025 0.121194 30.0627L3.44786 8.59724C4.30663 3.05761 9.49334 -0.737158 15.033 0.121122L158.682 22.3836Z" fill="#FF5F00"/></svg><b aria-hidden="true" style="left:65.4%;top:19.1%;font-size:12.9cqw;rotate:8.5deg">о, свежие<br>новости</b></p></div>
+          <p class="say" aria-label="о, свежие новости"><svg viewBox="0 0 168 96" style="left:66.5%;top:20.9%;width:55.2%" aria-hidden="true"><path d="M158.682 22.3836C164.222 23.2424 168.017 28.4291 167.159 33.9688L163.832 55.4342C162.973 60.9741 157.786 64.7696 152.247 63.9113L148.326 63.3036L145.439 81.9299C144.58 87.4698 139.394 91.2654 133.854 90.407L67.7569 80.1635L46.3866 95.7987C46.3866 95.7987 48.4944 86.7968 47.8538 81.7532C47.6622 80.2442 47.1959 78.5398 46.6399 76.8908L17.0227 72.3008C11.4827 71.4422 7.68721 66.2545 8.54579 60.7145L11.4325 42.0882L8.59716 41.6488C3.05738 40.79 -0.737364 35.6025 0.121194 30.0627L3.44786 8.59724C4.30663 3.05761 9.49334 -0.737158 15.033 0.121122L158.682 22.3836Z" fill="#FF5F00"/></svg><b aria-hidden="true" style="left:65.4%;top:19.1%;font-size:12.9cqw;rotate:8.8deg">о, свежие<br>новости</b></p></div>
         <h3 class="h3">собакам нужны<br>новые запахи</h3>
         <p class="body">Обнюхивая всё на своём пути, животные «читают» мир — это их способ снизить тревожность, узнать новое и потренировать ум</p>
       </li>
       <li class="why-item">
         <div class="tile"><div class="ph" style="--r:4deg"><img src="assets/why-2.webp" alt="Кот лежит на спине и ловит игрушку" loading="lazy"></div>
-          <p class="say" aria-label="почти поймала"><svg viewBox="0 0 162 98" style="left:62.7%;top:24%;width:52.3%;rotate:4deg" aria-hidden="true"><path d="M98.3579 75.8195C98.3262 75.8416 91.6896 80.4719 88.7516 84.6064C85.8067 88.7508 83.4164 97.6818 83.4164 97.6818L71.9537 73.811L9.38058 69.0511C3.79096 68.6257 -0.395615 63.7498 0.0293303 58.1601L1.6769 36.501C2.10211 30.9111 6.97812 26.7248 12.5679 27.1497L26.0768 28.1763L27.5065 9.38201C27.9317 3.79215 32.8078 -0.395173 38.3976 0.0297842L133.443 7.25973C139.033 7.68518 143.22 12.5619 142.795 18.1517L141.365 36.9461L152.592 37.8001C158.182 38.2256 162.369 43.1023 161.943 48.6921L160.296 70.3512C159.87 75.9409 154.994 80.1274 149.405 79.7025L98.3579 75.8195Z" fill="#FF5F00"/></svg><b aria-hidden="true" style="left:63.3%;top:19.2%;font-size:12.6cqw;rotate:4deg">почти<br>поймала</b></p></div>
+          <p class="say" aria-label="почти поймала"><svg viewBox="0 0 162 98" style="left:62.7%;top:24%;width:52.3%" aria-hidden="true"><path d="M98.3579 75.8195C98.3262 75.8416 91.6896 80.4719 88.7516 84.6064C85.8067 88.7508 83.4164 97.6818 83.4164 97.6818L71.9537 73.811L9.38058 69.0511C3.79096 68.6257 -0.395615 63.7498 0.0293303 58.1601L1.6769 36.501C2.10211 30.9111 6.97812 26.7248 12.5679 27.1497L26.0768 28.1763L27.5065 9.38201C27.9317 3.79215 32.8078 -0.395173 38.3976 0.0297842L133.443 7.25973C139.033 7.68518 143.22 12.5619 142.795 18.1517L141.365 36.9461L152.592 37.8001C158.182 38.2256 162.369 43.1023 161.943 48.6921L160.296 70.3512C159.87 75.9409 154.994 80.1274 149.405 79.7025L98.3579 75.8195Z" fill="#FF5F00"/></svg><b aria-hidden="true" style="left:63.3%;top:19.2%;font-size:12.6cqw;rotate:4.4deg">почти<br>поймала</b></p></div>
         <h3 class="h3">для котов игра —<br>не просто<br>развлечение</h3>
         <p class="body">Так они дают выход инстинктам и сбрасывают напряжение. Приятный бонус: уровень стресса снижается у всех участников процесса!</p>
       </li>
@@ -496,10 +508,10 @@ button{font:inherit;color:inherit}
       <div class="fr safe-fr">
         <h2 class="h2" id="safe-h">это<br class="m-only"><span class="d-only"> </span>безопасно<br>и просто</h2>
         <div class="stage">
-          <img class="safe-ill" src="assets/safe.webp" width="1800" height="1213" alt="Человек обнимает собаку, рядом бежит котёнок" loading="lazy">
-          <div class="sp sp1"><h3 class="h3">всё под контролем волонтёров</h3><p>Волонтёры знают характер каждого хвостика и будут рядом всю встречу.</p></div>
-          <div class="sp sp2"><h3 class="h3">дадим поводок и расскажем про правила</h3><p>Всё нужное для прогулки уже есть в приюте. Перед встречей объяснят, чем угощать и как понять настроение питомца.</p></div>
-          <div class="sp sp3"><h3 class="h3">можно прийти даже без опыта</h3><p>Не нужно быть кинологом. Достаточно желания провести время вместе — остальному научат на месте.</p></div>
+          <img class="safe-ill" src="assets/safe.webp" width="1518" height="1403" alt="Человек обнимает собаку, рядом ластится кошка" loading="lazy">
+          <div class="sp sp1"><h3 class="h3">всё под контролем волонтеров</h3><p>Волонтёры знают характер каждого хвостика и будут рядом всю встречу</p></div>
+          <div class="sp sp2"><h3 class="h3">дадим поводок и расскажем про правила</h3><p>Всё нужное для прогулки уже есть в приюте. Перед встречей объяснят, чем угощать и как понять настроение питомца</p></div>
+          <div class="sp sp3"><h3 class="h3">можно прийти даже без опыта</h3><p>Не нужно быть кинологом. Достаточно желания провести время вместе — остальному научат на месте</p></div>
         </div>
       </div>
     </div>
@@ -606,11 +618,7 @@ function onScroll(){if(tick)return;tick=true;requestAnimationFrame(()=>{tick=fal
   for(const w of [...w1,...w2])w.classList.toggle('on',w.getBoundingClientRect().top<line);
   const a=w1.every(w=>w.classList.contains('on')),b=w2.every(w=>w.classList.contains('on'));
   dl.forEach(d=>d.classList.toggle('show',a));dr.forEach(d=>d.classList.toggle('show',b));
-  const sb=snow.getBoundingClientRect().bottom,moved=Math.abs(scrollY-lastY)>0;lastY=scrollY;
-  const edge=sb<=innerHeight+8&&sb>innerHeight*.35;
-  const now=performance.now();
-  if(edge&&moved&&now-jt>70){jt=now;dd.forEach(d=>{if(d.classList.contains('show'))d.style.transform=`translate(${(Math.random()-.5)*5}px,${(Math.random()-.5)*5}px) rotate(${(Math.random()-.5)*5}deg)`})}
-  clearTimeout(jtimer);jtimer=setTimeout(()=>dd.forEach(d=>d.style.transform=''),140)})}
+})}
 if(reduce){[...w1,...w2].forEach(w=>w.classList.add('on'));dd.forEach(d=>d.classList.add('show'))}else{addEventListener('scroll',onScroll,{passive:true});onScroll()}
 
 /* приюты */
@@ -652,32 +660,29 @@ const PETS=[
  ['martinez','cat','Мартинез','мальчик, 3 года','Мурчу как трактор, если гладить правильно. Научу!','leo','hearts','s-tr',-10]];
 const rail=document.getElementById('rail'),dots=document.getElementById('dots');
 const pin='<svg viewBox="0 0 44 56" width="11" height="14" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg>';
-const COPIES=3;let set=PETS,cards=[];
+/* лента конечная: набор повторяется, пока карточек не наберётся хотя бы 12; старт с первой, стрелка «назад» неактивна */
+let set=PETS,cards=[];
 const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('on',e.intersectionRatio>.55)),{root:rail,threshold:[0,.55,1]});
-function card(p,copy){const s=SH[p[5]];const el=document.createElement('article');el.className='card';
-  if(copy!==1){el.setAttribute('aria-hidden','true');el.inert=true}
+function card(p){const s=SH[p[5]];const el=document.createElement('article');el.className='card';
   el.innerHTML=`<div class="pw"><div class="photo"><img src="assets/pet-${p[0]}.webp" alt="${p[2]}, ${p[3]}" loading="lazy"></div>
    <img class="sticker ${p[7]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"></div>
    <h3 class="name">${p[2]}</h3><p class="meta">${p[3]}</p>
    <p class="desc">«${p[4]}»</p>
    <a class="where" href="#map" data-sh="${s.id}">${pin}${s.n.replace(/^Приют /,'')}, ${s.city.name}</a>`;
   nbsp(el.querySelector('.desc'));return el}
-const setW=()=>cards[set.length]?cards[set.length].offsetLeft-cards[0].offsetLeft:0;
 const stepW=()=>cards[1]?cards[1].offsetLeft-cards[0].offsetLeft:300;
-function renderRail(kind){set=kind==='all'?PETS:PETS.filter(p=>p[1]===kind);io.disconnect();rail.innerHTML='';
-  for(let c=0;c<COPIES;c++)set.forEach(p=>rail.append(card(p,c)));cards=[...rail.children];cards.forEach(c=>io.observe(c));
-  rail.style.scrollSnapType='none';rail.scrollLeft=setW();requestAnimationFrame(()=>{rail.style.scrollSnapType='';drawDots()})}
-/* бесконечная лента: держим прокрутку в средней копии */
-function recenter(){const w=setW();if(!w)return;let x=rail.scrollLeft;
-  if(x<w*.5)x+=w;else if(x>w*1.5)x-=w;else return;
-  rail.style.scrollSnapType='none';rail.scrollLeft=x;requestAnimationFrame(()=>rail.style.scrollSnapType='')}
-function drawDots(){const n=set.length,i=((Math.round((rail.scrollLeft-setW())/stepW())%n)+n)%n;
+const prev=document.getElementById('prev'),next=document.getElementById('next');
+function arrows(){prev.disabled=rail.scrollLeft<8;next.disabled=rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-8}
+function drawDots(){const n=set.length,i=Math.round(rail.scrollLeft/stepW())%n;
   dots.innerHTML=Array.from({length:n},(_,k)=>`<i class="${k===i?'a':''}"></i>`).join('')}
-let rt;rail.addEventListener('scroll',()=>{requestAnimationFrame(drawDots);clearTimeout(rt);rt=setTimeout(recenter,160)},{passive:true});
+function renderRail(kind){set=kind==='all'?PETS:PETS.filter(p=>p[1]===kind);io.disconnect();rail.innerHTML='';
+  const copies=Math.ceil(12/set.length);for(let c=0;c<copies;c++)set.forEach(p=>rail.append(card(p)));
+  cards=[...rail.children];if(!fine.matches)cards.forEach(c=>io.observe(c));rail.scrollLeft=0;arrows();drawDots()}
+rail.addEventListener('scroll',()=>requestAnimationFrame(()=>{arrows();drawDots()}),{passive:true});
 document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b));renderRail(b.dataset.f)});
-document.getElementById('prev').onclick=()=>rail.scrollBy({left:-stepW()*2,behavior:'smooth'});
-document.getElementById('next').onclick=()=>rail.scrollBy({left:stepW()*2,behavior:'smooth'});
-addEventListener('resize',()=>{rail.style.scrollSnapType='none';rail.scrollLeft=setW();requestAnimationFrame(()=>rail.style.scrollSnapType='')});
+prev.onclick=()=>rail.scrollBy({left:-stepW()*2,behavior:'smooth'});
+next.onclick=()=>rail.scrollBy({left:stepW()*2,behavior:'smooth'});
+addEventListener('resize',arrows);
 
 /* карта: свой выпадающий список городов */
 const live=window.self===window.top&&!/schema/.test(location.search);
@@ -720,7 +725,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('.where');if(!a)r
 /* безопасно и просто: плашки опускаются по мере скролла */
 const track=document.getElementById('safeTrack'),sps=[...document.querySelectorAll('.sp')];
 function onSafe(){const r=track.getBoundingClientRect(),p=-r.top/Math.max(1,r.height-innerHeight);
-  sps.forEach((s,i)=>s.classList.toggle('in',p>.08+i*.27))}
+  sps.forEach((s,i)=>s.classList.toggle('in',p>.08+i*.27));sps.forEach((s,i)=>s.classList.toggle('under',!!sps[i+1]?.classList.contains('in')))}
 if(reduce)sps.forEach(s=>s.classList.add('in'));else{addEventListener('scroll',onSafe,{passive:true});onSafe()}
 
 /* FAQ */
