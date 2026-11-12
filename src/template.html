@@ -293,7 +293,9 @@ button{font:inherit;color:inherit}
 .sp1{--r:-2deg}.sp2{--r:1.6deg;translate:u(4) u(-6)}.sp3{--r:-1deg;translate:u(-3) u(-12)}
 @media (min-width:900px){
   .safe-track{height:320vh}
-  .safe-ill{top:u(30);translate:-50% 0;width:auto;max-width:u(900);max-height:calc(100% - u(150))}
+  /* сцена выше экрана на невысоких мониторах: липнет нижним краем, плашка 3 целиком под иллюстрацией */
+  .safe-stick{height:max(100vh,u(1070));top:min(0px,calc(100vh - u(1070)))}
+  .safe-ill{top:u(30);translate:-50% 0;height:u(560);width:auto;max-width:none;max-height:none}
   .safe .h2{padding-top:u(40)}
   .sp.under{background:var(--orange)}.sp.under>*{opacity:1}
   .sp{left:auto;right:auto;bottom:auto;width:u(320);padding:u(22) u(26) u(24);border-radius:u(28);translate:none}
@@ -301,7 +303,7 @@ button{font:inherit;color:inherit}
   .sp p{font-size:u(17);margin-top:u(12)}
   .sp1{left:calc(50% - u(640));top:12%}
   .sp2{left:calc(50% + u(320));top:32%}
-  .sp3{left:calc(50% - u(310));width:u(620);bottom:u(6)}
+  .sp3{left:calc(50% - u(160));top:u(614)}
 }
 
 /* ---------- 07 · FAQ ---------- */

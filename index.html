@@ -293,7 +293,9 @@ button{font:inherit;color:inherit}
 .sp1{--r:-2deg}.sp2{--r:1.6deg;translate:calc(4*var(--u)) calc(-6*var(--u))}.sp3{--r:-1deg;translate:calc(-3*var(--u)) calc(-12*var(--u))}
 @media (min-width:900px){
   .safe-track{height:320vh}
-  .safe-ill{top:calc(30*var(--u));translate:-50% 0;width:auto;max-width:calc(900*var(--u));max-height:calc(100% - calc(150*var(--u)))}
+  /* сцена выше экрана на невысоких мониторах: липнет нижним краем, плашка 3 целиком под иллюстрацией */
+  .safe-stick{height:max(100vh,calc(1070*var(--u)));top:min(0px,calc(100vh - calc(1070*var(--u))))}
+  .safe-ill{top:calc(30*var(--u));translate:-50% 0;height:calc(560*var(--u));width:auto;max-width:none;max-height:none}
   .safe .h2{padding-top:calc(40*var(--u))}
   .sp.under{background:var(--orange)}.sp.under>*{opacity:1}
   .sp{left:auto;right:auto;bottom:auto;width:calc(320*var(--u));padding:calc(22*var(--u)) calc(26*var(--u)) calc(24*var(--u));border-radius:calc(28*var(--u));translate:none}
@@ -301,7 +303,7 @@ button{font:inherit;color:inherit}
   .sp p{font-size:calc(17*var(--u));margin-top:calc(12*var(--u))}
   .sp1{left:calc(50% - calc(640*var(--u)));top:12%}
   .sp2{left:calc(50% + calc(320*var(--u)));top:32%}
-  .sp3{left:calc(50% - calc(310*var(--u)));width:calc(620*var(--u));bottom:calc(6*var(--u))}
+  .sp3{left:calc(50% - calc(160*var(--u)));top:calc(614*var(--u))}
 }
 
 /* ---------- 07 · FAQ ---------- */
