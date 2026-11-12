@@ -1,0 +1,587 @@
+<title>Пицца съедена, пора гулять</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;800;900&display=swap">
+<style>
+@font-face{font-family:"Dodo Narrow";src:url(data:font/ttf;base64,__FONT__) format("truetype");font-display:block}
+
+/* ДИЗАЙН-СИСТЕМА · Додо × Помощь приютам
+   Все размеры — в единицах макета: u() = 1px кадра Figma.
+   Мобайл: кадр 390 (масштаб до 480px), десктоп ≥ 900px: кадр 1495 (масштаб до 1600px). */
+:root{
+  --orange:#FF5F00;
+  --orange-15:rgba(255,95,0,.15);
+  --peach:#FBE6D8;
+  --cream:#FFF6EF;      /* фон карты */
+  --white:#FFFFFF;
+  --ink:#2F201E;        /* имена, вопросы, карточки приютов */
+  --brown:#682B00;      /* H3 */
+  --text:#795E47;       /* наборный текст */
+  --purple:#8F6BB7;     /* только в лиде */
+  --line:#F1DCCB;
+  --dots:#F5D9C7;
+  --map:#EDE6DC;
+  --shadow:#303053;
+  --f-display:"Dodo Narrow","Arial Narrow",Impact,sans-serif;
+  --f-text:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --u:calc(min(var(--vw,100vw),480px)/390);
+  /* типографика · мобайл */
+  --h2:u(75.5);  --h3:u(37.7);  --lead:u(36);   --say:u(28.5);
+  --body:u(17);  --body-lh:1.35;
+  --name:u(25);  --meta:u(18.8); --desc:u(15);   --chip:u(19.7);
+  --q:u(17);     --a:u(16);
+  --sh-name:u(20); --sh-addr:u(15); --sh-tag:u(14); --btn:u(16);
+  --title-top:u(48);
+  color-scheme:light;
+}
+@media (min-width:900px){:root{
+  --u:calc(min(var(--vw,100vw),1600px)/1495);
+  --h2:u(138.9); --h3:u(49.2); --lead:u(68.4); --say:u(39.1);
+  --body:u(25.6); --body-lh:1.08;
+  --name:u(32); --meta:u(24); --desc:u(20); --chip:u(25.6);
+  --q:u(26); --a:u(22);
+  --sh-name:u(24); --sh-addr:u(18); --sh-tag:u(16); --btn:u(18);
+  --title-top:u(96);
+}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--text);font-family:var(--f-text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:none}
+button,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:6px}
+.fr{position:relative;width:u(390);margin-inline:auto}
+@media (min-width:900px){.fr{width:u(1495)}}
+
+/* текстовые стили */
+.h2{margin:0;padding-top:var(--title-top);font-family:var(--f-display);font-weight:400;font-size:var(--h2);line-height:.76;letter-spacing:-.03em;color:var(--orange);text-transform:lowercase;text-align:center}
+.h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:var(--h3);line-height:.8;color:var(--brown);text-transform:lowercase}
+.body{margin:0;font-weight:600;font-size:var(--body);line-height:var(--body-lh);letter-spacing:-.03em;color:var(--text)}
+.d-only{display:none}
+@media (min-width:900px){.m-only{display:none}.d-only{display:inline}}
+
+/* ---------- 01 · хиро ---------- */
+.snow{background:#E7E6F2 url(assets/snow.webp) center top/cover no-repeat;overflow:hidden}
+.hero{height:u(811)}
+.logo{position:absolute;left:u(16);top:u(15);width:u(80);z-index:6}
+.logo img{width:100%;height:auto}
+.nav{display:none}
+.burger{position:absolute;left:u(326);top:u(20);width:u(48);height:u(48);border-radius:50%;border:0;background:rgba(255,255,255,.92);display:grid;place-items:center;cursor:pointer;z-index:6}
+.burger i{display:block;width:u(20);height:u(3);border-radius:2px;background:var(--orange);box-shadow:0 u(7) 0 var(--orange);transform:translateY(u(-3.5))}
+.walk{position:absolute;left:u(-180);top:u(218);width:u(623);height:auto;z-index:2}
+.shd{position:absolute;background:var(--shadow);opacity:.3;border-radius:50%;filter:blur(u(4));z-index:1}
+.plate,.ol{position:absolute;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);text-transform:lowercase;letter-spacing:-.03em;white-space:nowrap;translate:-50% -50%}
+.plate{left:u(181.5);top:u(192.5);width:u(241);height:u(46);border-radius:u(15);background:var(--white);color:var(--orange);font-size:u(38.8);line-height:.8;rotate:-7deg;z-index:5}
+.ol{background:var(--orange);color:var(--white);border-radius:u(18);font-size:u(85.4);line-height:.76;rotate:4deg}
+.ol.ot{background:none}
+.ol1{left:u(247);top:u(254.5);width:u(194);height:u(88)}
+.ol2{left:u(246.5);top:u(320);width:u(264);height:u(88)}
+.tail{position:absolute;left:u(287);top:u(351);width:u(54);height:u(49);background:var(--orange);clip-path:polygon(0 0,62% 0,100% 100%)}
+.obub{position:absolute;inset:0;z-index:4;transform-origin:u(300) u(395)}
+@media (min-width:900px){
+  .hero{height:u(865)}
+  .logo{left:u(36);top:u(24);width:u(93)}
+  .burger{display:none}
+  .nav{display:flex;position:absolute;right:u(35);top:u(34);gap:u(59);z-index:6}
+  .nav a{font-weight:900;font-size:u(25.6);line-height:.86;letter-spacing:-.03em;color:var(--orange);text-decoration:none}
+  .nav a:hover{text-decoration:underline;text-underline-offset:u(6)}
+  .walk{left:u(-152);top:u(77);width:u(1165)}
+  .plate{left:u(1001);top:u(198.5);width:u(534);height:u(101);border-radius:u(34);font-size:u(85.9)}
+  .ol{border-radius:u(40);font-size:u(188.9)}
+  .ol1{left:u(1144);top:u(336);width:u(429);height:u(195)}
+  .ol2{left:u(1142);top:u(480);width:u(581);height:u(195)}
+  .tail{left:u(902);top:u(508);width:u(137);height:u(135);clip-path:polygon(38% 0,100% 0,0 100%)}
+  .obub{transform-origin:u(902) u(640)}
+}
+/* появление баблов: белая плашка с наклоном, оранжевый поднимается снизу «из собаки» */
+.js .plate,.js .obub{opacity:0}
+.go .plate{animation:pop .7s cubic-bezier(.34,1.56,.64,1) .25s both}
+.go .obub{animation:rise .9s cubic-bezier(.34,1.4,.64,1) .75s both, sway 5s ease-in-out 1.8s infinite alternate}
+@keyframes pop{from{opacity:0;scale:.6;rotate:-16deg}to{opacity:1;scale:1;rotate:-7deg}}
+@keyframes rise{from{opacity:0;translate:0 u(80);scale:.5}to{opacity:1;translate:0 0;scale:1}}
+@keyframes sway{from{rotate:0deg}to{rotate:1.2deg}}
+
+/* ---------- 02 · текст на снегу ---------- */
+.lead-sec{height:u(540)}
+.lead{position:absolute;left:u(18);top:u(110);width:u(358);margin:0;font-family:var(--f-display);font-size:var(--lead);line-height:.9;letter-spacing:-.01em;color:var(--orange);text-align:center;text-transform:lowercase;
+  text-shadow:0 0 u(14) rgba(255,255,255,.9),0 0 u(30) rgba(255,255,255,.75)}
+.lead .p2{color:var(--purple)}
+.lead .w{transition:opacity .35s ease}
+.js .lead .w{opacity:.16}
+.js .lead .w.on{opacity:1}
+.dd{position:absolute;height:auto;transition:clip-path .55s cubic-bezier(.6,.05,.3,1),transform .12s linear}
+.js .dd{clip-path:inset(0 100% 0 0)}
+.dd.show{clip-path:inset(0 0 0 0)}
+.dl1{left:u(14);top:u(70);width:u(60)}
+.dl2{left:u(4);top:u(96);width:u(75);rotate:12deg}
+.dr1{left:u(266);top:u(450);width:u(68);transition-delay:.1s}
+.dr2{left:u(278);top:u(476);width:u(45);rotate:12deg;transition-delay:.25s}
+@media (min-width:900px){
+  .lead-sec{height:u(760)}
+  .lead{left:u(369);top:u(134);width:u(757)}
+  .dl1{left:u(248);top:u(124);width:u(110)}
+  .dl2{left:u(205);top:u(202);width:u(137)}
+  .dr1{left:u(1145);top:u(512);width:u(124)}
+  .dr2{left:u(1135);top:u(562);width:u(81)}
+}
+
+/* ---------- 03 · почему это важно ---------- */
+.why .fr{padding-bottom:u(64)}
+.why-list{list-style:none;margin:u(41) 0 0;padding:0 u(24)}
+.why-item+.why-item{margin-top:u(56)}
+.tile{position:relative;width:u(210);height:u(210)}
+.why-item:nth-child(2) .tile{margin-left:u(132)}
+.why-item:nth-child(3) .tile{margin-left:u(16)}
+.ph{width:100%;height:100%;border-radius:u(29);overflow:hidden;rotate:var(--r)}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.say{position:absolute;translate:-50% -50%;rotate:var(--sr);margin:0;font-family:var(--f-display);font-size:var(--say);line-height:.76;letter-spacing:-.03em;color:var(--white);text-align:center;text-transform:lowercase;white-space:nowrap;transition:opacity .3s ease,scale .4s cubic-bezier(.34,1.56,.64,1);z-index:2}
+.say .bg{position:absolute;inset:0;color:transparent}
+.say .bg span{background:var(--orange);padding:.06em .18em .1em;border-radius:.14em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.say .tx{position:relative}
+.why-item .h3{margin-top:u(24);transition:color .25s ease}
+.why-item .body{margin-top:u(13);max-width:u(342)}
+@media (min-width:900px){
+  .why .fr{height:u(1240);padding:0}
+  .why-list{margin:0;padding:0}
+  .why-item{position:absolute;width:u(394)}
+  .why-item+.why-item{margin-top:0}
+  .why-item:nth-child(1){left:u(87);top:u(237)}
+  .why-item:nth-child(2){left:u(550);top:u(448)}
+  .why-item:nth-child(3){left:u(1032);top:u(565)}
+  .tile{width:u(289);height:u(289);margin:u(7)}
+  .why-item:nth-child(2) .tile{margin:u(10.5)}
+  .why-item:nth-child(3) .tile{margin:u(12.5)}
+  .ph{border-radius:u(33)}
+  .why-item:nth-child(1) .h3{margin-top:u(33)}
+  .why-item:nth-child(2) .h3{margin-top:u(40.5)}
+  .why-item .body{margin-top:u(27)!important}
+  .why-item:nth-child(3) .h3{margin:u(53.5) 0 0 u(13)}
+  .why-item .body{margin-top:u(27);max-width:u(394)}
+  .why-item:nth-child(3) .body{margin-left:u(13)}
+}
+@media (hover:hover) and (pointer:fine){
+  .why-item .say{opacity:0;scale:.85}
+  .why-item:hover .say,.why-item:focus-within .say{opacity:1;scale:1}
+  .why-item:hover .h3{color:var(--orange)}
+  .why-item:hover .ph img{transform:scale(1.07)}
+}
+
+/* ---------- 04 · анкеты ---------- */
+.pets .fr{padding-bottom:u(56)}
+.chips{display:flex;justify-content:center;gap:u(8);margin-top:u(25)}
+.chip{border:0;background:none;cursor:pointer;font-weight:600;font-size:var(--chip);line-height:1.08;letter-spacing:-.03em;color:var(--text);padding:u(8) u(12);border-radius:u(20)}
+.chip[aria-pressed="true"]{background:var(--orange-15);color:var(--orange)}
+.arrows{display:none}
+.rail{display:flex;gap:u(12);overflow-x:auto;scroll-snap-type:x mandatory;margin-top:u(16);padding:u(16) u(18) u(20);scroll-padding-inline:u(18);scrollbar-width:none;overscroll-behavior-x:contain}
+.rail::-webkit-scrollbar{display:none}
+.card{flex:0 0 u(271);scroll-snap-align:start;position:relative}
+.photo{position:relative;height:u(390);border-radius:u(30);overflow:hidden;background:var(--line)}
+.photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.name{margin:u(13) 0 0;font-family:var(--f-display);font-weight:400;font-size:var(--name);line-height:1;color:var(--ink);text-transform:lowercase}
+.meta{margin:u(6) 0 0;font-weight:500;font-size:var(--meta);line-height:1.15;color:var(--ink)}
+.desc{margin:u(10) 0 0;font-weight:500;font-size:var(--desc);line-height:1.28;color:var(--text);max-width:u(262)}
+.where{display:inline-flex;align-items:center;gap:u(6);margin-top:u(10);font-weight:600;font-size:u(14);color:var(--orange);text-decoration:none}
+.where:hover{text-decoration:underline}
+.sticker{position:absolute;height:auto;width:var(--sw);z-index:3;pointer-events:none;opacity:0;scale:.3;rotate:-25deg;transition:opacity .25s ease,scale .5s cubic-bezier(.34,1.56,.64,1),rotate .5s cubic-bezier(.34,1.56,.64,1)}
+.card.on .sticker{opacity:1;scale:1;rotate:var(--sr)}
+.dots{display:flex;justify-content:center;gap:u(8);margin-top:u(28)}
+.dots i{width:u(8);height:u(8);border-radius:u(4);background:var(--dots);transition:width .25s,background .25s}
+.dots i.a{width:u(24);background:var(--orange)}
+@media (min-width:900px){
+  .pets .fr{padding-bottom:u(67)}
+  .chips{gap:u(10);margin-top:u(43)}
+  .chip{padding:u(11) u(16);border-radius:u(26)}
+  .arrows{display:flex;gap:u(16);position:absolute;right:u(77);top:u(250)}
+  .arrow{width:u(56);height:u(56);border-radius:50%;border:0;cursor:pointer;background:var(--orange);color:var(--white);display:grid;place-items:center}
+  .arrow svg{width:u(24);height:u(24)}
+  .arrow:disabled{background:var(--peach);color:var(--orange);cursor:default}
+  .rail{gap:u(14);margin-top:u(28);padding:u(16) u(40) u(24);scroll-padding-inline:u(40)}
+  .card{flex-basis:u(347)}
+  .photo{height:u(498);border-radius:u(40)}
+  .name{margin-top:u(17)}
+  .desc{max-width:u(330);line-height:1.25}
+  .where{font-size:u(16)}
+  .dots{display:none}
+}
+@media (hover:hover) and (pointer:fine){
+  .card .sticker{opacity:0;scale:.3;rotate:-25deg}
+  .card:hover .sticker{opacity:1;scale:1;rotate:var(--sr)}
+  .card:hover .photo img{transform:scale(1.04)}
+}
+
+/* ---------- 05 · карта ---------- */
+.map-sec{background:var(--cream)}
+.map-sec .fr{padding-bottom:u(52)}
+.sel{display:flex;justify-content:center;margin-top:u(21)}
+.pill{position:relative;display:inline-flex;align-items:center;gap:u(10);border:2px solid var(--orange);background:var(--white);border-radius:999px;font-weight:600;font-size:u(17);line-height:1.2;color:var(--ink);padding:u(13) u(24);cursor:pointer}
+.pill::after{content:"";border:u(5) solid transparent;border-top:u(6) solid var(--ink);border-bottom:0;margin-top:u(3)}
+.pill select{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.pill:focus-within{outline:3px solid var(--orange);outline-offset:3px}
+.map-grid{margin-top:u(20);padding:0 u(16)}
+.mapbox{position:relative;height:u(300);border-radius:u(24);overflow:hidden;background:var(--map)}
+.mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.fake{position:absolute;inset:0;background:
+  linear-gradient(transparent 46%,#fff 46%,#fff 54%,transparent 54%) 0 0/100% u(120),
+  linear-gradient(90deg,transparent 46%,#fff 46%,#fff 54%,transparent 54%) 0 0/u(150) 100%,var(--map)}
+.fake::after{content:"";position:absolute;left:-10%;right:-10%;top:60%;height:u(24);background:#CFE0EC;rotate:-8deg;border-radius:u(30)}
+.pin{position:absolute;width:u(32);height:u(40);translate:-50% -100%;border:0;padding:0;background:none;cursor:pointer;z-index:2}
+.pin svg{width:100%;height:100%;display:block}
+.pin.active{width:u(40);height:u(50);z-index:3}
+.map-note{position:absolute;left:u(10);right:u(10);bottom:u(10);margin:0;z-index:4;background:rgba(255,255,255,.92);border-radius:u(12);padding:u(8) u(12);font-size:u(12);line-height:1.35;color:var(--ink)}
+.shelters{list-style:none;margin:u(16) 0 0;padding:0;display:grid;gap:u(12)}
+.shelter{background:var(--white);border-radius:u(22);padding:u(20) u(22);display:grid;gap:u(6);cursor:pointer;border:2px solid transparent}
+.shelter.active{border-color:var(--orange)}
+.shelter b{font-weight:900;font-size:var(--sh-name);color:var(--ink);line-height:1.2}
+.shelter .addr{font-weight:500;font-size:var(--sh-addr);color:var(--text);line-height:1.2}
+.shelter .tag{font-weight:600;font-size:var(--sh-tag);color:var(--orange)}
+.shelter .acts{display:none;flex-wrap:wrap;align-items:center;gap:u(8) u(16);margin-top:u(6)}
+.shelter.active .acts{display:flex}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font-weight:600;font-size:var(--btn);text-decoration:none;border:0;cursor:pointer;background:var(--orange);color:var(--white);height:u(47);padding:0 u(24);width:100%}
+.route{font-weight:600;font-size:var(--sh-tag);color:var(--orange)}
+.more{display:block;margin:u(16) auto 0;border:2px solid var(--orange);background:none;color:var(--orange);border-radius:999px;height:u(46);padding:0 u(24);font-weight:600;font-size:u(15);cursor:pointer}
+.demo{margin:u(16) u(16) 0;font-size:u(12);color:#A88E7A}
+@media (min-width:900px){
+  .map-sec .fr{padding-bottom:u(70)}
+  .sel{margin-top:u(28)}
+  .pill{font-size:u(22);padding:u(14) u(28)}
+  .map-grid{margin-top:u(81);padding:0 u(60);display:grid;grid-template-columns:u(440) u(880);gap:u(55);align-items:start}
+  .mapbox{order:2;height:u(640);border-radius:u(36)}
+  .shelters{order:1;margin:0;gap:u(16)}
+  .shelter{border-radius:u(28);padding:u(24);gap:u(8)}
+  .btn{height:u(50);width:auto}
+  .more{display:none}
+  .demo{margin:u(16) u(60) 0;font-size:u(14)}
+}
+
+/* ---------- 06 · безопасно и просто ---------- */
+.safe .fr{padding-bottom:u(56)}
+.safe-list{list-style:none;margin:u(32) 0 0;padding:0 u(16);display:grid;gap:u(44)}
+.slot{width:u(110);height:u(110);border:2px dashed var(--orange);border-radius:u(12);display:grid;place-items:center;font-weight:600;font-size:u(11);color:var(--orange)}
+.safe-list .h3{margin-top:u(16)}
+.safe-list .body{margin-top:u(10);max-width:u(358)}
+@media (min-width:900px){
+  .safe .fr{padding-bottom:u(26)}
+  .safe-list{margin-top:u(90);padding:0 u(87);grid-template-columns:repeat(3,u(390));gap:u(78)}
+  .slot{width:u(170);height:u(170);border-radius:u(16);font-size:u(14)}
+  .safe-list .h3{margin-top:u(30)}
+  .safe-list .body{margin-top:u(32);max-width:u(390)}
+}
+
+/* ---------- 07 · FAQ ---------- */
+.faq .fr{padding-bottom:u(56)}
+.faq-list{margin:u(28) u(16) 0;border-top:2px solid var(--line)}
+.q{border-bottom:2px solid var(--line)}
+.q button{display:grid;grid-template-columns:1fr u(32);gap:u(16);align-items:center;width:100%;background:none;border:0;padding:u(18) 0;text-align:left;cursor:pointer;font-weight:600;font-size:var(--q);line-height:1.25;color:var(--ink)}
+.ic{width:u(32);height:u(32);border-radius:50%;background:var(--peach);display:grid;place-items:center;transition:background .2s}
+.ic svg{width:44%;height:44%}
+.ic .v{transition:opacity .2s}
+.ic path{stroke:var(--orange)}
+.q.open .ic{background:var(--orange)}
+.q.open .ic .v{opacity:0}
+.q.open button{padding-bottom:u(10)}
+.q.open .ic path{stroke:var(--white)}
+.a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.q.open .a{grid-template-rows:1fr}
+.a>div{overflow:hidden}
+/* ответ не заходит под иконку: ширина = строка вопроса минус иконка и зазор */
+.a p{margin:0;padding:0 0 u(18);width:calc(100% - var(--icw,u(48)));font-weight:500;font-size:var(--a);line-height:1.35;color:var(--text)}
+@media (min-width:900px){
+  .faq .fr{padding-bottom:u(140)}
+  .faq-list{width:u(1080);margin:u(80) auto 0}
+  .q button{grid-template-columns:1fr u(44);gap:u(24);padding:u(26) 0;line-height:1.2}
+  .ic{width:u(44);height:u(44)}
+  .a p{--icw:u(68);padding-bottom:u(26);line-height:1.3}
+  .q.open button{padding-bottom:u(14)}
+}
+
+/* ---------- 08 · футер ---------- */
+.foot{background:var(--orange);color:var(--white)}
+.foot .fr{padding:u(40) u(16) calc(u(32) + env(safe-area-inset-bottom,0px));display:grid;gap:u(24)}
+.brand{display:flex;align-items:center;gap:u(12);font-weight:800;font-size:u(17)}
+.brand img{width:u(48);height:auto}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:u(4) u(24)}
+.foot ul a{color:var(--white);text-decoration:none;font-weight:800;font-size:u(18);display:inline-block;padding:u(6) 0}
+.foot ul a:hover{text-decoration:underline}
+.legal{margin:0;padding-top:u(20);border-top:1.5px solid rgba(255,255,255,.4);font-size:u(13);opacity:.9}
+@media (min-width:900px){
+  .foot .fr{padding:u(56) u(87);grid-template-columns:1fr auto;align-items:center;gap:u(32)}
+  .brand{font-size:u(20);gap:u(16)}.brand img{width:u(64)}
+  .foot ul{gap:u(40)}.foot ul a{font-size:u(22)}
+  .legal{grid-column:1/-1;font-size:u(16)}
+}
+
+/* меню (мобайл) */
+.menu{position:fixed;inset:0;z-index:50;background:var(--orange);display:flex;flex-direction:column;padding:calc(u(20) + env(safe-area-inset-top,0px)) u(16) calc(u(32) + env(safe-area-inset-bottom,0px))}
+.menu .x{align-self:flex-end;width:u(48);height:u(48);border-radius:50%;border:0;background:var(--white);color:var(--orange);font-size:u(28);line-height:1;cursor:pointer}
+.menu nav{margin-top:auto;display:grid;gap:u(8)}
+.menu nav a{font-family:var(--f-display);font-size:var(--h2);line-height:.9;color:var(--white);text-decoration:none;text-transform:lowercase}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .plate,.js .obub,.js .lead .w{opacity:1}
+  .js .dd{clip-path:none}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<div class="snow">
+  <section class="hero" aria-label="Пицца съедена, пора гулять">
+    <div class="fr" style="height:100%">
+      <a class="logo" href="#top" aria-label="Додо Пицца"><img src="assets/logo.png" alt="Додо Пицца"></a>
+      <nav class="nav" aria-label="Разделы"><a href="#map">приюты</a><a href="#faq">вопросы</a><a href="#footer">как помочь</a></nav>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i></i></button>
+      <span class="shd s1"></span><span class="shd s2"></span><span class="shd s3"></span>
+      <img class="walk" src="assets/hero.webp" width="1747" height="1160" alt="Человек гуляет с собакой на поводке и держит кота на руках">
+      <h1 style="margin:0">
+        <span class="plate">пицца съедена</span>
+        <span class="obub"><span class="tail"></span><span class="ol ol1"></span><span class="ol ol2"></span><span class="ol ol1 ot">пора</span><span class="ol ol2 ot">гулять</span></span>
+      </h1>
+    </div>
+  </section>
+  <section class="lead-sec" aria-label="О проекте">
+    <div class="fr" style="height:100%" id="top">
+      <img class="dd dl1" src="assets/doodle-b.png" alt="">
+      <img class="dd dl2" src="assets/doodle-a.png" alt="">
+      <p class="lead" id="lead"><span class="p1">хвостики из приюта зовут <br class="d-only">в гости: собаки готовы <br class="d-only">к прогулке, коты — <br class="d-only">к почёсыванию за ушком.</span><br><br><span class="p2">выбирайте друга по душе <br class="d-only">и назначайте встречу</span></p>
+      <img class="dd dr1" src="assets/doodle-a.png" alt="">
+      <img class="dd dr2" src="assets/doodle-a.png" alt="">
+    </div>
+  </section>
+</div>
+
+<div class="menu" id="menu" hidden>
+  <button class="x" id="menuClose" aria-label="Закрыть меню">×</button>
+  <nav aria-label="Разделы"><a href="#pets">хвостики</a><a href="#map">приюты</a><a href="#faq">вопросы</a><a href="#footer">как помочь</a></nav>
+</div>
+
+<section class="why" aria-labelledby="why-h">
+  <div class="fr">
+    <h2 class="h2" id="why-h">почему<br>это важно</h2>
+    <ul class="why-list">
+      <li class="why-item">
+        <div class="tile"><div class="ph" style="--r:-3deg"><img src="assets/why-1.webp" alt="Пёс нюхает камеру на заснеженной поляне" loading="lazy"></div>
+          <p class="say" style="left:28%;top:77%;--sr:-6deg"><span>о,<br>свежие<br>новости</span></p></div>
+        <h3 class="h3">собакам нужны<br>новые запахи</h3>
+        <p class="body">Обнюхивая всё на своём пути, животные «читают» мир — это их способ снизить тревожность, узнать новое и потренировать ум</p>
+      </li>
+      <li class="why-item">
+        <div class="tile"><div class="ph" style="--r:4deg"><img src="assets/why-2.webp" alt="Кот лежит на спине и ловит игрушку" loading="lazy"></div>
+          <p class="say" style="left:56%;top:19%;--sr:-13deg"><span>почти<br>поймала</span></p></div>
+        <h3 class="h3">для котов игра —<br>не просто<br>развлечение</h3>
+        <p class="body">Так они дают выход инстинктам и сбрасывают напряжение. Приятный бонус: уровень стресса снижается у всех участников процесса!</p>
+      </li>
+      <li class="why-item">
+        <div class="tile"><div class="ph" style="--r:-5deg"><img src="assets/why-3.webp" alt="Пса чешут за ухом, он зажмурился" loading="lazy"></div>
+          <p class="say" style="left:38%;top:74%;--sr:-4deg"><span>с тобой<br>весело</span></p></div>
+        <h3 class="h3">они скорее<br>встретят<br>своего человека</h3>
+        <p class="body">Даже один визит важен: животные учатся доверять человеку, а это помогает в социализации</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="pets" id="pets" aria-labelledby="pets-h">
+  <div class="fr">
+    <h2 class="h2" id="pets-h">анкеты<br class="m-only"><span class="d-only"> </span>хвостиков</h2>
+    <div class="chips" role="group" aria-label="Фильтр">
+      <button class="chip" data-f="all" aria-pressed="true">все хвостики</button>
+      <button class="chip" data-f="dog" aria-pressed="false">собаки</button>
+      <button class="chip" data-f="cat" aria-pressed="false">кошки</button>
+    </div>
+    <div class="arrows">
+      <button class="arrow" id="prev" aria-label="Назад"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="arrow" id="next" aria-label="Вперёд"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <div class="rail" id="rail" aria-label="Анкеты"></div>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+  </div>
+</section>
+
+<section class="map-sec" id="map" aria-labelledby="map-h">
+  <div class="fr">
+    <h2 class="h2" id="map-h">приюты<br class="m-only"><span class="d-only"> </span>на карте</h2>
+    <div class="sel"><label class="pill"><span id="cityLabel">Москва</span><select id="city" aria-label="Город"></select></label></div>
+    <div class="map-grid">
+      <div class="mapbox" id="mapbox"></div>
+      <div><ul class="shelters" id="shelters"></ul><button class="more" id="more">показать ещё приюты</button></div>
+    </div>
+    <p class="demo">Адреса и точки — демо из открытых каталогов, сверим с приютами перед запуском.</p>
+  </div>
+</section>
+
+<section class="safe" aria-labelledby="safe-h">
+  <div class="fr">
+    <h2 class="h2" id="safe-h">это<br class="m-only"><span class="d-only"> </span>безопасно<br>и просто</h2>
+    <ul class="safe-list">
+      <li><div class="slot">мини-илл.</div><h3 class="h3">всё под контролем<br>волонтёров</h3><p class="body">Волонтёры знают характер каждого хвостика и будут рядом всю встречу: подскажут, как познакомиться, и помогут, если что-то пойдёт не так.</p></li>
+      <li><div class="slot">мини-илл.</div><h3 class="h3">дадим поводок<br>и расскажем<br>про правила</h3><p class="body">Всё нужное для прогулки и игры уже есть в приюте. Перед встречей коротко объяснят, как держать поводок, чем можно угощать и как понять настроение питомца.</p></li>
+      <li><div class="slot">мини-илл.</div><h3 class="h3">можно прийти<br>даже без опыта</h3><p class="body">Не нужно быть кинологом или хозяином кошки. Достаточно желания провести время вместе — остальному научат на месте.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="faq" id="faq" aria-labelledby="faq-h">
+  <div class="fr">
+    <h2 class="h2" id="faq-h">если<br class="m-only"><span class="d-only"> </span>остались<br>вопросы</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<footer class="foot" id="footer">
+  <div class="fr">
+    <div class="brand"><img src="assets/logo.png" alt=""><span>Додо Пицца × Помощь приютам</span></div>
+    <ul><li><a href="#map">приюты</a></li><li><a href="#faq">вопросы</a></li><li><a href="#pets">как помочь</a></li></ul>
+    <p class="legal">© 2026 Додо Пицца · Политика конфиденциальности</p>
+  </div>
+</footer>
+
+<script>
+const root=document.documentElement;root.classList.add('js');
+const setVw=()=>root.style.setProperty('--vw',root.clientWidth+'px');setVw();addEventListener('resize',setVw);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine=matchMedia('(hover:hover) and (pointer:fine)');
+const desk=matchMedia('(min-width:900px)');
+
+/* тени под иллюстрацией — координаты из макета */
+const SHD={m:[[209,587,163,20],[-106,587,161,20],[114,590,80,10]],d:[[576,767,306,37],[-13,767,302,37],[398,774,149,18]]};
+function placeShadows(){const s=SHD[desk.matches?'d':'m'];document.querySelectorAll('.shd').forEach((e,i)=>{const [x,y,w,h]=s[i];Object.assign(e.style,{left:`calc(${x}*var(--u))`,top:`calc(${y}*var(--u))`,width:`calc(${w}*var(--u))`,height:`calc(${h}*var(--u))`})})}
+placeShadows();desk.addEventListener?.('change',placeShadows);
+
+/* меню */
+const menu=document.getElementById('menu'),burger=document.getElementById('burger');
+burger.onclick=()=>{menu.hidden=false;burger.setAttribute('aria-expanded','true');document.getElementById('menuClose').focus()};
+const closeMenu=()=>{menu.hidden=true;burger.setAttribute('aria-expanded','false')};
+document.getElementById('menuClose').onclick=closeMenu;menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+
+/* хиро */
+document.fonts?.ready.then(()=>requestAnimationFrame(()=>document.querySelector('.hero').classList.add('go')));
+setTimeout(()=>document.querySelector('.hero').classList.add('go'),1200);
+
+/* лид: слова по скроллу, почеркушки после абзацев, лёгкая дрожь при скролле */
+const lead=document.getElementById('lead');
+function split(el){[...el.childNodes].forEach(n=>{if(n.nodeType!==3)return;const f=document.createDocumentFragment();n.textContent.split(/(\s+)/).forEach(w=>{if(!w)return;if(/^\s+$/.test(w)){f.append(' ');return}const s=document.createElement('span');s.className='w';s.textContent=w;f.append(s)});n.replaceWith(f)});return [...el.querySelectorAll('.w')]}
+const w1=split(lead.querySelector('.p1')),w2=split(lead.querySelector('.p2'));
+const dl=[...document.querySelectorAll('.dl1,.dl2')],dr=[...document.querySelectorAll('.dr1,.dr2')];
+let tick=false,jt=0,jtimer;
+function onScroll(){if(tick)return;tick=true;requestAnimationFrame(()=>{tick=false;const line=innerHeight*.8;
+  for(const w of [...w1,...w2])w.classList.toggle('on',w.getBoundingClientRect().top<line);
+  const a=w1.every(w=>w.classList.contains('on')),b=w2.every(w=>w.classList.contains('on'));
+  dl.forEach(d=>d.classList.toggle('show',a));dr.forEach(d=>d.classList.toggle('show',b));
+  const now=performance.now();if(now-jt>90){jt=now;[...dl,...dr].forEach(d=>{if(d.classList.contains('show'))d.style.transform=`translate(${(Math.random()-.5)*4}px,${(Math.random()-.5)*4}px) rotate(${(Math.random()-.5)*3}deg)`})}
+  clearTimeout(jtimer);jtimer=setTimeout(()=>[...dl,...dr].forEach(d=>d.style.transform=''),160)})}
+if(reduce){[...w1,...w2].forEach(w=>w.classList.add('on'));[...dl,...dr].forEach(d=>d.classList.add('show'))}else{addEventListener('scroll',onScroll,{passive:true});onScroll()}
+
+document.querySelectorAll('.say').forEach(p=>{const h=p.querySelector('span').innerHTML;p.innerHTML=`<span class="bg" aria-hidden="true"><span>${h}</span></span><span class="tx">${h}</span>`});
+
+/* приюты */
+const CITIES=[
+ {name:'Москва',c:[55.751,37.618],z:10,list:[
+  {id:'birul',n:'Приют «Бирюлёво»',a:'Москва, Востряковский проезд, 10А',p:[55.5868,37.6349]},
+  {id:'kozh',n:'Кожуховский приют',a:'Москва, Пехорская ул., 1/3, стр. 5',p:[55.7176,37.8590]},
+  {id:'murk',n:'«Муркоша»',a:'Москва, Осташковская ул., 14, стр. 2',p:[55.8742,37.6927],k:'кошки'},
+  {id:'pech',n:'Приют «Печатники»',a:'Москва, Проектируемый проезд № 5112, 1–3',p:[55.6918,37.7270]}]},
+ {name:'Санкт-Петербург',c:[59.939,30.316],z:10,list:[
+  {id:'drug',n:'Фонд-приют «Друг»',a:'Санкт-Петербург, Поселковая ул., 1В',p:[59.9763,30.5349]},
+  {id:'rzh',n:'Приют «Ржевка»',a:'Санкт-Петербург, Поселковая ул., 9',p:[59.9773,30.5398]},
+  {id:'nd',n:'«Новый дом»',a:'Санкт-Петербург, Белградская ул., 30',p:[59.8555,30.3920],k:'кошки'},
+  {id:'ub',n:'«Убежище»',a:'Санкт-Петербург, 2-й Муринский пр., 34, к. 1',p:[60.0050,30.3510]}]},
+ {name:'Екатеринбург',c:[56.828,60.597],z:11,list:[
+  {id:'leo',n:'«Кот Леопольд»',a:'Екатеринбург, ул. Амундсена, 59',p:[56.8094,60.5530]},
+  {id:'kov',n:'«Ковчег»',a:'Екатеринбург, Восточная ул., 160',p:[56.8212,60.6302]},
+  {id:'reab',n:'Центр реабилитации животных',a:'Екатеринбург, ул. Белинского, 112А',p:[56.8160,60.6155]}]},
+ {name:'Саратов',c:[51.52,46.04],z:11,list:[
+  {id:'vd',n:'«Верный друг»',a:'Саратов, ул. им. Азина В. М., 66Б',p:[51.4890,46.0710]},
+  {id:'ozz',n:'Общество защиты животных',a:'Саратов, 2-й Акмолинский проезд, 4',p:[51.5560,45.9890]},
+  {id:'vde',n:'«Верный друг», Энгельс',a:'Энгельс, Промышленная ул., 22А',p:[51.4800,46.1170]}]},
+ {name:'Казань',c:[55.78,49.12],z:10,list:[
+  {id:'bio',n:'«Биоритм»',a:'Казань, ул. Хайдара Бигичева, 3',p:[55.7368,49.1960]},
+  {id:'cats',n:'«Cats house»',a:'Казань, Гвардейская ул., 46А',p:[55.7798,49.1640],k:'кошки'},
+  {id:'stol',n:'Казанский приют бездомных животных',a:'с. Столбище, Объездная ул., 4',p:[55.6470,49.2100]},
+  {id:'kip',n:'«Кот и пёс»',a:'с. Айша, Садовая ул., 48',p:[55.8930,48.7660]}]}];
+const SH={};CITIES.forEach(c=>c.list.forEach(s=>{s.city=c;SH[s.id]=s}));
+
+/* хвостики: 7 собак + 7 кошек */
+const ST=['heart','ball','paw','hearts','bone','mouse','feather','bowl','sparkle'];
+const PETS=[
+ ['maya','dog','Майя','девочка, 3 года','Люблю неспешные прогулки и новые запахи. Пойдём исследовать мир вместе?','birul'],
+ ['milka','cat','Милка','девочка, 6 лет','Не очень люблю шумные компании. А вот тихое место и почёсывания за ухом — совсем другое дело','murk'],
+ ['boris','dog','Борис','мальчик, 2 года','Сначала могу немного стесняться. Но если подружимся — обещаю вилять хвостом!','rzh'],
+ ['dymka','cat','Дымка','девочка, 1 год','Сижу у окна и жду гостей. Поиграем с пёрышком?','pech'],
+ ['bonya','dog','Боня','мальчик, 2 года','Мне нравится быть рядом с людьми. Особенно когда мы просто проводим время вместе','kozh'],
+ ['ugolek','cat','Уголёк','мальчик, 3 года','Мурчу как трактор, если гладить правильно. Научу!','nd'],
+ ['ryzhik','dog','Рыжик','мальчик, 4 года','Шуршу листьями громче всех. Возьмёшь меня в парк?','drug'],
+ ['iriska','cat','Ириска','девочка, 2 года','Сначала посмотрю на тебя сверху, а потом сама приду знакомиться','leo'],
+ ['jack','dog','Джек','мальчик, 5 лет','Хорошо хожу на поводке и знаю все лужи в округе. Покажу!','kov'],
+ ['pirat','cat','Пират','мальчик, 7 месяцев','Коробка — мой штаб. Заходи, вместе поохотимся на верёвочку','cats'],
+ ['tuman','dog','Туман','мальчик, 8 лет','Я уже не тороплюсь. Зато умею слушать и долго сидеть рядом','vd'],
+ ['poloska','cat','Полоска','девочка, 1 год','Обожаю мячики и тех, кто их кидает','ozz'],
+ ['bublik','dog','Бублик','мальчик, 1 год','Энергии — на троих. Побегаем, а потом можно и почесать за ухом?','stol'],
+ ['zefir','cat','Зефир','мальчик, 5 лет','Я спокойный и пушистый. Посидим рядом, пока ты рассказываешь, как прошёл день?','ub']];
+const SPOTS=['top:-6%;right:-7%','top:38%;left:-8%','top:62%;right:-6%','top:-5%;left:6%','top:20%;right:-9%','top:70%;left:-6%'];
+const rail=document.getElementById('rail'),dots=document.getElementById('dots');
+const pin='<svg viewBox="0 0 44 56" width="11" height="14" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg>';
+PETS.forEach((p,i)=>{const s=SH[p[5]],st=ST[(i*4+1)%ST.length],sp=SPOTS[(i*5+2)%SPOTS.length],rot=((i*37)%30)-15,small=st==='sparkle'||st==='hearts';
+  const el=document.createElement('article');el.className='card';el.dataset.kind=p[1];
+  el.innerHTML=`<div class="photo"><img src="assets/pet-${p[0]}.webp" alt="${p[2]}, ${p[3]}" loading="lazy"></div>
+   <img class="sticker" src="assets/st-${st}.png" alt="" style="${sp};--sr:${rot}deg;--sw:calc(${small?64:84}*var(--u))">
+   <h3 class="name">${p[2]}</h3><p class="meta">${p[3]}</p>
+   <p class="desc">«${p[4]}»</p>
+   <a class="where" href="#map" data-sh="${s.id}">${pin}${s.n.replace(/^Приют /,'')}, ${s.city.name}</a>`;
+  rail.append(el)});
+const cards=[...rail.children];
+const vis=()=>cards.filter(c=>!c.hidden);
+function drawDots(){const n=vis().length,step=vis()[1]?vis()[1].offsetLeft-vis()[0].offsetLeft:1,idx=Math.round(rail.scrollLeft/step);
+  dots.innerHTML=Array.from({length:Math.min(n,7)},(_,i)=>`<i class="${i===Math.min(idx,6)?'a':''}"></i>`).join('')}
+const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('on',e.intersectionRatio>.85)),{root:rail,threshold:[0,.85,1]});
+const bind=()=>cards.forEach(c=>fine.matches?io.unobserve(c):io.observe(c));bind();fine.addEventListener?.('change',bind);
+document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  cards.forEach(c=>c.hidden=!(b.dataset.f==='all'||c.dataset.kind===b.dataset.f));rail.scrollTo({left:0});arrows();drawDots()});
+const prev=document.getElementById('prev'),next=document.getElementById('next');
+const stepW=()=>{const v=vis();return v[1]?v[1].offsetLeft-v[0].offsetLeft:300};
+prev.onclick=()=>rail.scrollBy({left:-stepW()*2,behavior:'smooth'});next.onclick=()=>rail.scrollBy({left:stepW()*2,behavior:'smooth'});
+function arrows(){prev.disabled=rail.scrollLeft<8;next.disabled=rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-8}
+rail.addEventListener('scroll',()=>requestAnimationFrame(()=>{arrows();drawDots()}),{passive:true});arrows();drawDots();
+
+/* карта */
+const live=window.self===window.top&&!/schema/.test(location.search);
+const mapbox=document.getElementById('mapbox'),sel=document.getElementById('city'),list=document.getElementById('shelters'),more=document.getElementById('more');
+let city=CITIES[0],active=city.list[0],iframe=null,expanded=false;
+CITIES.forEach((c,i)=>sel.add(new Option(c.name,i)));
+sel.onchange=()=>{city=CITIES[+sel.value];document.getElementById('cityLabel').textContent=city.name;active=city.list[0];expanded=false;render()};
+const pinSvg=(a)=>`<svg viewBox="0 0 44 56"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="${a?'#FF5F00':'#fff'}" stroke="#FF5F00" stroke-width="4"/><circle cx="22" cy="21" r="7" fill="${a?'#fff':'#FF5F00'}"/></svg>`;
+function renderMap(){
+  if(live){if(!iframe){iframe=document.createElement('iframe');iframe.title='Карта приютов';mapbox.append(iframe)}
+    const pt=city.list.map(s=>`${s.p[1]},${s.p[0]},${s===active?'pm2rdl':'pm2orm'}`).join('~');
+    iframe.src=`https://yandex.ru/map-widget/v1/?ll=${city.c[1]},${city.c[0]}&z=${city.z}&pt=${pt}`;return}
+  mapbox.innerHTML='<div class="fake"></div><p class="map-note">Превью. На сайте здесь живая Яндекс Карта с теми же точками.</p>';
+  const la=city.list.map(s=>s.p[0]),lo=city.list.map(s=>s.p[1]),pad=.16;
+  const [a0,a1,o0,o1]=[Math.min(...la),Math.max(...la),Math.min(...lo),Math.max(...lo)];
+  city.list.forEach(s=>{const b=document.createElement('button');b.className='pin'+(s===active?' active':'');b.setAttribute('aria-label',s.n);
+    b.style.left=(pad+(1-2*pad)*((s.p[1]-o0)/((o1-o0)||1)))*100+'%';b.style.top=(pad+.06+(1-2*pad-.1)*(1-(s.p[0]-a0)/((a1-a0)||1)))*100+'%';
+    b.innerHTML=pinSvg(s===active);b.onclick=()=>{active=s;render()};mapbox.append(b)})}
+function renderList(){list.innerHTML='';const lim=desk.matches||expanded?99:2;
+  city.list.slice(0,lim).forEach(s=>{const li=document.createElement('li');
+    li.innerHTML=`<div class="shelter${s===active?' active':''}" role="button" tabindex="0" aria-pressed="${s===active}"><b>${s.n}</b><span class="addr">${s.a}</span>${s.k?`<span class="tag">${s.k}</span>`:''}
+      <span class="acts"><a class="btn" href="#" onclick="event.preventDefault()">хочу пойти на встречу</a><a class="route" href="https://yandex.ru/maps/?rtext=~${s.p[0]},${s.p[1]}" target="_blank" rel="noopener">маршрут ↗</a></span></div>`;
+    const c=li.firstElementChild;c.onclick=e=>{if(e.target.closest('a'))return;active=s;render()};c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}};list.append(li)});
+  more.hidden=desk.matches||expanded||city.list.length<=2}
+more.onclick=()=>{expanded=true;renderList()};
+function render(){renderList();renderMap()}
+desk.addEventListener?.('change',renderList);
+document.addEventListener('click',e=>{const a=e.target.closest('.where');if(!a)return;const s=SH[a.dataset.sh];city=s.city;sel.value=CITIES.indexOf(city);document.getElementById('cityLabel').textContent=city.name;active=s;expanded=true;render()});
+render();
+
+/* FAQ */
+const FAQ=[
+ ['Где находится приют и в какие часы можно приехать на встречу?','Адреса всех приютов — на карте выше: выберите свой город и нажмите на приют. Точное время встречи согласуете с волонтёром при записи.'],
+ ['Можно прийти с детьми?','Да, с детьми можно — в сопровождении взрослого. Правила у приютов отличаются, волонтёры подскажут при записи и подберут спокойного хвостика.'],
+ ['Нужно ли нести с собой поводок или игрушки?','Нет, всё необходимое выдадут на месте. Если хочется порадовать питомца лакомством, сначала уточните у волонтёра, что ему можно.'],
+ ['Как ещё можно помочь, если нет времени на визит?','Можно поддержать приют донатом, привезти корм или просто поделиться этой страницей с друзьями — чем больше людей узнают о хвостиках, тем лучше.'],
+ ['А вдруг питомец, которого я выбрал для встречи, уже нашёл свой дом?','Это лучшая новость! Волонтёры предупредят заранее и предложат познакомиться с другим хвостиком, которому тоже нужна компания.'],
+ ['Что, если я растеряюсь или передумаю приходить?','Ничего страшного — просто предупредите приют, если планы поменялись. А на месте волонтёры всё покажут и будут рядом.']];
+const fl=document.getElementById('faqList');
+FAQ.forEach((q,i)=>{const d=document.createElement('div');d.className='q'+(i===0?' open':'');
+  d.innerHTML=`<button aria-expanded="${i===0}" aria-controls="a${i}" id="q${i}"><span>${q[0]}</span><span class="ic" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 10h14" stroke-width="3" stroke-linecap="round"/><path class="v" d="M10 3v14" stroke-width="3" stroke-linecap="round"/></svg></span></button>
+   <div class="a" id="a${i}" role="region" aria-labelledby="q${i}"><div><p>${q[1]}</p></div></div>`;
+  d.querySelector('button').onclick=e=>{const o=d.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',o)};fl.append(d)});
+</script>
