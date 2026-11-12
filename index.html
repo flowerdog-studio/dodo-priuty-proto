@@ -292,9 +292,9 @@ button{font:inherit;color:inherit}
 .sp{transition:transform .9s cubic-bezier(.3,1.3,.5,1),opacity .25s ease,background .35s ease,color .35s ease}
 .sp1{--r:-2deg}.sp2{--r:1.6deg;translate:calc(4*var(--u)) calc(-6*var(--u))}.sp3{--r:-1deg;translate:calc(-3*var(--u)) calc(-12*var(--u))}
 @media (min-width:900px){
-  .safe-track{height:320vh}
-  /* сцена выше экрана на невысоких мониторах: липнет нижним краем, плашка 3 целиком под иллюстрацией */
-  .safe-stick{height:max(100vh,calc(1070*var(--u)));top:min(0px,calc(100vh - calc(1070*var(--u))))}
+  .safe-track{height:calc(calc(1070*var(--u)) + 110vh)}
+  /* сцена липнет верхом (виден заголовок), пока падают плашки 1 и 2; потом блок прокручивается целиком, и под иллюстрацией падает плашка 3 */
+  .safe-stick{height:calc(1070*var(--u));top:0}
   .safe-ill{top:calc(30*var(--u));translate:-50% 0;height:calc(560*var(--u));width:auto;max-width:none;max-height:none}
   .safe .h2{padding-top:calc(40*var(--u))}
   .sp.under{background:var(--orange)}.sp.under>*{opacity:1}
@@ -636,8 +636,13 @@ document.addEventListener('click',e=>{const a=e.target.closest('.where');if(!a)r
 
 /* безопасно и просто: плашки опускаются по мере скролла */
 const track=document.getElementById('safeTrack'),sps=[...document.querySelectorAll('.sp')];
-function onSafe(){const r=track.getBoundingClientRect(),p=-r.top/Math.max(1,r.height-innerHeight);
-  sps.forEach((s,i)=>s.classList.toggle('in',p>.08+i*.27));sps.forEach((s,i)=>s.classList.toggle('under',!!sps[i+1]?.classList.contains('in')))}
+const stick=document.querySelector('.safe-stick'),stage=document.querySelector('.stage');
+function onSafe(){const r=track.getBoundingClientRect();
+  if(desk.matches){const p=-r.top/Math.max(1,r.height-stick.offsetHeight),u=U();
+    sps[0].classList.toggle('in',p>.12);sps[1].classList.toggle('in',p>.5);
+    sps[2].classList.toggle('in',stage.getBoundingClientRect().top+(614+120)*u<innerHeight)}
+  else{const p=-r.top/Math.max(1,r.height-innerHeight);sps.forEach((s,i)=>s.classList.toggle('in',p>.08+i*.27))}
+  sps.forEach((s,i)=>s.classList.toggle('under',!!sps[i+1]?.classList.contains('in')))}
 if(reduce)sps.forEach(s=>s.classList.add('in'));else{addEventListener('scroll',onSafe,{passive:true});onSafe()}
 
 /* FAQ */
