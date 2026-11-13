@@ -206,9 +206,9 @@ button{font:inherit;color:inherit}
 .sticker.s-bl{bottom:calc(14*var(--u));left:calc(14*var(--u))}
 .sticker.s-br{bottom:calc(14*var(--u));right:calc(14*var(--u))}
 .card.on .sticker{opacity:1;scale:1;rotate:var(--sr)}
-.dots{display:flex;justify-content:center;gap:calc(8*var(--u));margin-top:calc(20*var(--u))}
-.dots i{width:calc(8*var(--u));height:calc(8*var(--u));border-radius:calc(4*var(--u));background:var(--dots);transition:width .25s,background .25s}
-.dots i.a{width:calc(24*var(--u));background:var(--orange)}
+/* полоса прокрутки ленты (мобайл) */
+.dots{position:relative;height:calc(6*var(--u));width:calc(120*var(--u));margin:calc(20*var(--u)) auto 0;border-radius:calc(3*var(--u));background:var(--dots);overflow:hidden}
+.dots::after{content:"";position:absolute;top:0;bottom:0;width:var(--w,30%);left:calc((100% - var(--w,30%))*var(--f,0));border-radius:calc(3*var(--u));background:var(--orange)}
 @media (min-width:900px){
   /* высота фото подстраивается под экран, чтобы блок целиком влезал; 4 карточки по центру с полями по бокам */
   .pets{--ph:clamp(calc(300*var(--u)),calc(100vh - calc(600*var(--u))),calc(498*var(--u)));--cw:calc(330*var(--u))}
@@ -268,6 +268,7 @@ button{font:inherit;color:inherit}
 .shelter.active{border-color:var(--orange)}
 .shelter b{font-weight:900;font-size:var(--sh-name);color:var(--ink);line-height:1.2}
 .shelter .addr{font-weight:500;font-size:var(--sh-addr);color:var(--ink);line-height:1.2}
+.shelter .hrs{font-weight:500;font-size:var(--sh-tag);color:var(--ink-50);line-height:1.3}
 .shelter .tag{font-weight:600;font-size:var(--sh-tag);color:var(--orange)}
 .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font-weight:600;font-size:var(--btn);text-decoration:none;border:0;cursor:pointer;background:var(--orange);color:var(--white);height:calc(47*var(--u));padding:0 calc(24*var(--u));width:100%}
 .route{font-weight:600;font-size:var(--sh-tag);color:var(--orange)}
@@ -384,7 +385,7 @@ button{font:inherit;color:inherit}
   <section class="hero" aria-label="Пицца съедена, пора гулять">
     <div class="fr" style="height:100%">
       <a class="logo" href="#top" aria-label="Додо Пицца"><img src="assets/logo.png" alt="Додо Пицца"></a>
-      <div class="city cityhdr"><button class="pill pill-s" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><svg viewBox="0 0 44 56" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg><span class="cityLabel">Москва</span><i class="caret" aria-hidden="true"></i></button><ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul></div>
+      <div class="city cityhdr"><button class="pill pill-s" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><svg viewBox="0 0 44 56" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg><span class="cityLabel">Челябинск</span><i class="caret" aria-hidden="true"></i></button><ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul></div>
       <nav class="nav" aria-label="Разделы"><a href="#pets">хвостики</a><a href="#map">приюты</a><a href="#faq">вопросы</a></nav>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i></i></button>
       <h1 style="margin:0">
@@ -458,7 +459,7 @@ button{font:inherit;color:inherit}
   <div class="fr">
     <h2 class="h2" id="map-h">приюты<br class="m-only"><span class="d-only"> </span>на карте</h2>
     <div class="sel"><div class="city">
-      <button class="pill" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><span class="cityLabel">Москва</span><i class="caret" aria-hidden="true"></i></button>
+      <button class="pill" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><span class="cityLabel">Челябинск</span><i class="caret" aria-hidden="true"></i></button>
       <ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul>
     </div></div>
     <div class="map-grid">
@@ -536,50 +537,70 @@ function onScroll(){if(tick)return;tick=true;requestAnimationFrame(()=>{tick=fal
 if(reduce){[...w1,...w2].forEach(w=>w.classList.add('on'));dd.forEach(d=>d.classList.add('show'))}else{addEventListener('scroll',onScroll,{passive:true});onScroll()}
 
 /* приюты */
+/* реальные приюты-участники (данные от приютов, ноябрь 2026); координаты — по 2ГИС, у Колпино — приблизительно */
 const CITIES=[
- {name:'Москва',c:[55.751,37.618],z:10,list:[
-  {id:'birul',n:'Приют «Бирюлёво»',a:'Москва, Востряковский проезд, 10А',p:[55.5868,37.6349]},
-  {id:'kozh',n:'Кожуховский приют',a:'Москва, Пехорская ул., 1/3, стр. 5',p:[55.7176,37.8590]},
-  {id:'murk',n:'«Муркоша»',a:'Москва, Осташковская ул., 14, стр. 2',p:[55.8742,37.6927],k:'кошки'},
-  {id:'pech',n:'Приют «Печатники»',a:'Москва, Проектируемый проезд № 5112, 1–3',p:[55.6918,37.7270]}]},
- {name:'Санкт-Петербург',c:[59.939,30.316],z:10,list:[
-  {id:'drug',n:'Фонд-приют «Друг»',a:'Санкт-Петербург, Поселковая ул., 1В',p:[59.9763,30.5349]},
-  {id:'rzh',n:'Приют «Ржевка»',a:'Санкт-Петербург, Поселковая ул., 9',p:[59.9773,30.5398]},
-  {id:'nd',n:'«Новый дом»',a:'Санкт-Петербург, Белградская ул., 30',p:[59.8555,30.3920],k:'кошки'},
-  {id:'ub',n:'«Убежище»',a:'Санкт-Петербург, 2-й Муринский пр., 34, к. 1',p:[60.0050,30.3510]}]},
- {name:'Екатеринбург',c:[56.828,60.597],z:11,list:[
-  {id:'leo',n:'«Кот Леопольд»',a:'Екатеринбург, ул. Амундсена, 59',p:[56.8094,60.5530]},
-  {id:'kov',n:'«Ковчег»',a:'Екатеринбург, Восточная ул., 160',p:[56.8212,60.6302]},
-  {id:'reab',n:'Центр реабилитации животных',a:'Екатеринбург, ул. Белинского, 112А',p:[56.8160,60.6155]}]},
- {name:'Саратов',c:[51.52,46.04],z:11,list:[
-  {id:'vd',n:'«Верный друг»',a:'Саратов, ул. им. Азина В. М., 66Б',p:[51.4890,46.0710]},
-  {id:'ozz',n:'Общество защиты животных',a:'Саратов, 2-й Акмолинский проезд, 4',p:[51.5560,45.9890]},
-  {id:'vde',n:'«Верный друг», Энгельс',a:'Энгельс, Промышленная ул., 22А',p:[51.4800,46.1170]}]},
- {name:'Казань',c:[55.78,49.12],z:10,list:[
-  {id:'bio',n:'«Биоритм»',a:'Казань, ул. Хайдара Бигичева, 3',p:[55.7368,49.1960]},
-  {id:'cats',n:'«Cats house»',a:'Казань, Гвардейская ул., 46А',p:[55.7798,49.1640],k:'кошки'},
-  {id:'stol',n:'Казанский приют бездомных животных',a:'с. Столбище, Объездная ул., 4',p:[55.6470,49.2100]},
-  {id:'kip',n:'«Кот и пёс»',a:'с. Айша, Садовая ул., 48',p:[55.8930,48.7660]}]}];
+ {name:'Челябинск',c:[55.2413,61.4521],z:13,list:[
+  {id:'togo',n:'Приют «Того»',a:'Челябинск, СНТ «Электродчик», 4-я улица',h:'Визиты по договорённости, нужна запись',t:'+79517768004',p:[55.241348,61.452071]}]},
+ {name:'Санкт-Петербург',c:[59.82,30.42],z:10,list:[
+  {id:'ps',n:'Приют «Преданное сердце»',a:'Санкт-Петербург, ул. Автовская, 31, лит. И (метро «Кировский завод»)',h:'Ср, чт 18:00–20:00, сб, вс 17:00–20:00; без записи',k:'кошки',t:'+79219530918',p:[59.8716,30.2629]},
+  {id:'ps-dog',n:'Приют «Преданное сердце», собаки',a:'Колпино, точный адрес — при записи',h:'Визиты по записи',k:'собаки',t:'+79219530918',p:[59.7506,30.5880]}]},
+ {name:'Краснодар',c:[45.0304,39.0094],z:13,list:[
+  {id:'krasnodog',n:'Приют «Краснодог»',a:'Краснодар, ул. Куйбышева, 2',h:'Визиты ежедневно 12:00–16:00 по записи; к собакам — с 18 лет',t:'+79885052505',p:[45.030385,39.009408]}]}];
+let city=CITIES[0];
 const SH={};CITIES.forEach(c=>c.list.forEach(s=>{s.city=c;SH[s.id]=s}));
 
-/* хвостики: 4 собаки + 4 кошки; лента повторяется по кругу */
+/* хвостики из анкет приютов: [id, вид, кличка, пол и возраст, цитата, приют] — цитаты написаны по анкетам */
 const PETS=[
- ['maya','dog','Майя','девочка, 3 года','Люблю неспешные прогулки и новые запахи. Пойдём исследовать мир вместе?','birul','bone','s-tr',-12],
- ['milka','cat','Милка','девочка, 6 лет','Не очень люблю шумные компании. А вот тихое место и почёсывания за ухом — совсем другое дело','murk','heart','s-tl',10],
- ['boris','dog','Борис','мальчик, 2 года','Сначала могу немного стесняться. Но если подружимся — обещаю вилять хвостом!','rzh','ball','s-br',-8],
- ['daryl','cat','Дэрил','мальчик, 1 год','Сижу у окна и жду гостей. Поиграем с пёрышком?','pech','sparkle','s-tc',6],
- ['bonya','dog','Боня','мальчик, 2 года','Мне нравится быть рядом с людьми. Особенно когда мы просто проводим время вместе','kozh','hearts','s-tr',12],
- ['dito','cat','Дито','мальчик, 2 года','Сначала посмотрю на тебя сверху, а потом сам приду знакомиться','nd','heart','s-bl',-6],
- ['denis','dog','Дэнис','мальчик, 4 года','Шуршу листьями громче всех. Возьмёшь меня в парк?','drug','bone','s-tl',14],
- ['martinez','cat','Мартинез','мальчик, 3 года','Мурчу как трактор, если гладить правильно. Научу!','leo','hearts','s-tr',-10]];
+ ['mayya','dog','Майя','девочка, 5 лет','Заводная, весёлая и смелая. Иду навстречу всему новому — и тебе тоже!','togo'],
+ ['banni','dog','Банни','мальчик, 6 лет','Я сделан из 100% нежности. Охранник из меня так себе, а вот друг — отличный','togo'],
+ ['sirius','dog','Сириус','мальчик, 16 лет','Добрый старичок на трёх лапах. Верный, умный и храбрый — как пёс из хороших рассказов','togo'],
+ ['ushka','dog','Ушка','девочка, 11 лет','Во мне 100% позитива и нескончаемой энергии. Больше всего люблю почесушки за ушком','togo'],
+ ['shprotik','dog','Шпротик','мальчик, 3 года','Размером с таксу, а харизмы на овчарку. Когда прошу вкусное, встаю на задние лапки, как зайчик','togo'],
+ ['luk','dog','Люк','мальчик, 6 лет','Ростом с овчарку, а внутри — нежный щенок. Несколько раз был донором крови для других собак','togo'],
+ ['muna','dog','Муна','девочка, 12 лет','Я лабрадор до кончика хвоста: обожаю людей и игрушки. Возраст — не повод не дурачиться!','togo'],
+ ['morsik','dog','Морсик','мальчик, 1,5 года','Обожаю внимание и прогулки. Поводок сначала тяну, но быстро успокаиваюсь','togo'],
+ ['juna','dog','Джуна','девочка, 4 года','Сначала чуть осторожничаю, но доверяю быстро. Люблю внимание и игрушки','togo'],
+ ['pandora','dog','Пандора','девочка, 5 лет','Ласковая и нежная, весом около 18 кг. Поводок знаю, но иногда увлекаюсь и тяну','togo'],
+ ['asya','dog','Ася','девочка, 2 года','Умная, воспитанная и очень верная. С поводком дружу — пойдём гулять?','togo'],
+ ['cirilla','dog','Цирилла','девочка, 2 года','Была самой крошечной в помёте. Поводок пока знаю плохо, но очень стараюсь научиться','togo'],
+ ['molli','dog','Молли','девочка, 6 лет','Некрупная и сообразительная, с другими животными лажу на пять с плюсом','togo'],
+ ['miamur','cat','Миамур','мальчик, 2 года','Ласковый и немного осторожный. Больше всего люблю дарить мурчалки','ps'],
+ ['jek','dog','Джек','мальчик, 2 года','Всегда рад видеть человека. Люблю обниматься и облизывать того, кто меня гладит','ps-dog'],
+ ['minimini','cat','Мини-Мини','девочка, 3 года','Завхоз зовёт меня «минимааальной кошкой», а я в ответ сразу прыгаю к ней на руки','ps'],
+ ['tobik','dog','Тобик','мальчик, 5 лет','Первые десять минут радуюсь и рвусь вперёд, а потом гуляю размеренно — как на медитации','ps-dog'],
+ ['myshel','cat','Мышель','девочка, 8 лет','Сначала наблюдаю со стороны, а потом присоединяюсь к игре. Люблю тихие разговоры','ps'],
+ ['anfisa','dog','Анфиса','девочка, 5 лет','Подставляю пузико для поглаживаний. А ещё знаю, где в Колпино самые вкусные пирожки','ps-dog'],
+ ['moti','cat','Моти','девочка, 3 года','Игривая и добрая. Мне куда интереснее поиграть, чем сидеть на месте','ps'],
+ ['marsik','dog','Марсик','мальчик, 9 месяцев','Бесстрашный и компанейский, городской шум мне нипочём. Люблю бегать и играть','ps-dog'],
+ ['fima','cat','Фима','мальчик, 4 года','Спокойный и терпеливый. Люблю общение с людьми — подходи, познакомимся','ps'],
+ ['alma','dog','Альма','девочка, 6 лет','Умная и контактная. Люблю ласку и тренировки, в городе гуляю уверенно','ps-dog'],
+ ['margaritka','cat','Маргаритка','девочка, 6 месяцев','Ласковая и нежная малышка. Обожаю ласкушки','ps'],
+ ['reks','dog','Рекс','мальчик, 7 лет','Игривый и ласковый, занимаюсь с кинологом. Обожаю всевозможные игрушки','ps-dog'],
+ ['molniya','cat','Молния','девочка, 4 года','Осторожная и наблюдательная. Раньше жила на заводе — теперь присматриваюсь к людям','ps'],
+ ['freddi','dog','Фредди','мальчик, 6 месяцев','Мне нужна пара минут, чтобы осмотреться. А потом — бегать и играть!','ps-dog'],
+ ['argon','dog','Аргон','мальчик, 2 года','Игривый и активный, люблю дурачиться и бегать. Немного ревную тебя к другим собакам','ps-dog'],
+ ['lelik','dog','Лёлик-Анаболик','мальчик, 5 лет','Обожаю объятия и поглаживания. Могу аккуратно сделать кусь за бок — любя!','krasnodog'],
+ ['rita','dog','Рита','девочка, 2 года','Я скромная и не бегу знакомиться первой. Дай мне минутку — и сыграем в догонялки','krasnodog'],
+ ['chernyh','dog','Черных','мальчик, 1 год','Мегаконтактный и любопытный. Обожаю мячики, а однажды стал звездой соцсетей','krasnodog'],
+ ['lermontov','dog','Лермонтов','мальчик, 9 месяцев','Очень ласковый и спокойный. Гуляю неспешно, а больше всего люблю обнимашки','krasnodog'],
+ ['sparki','dog','Спарки','мальчик, 1 год','Джентльмен и любитель игрушек. Если рядом ванночка с водой — берегись брызг!','krasnodog'],
+ ['spagetti','dog','Спагетти','девочка, 1 год','Любопытная и дружелюбная. На прогулке изучаю все новые запахи улицы','krasnodog'],
+ ['magiks','dog','Магикс','мальчик, 7 месяцев','Тихий и спокойный, а с людьми обожаю активные игры. Поводок не тяну','krasnodog'],
+ ['pensi','dog','Пэнси','девочка, 1 год','Молодая и озорная, всегда прошусь на ручки. На прогулке пока немного стесняюсь','krasnodog'],
+ ['dina-k','dog','Дина','девочка, 10 лет','Скромная и немного застенчивая. Люблю прогулки и спокойные объятия','krasnodog'],
+ ['terabait','dog','Терабайт','мальчик, 10 месяцев','Скромный и спокойный, внимание к себе не привлекаю. Идеальная компания для тихой прогулки','krasnodog'],
+ ['leha','dog','Лёха','мальчик, 10 месяцев','Пока побаиваюсь поводка и новых людей. Нужен спокойный друг, который не торопит','krasnodog']];
+/* стикеры: косточка и мячик — только у собак; место и наклон чередуются */
+const ST_DOG=['bone','ball','heart','hearts','sparkle'],ST_CAT=['heart','hearts','sparkle'],SPOTS=['s-tr','s-tl','s-br','s-tc','s-bl'],ROTS=[-12,10,-8,6,12,-6,14,-10];
+PETS.forEach((p,i)=>{const L=p[1]==='dog'?ST_DOG:ST_CAT;p[6]=L[i%L.length];p[7]=SPOTS[i%5];p[8]=ROTS[i%8]});
 const rail=document.getElementById('rail'),dots=document.getElementById('dots');
 const pin='<svg viewBox="0 0 44 56" width="11" height="14" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg>';
-/* лента конечная: набор повторяется, пока карточек не наберётся хотя бы 12; старт с первой, стрелка «назад» неактивна */
-let set=PETS,cards=[];
+/* лента: хвостики выбранного города, фильтр по виду; старт с первой карточки, стрелка «назад» неактивна */
+let set=PETS,cards=[],kind='all';
 /* стикеры появляются по очереди на карточках, которые видны на экране */
 let io=null;
 function card(p){const s=SH[p[5]];const el=document.createElement('article');el.className='card';
-  el.innerHTML=`<div class="pw"><div class="photo"><img src="assets/pet-${p[0]}.webp" alt="${p[2]}, ${p[3]}" loading="lazy"></div>
+  el.innerHTML=`<div class="pw"><div class="photo"><img src="assets/pets/${p[0]}.webp" alt="${p[2]}, ${p[3]}" loading="lazy"></div>
    <img class="sticker ${p[7]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"></div>
    <h3 class="name">${p[2]}</h3><p class="meta">${p[3]}</p>
    <p class="desc">«${p[4]}»</p>
@@ -588,13 +609,16 @@ function card(p){const s=SH[p[5]];const el=document.createElement('article');el.
 const stepW=()=>cards[1]?cards[1].offsetLeft-cards[0].offsetLeft:300;
 const prev=document.getElementById('prev'),next=document.getElementById('next');
 function arrows(){prev.disabled=rail.scrollLeft<8;next.disabled=rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-8}
-function drawDots(){const n=set.length,i=Math.round(rail.scrollLeft/stepW())%n;
-  dots.innerHTML=Array.from({length:n},(_,k)=>`<i class="${k===i?'a':''}"></i>`).join('')}
-function renderRail(kind){set=kind==='all'?PETS:PETS.filter(p=>p[1]===kind);io?.disconnect();rail.innerHTML='';
-  const copies=Math.ceil(12/set.length);for(let c=0;c<copies;c++)set.forEach(p=>rail.append(card(p)));
+function drawDots(){const max=rail.scrollWidth-rail.clientWidth,f=max>0?rail.scrollLeft/max:0;dots.style.setProperty('--f',f.toFixed(3));dots.style.setProperty('--w',(Math.min(1,rail.clientWidth/rail.scrollWidth)*100).toFixed(1)+'%')}
+function renderRail(k=kind){const inCity=PETS.filter(p=>SH[p[5]].city===city);
+  const has={dog:inCity.some(p=>p[1]==='dog'),cat:inCity.some(p=>p[1]==='cat')};
+  if(k!=='all'&&!has[k])k='all';kind=k;
+  document.querySelectorAll('.chip').forEach(x=>{const f=x.dataset.f;x.setAttribute('aria-pressed',f===kind);x.hidden=f!=='all'&&!has[f]});
+  set=kind==='all'?inCity:inCity.filter(p=>p[1]===kind);io?.disconnect();rail.innerHTML='';
+  set.forEach(p=>rail.append(card(p)));
   cards=[...rail.children];io=revealOn(cards,230,.6);rail.scrollLeft=0;arrows();drawDots()}
 rail.addEventListener('scroll',()=>requestAnimationFrame(()=>{arrows();drawDots()}),{passive:true});
-document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b));renderRail(b.dataset.f)});
+document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>renderRail(b.dataset.f));
 prev.onclick=()=>rail.scrollBy({left:-stepW()*2,behavior:'smooth'});
 next.onclick=()=>rail.scrollBy({left:stepW()*2,behavior:'smooth'});
 addEventListener('resize',arrows);
@@ -606,13 +630,14 @@ addEventListener('resize',arrows);
 const YMAPS_KEY='';
 const live=window.self===window.top&&!/schema/.test(location.search);
 const mapbox=document.getElementById('mapbox'),list=document.getElementById('shelters');
-let city=CITIES[0],active=city.list[0],iframe=null;
+/* city объявлен выше, рядом с данными */
+let active=city.list[0],iframe=null;
 const DDS=[...document.querySelectorAll('.city')].map((w,n)=>({w,n,btn:w.querySelector('.pill'),ul:w.querySelector('.opts'),kb:-1}));
 function drawOpts(d){d.ul.innerHTML=CITIES.map((c,i)=>`<li role="option" id="o${d.n}-${i}" data-i="${i}" aria-selected="${c===city}" class="${i===d.kb?'kb':''}">${c.name}</li>`).join('');
   d.ul.setAttribute('aria-activedescendant',d.kb>=0?`o${d.n}-${d.kb}`:'')}
 function openDD(d,viaKey){DDS.forEach(x=>x!==d&&closeDD(x));d.kb=viaKey?CITIES.indexOf(city):-1;drawOpts(d);d.ul.hidden=false;d.btn.setAttribute('aria-expanded','true');if(viaKey)d.ul.focus()}
 function closeDD(d,viaKey){if(d.ul.hidden)return;d.ul.hidden=true;d.btn.setAttribute('aria-expanded','false');if(viaKey)d.btn.focus()}
-function setCity(c,s){city=c;active=s||c.list[0];document.querySelectorAll('.cityLabel').forEach(l=>l.textContent=c.name);render(true)}
+function setCity(c,s){const changed=c!==city;city=c;active=s||c.list[0];document.querySelectorAll('.cityLabel').forEach(l=>l.textContent=c.name);render(true);if(changed)renderRail()}
 DDS.forEach(d=>{
   d.btn.onclick=e=>{d.ul.hidden?openDD(d,e.detail===0):closeDD(d)};
   d.btn.onkeydown=e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();openDD(d,true)}};
@@ -647,8 +672,8 @@ function renderMap(fit){
 /* все приюты города списком, у каждого — «связаться с приютом» */
 function renderList(){list.innerHTML='';
   city.list.forEach(s=>{const li=document.createElement('li');
-    li.innerHTML=`<div class="shelter${s===active?' active':''}" role="button" tabindex="0" aria-pressed="${s===active}"><b>${s.n}</b><span class="addr">${s.a}</span>${s.k?`<span class="tag">${s.k}</span>`:''}
-      <span class="acts"><a class="btn-soft" href="#" data-nolink>связаться с приютом</a><a class="route" href="https://yandex.ru/maps/?rtext=~${s.p[0]},${s.p[1]}" target="_blank" rel="noopener">маршрут ↗</a></span></div>`;
+    li.innerHTML=`<div class="shelter${s===active?' active':''}" role="button" tabindex="0" aria-pressed="${s===active}"><b>${s.n}</b><span class="addr">${s.a}</span>${s.h?`<span class="hrs">${s.h}</span>`:''}${s.k?`<span class="tag">${s.k}</span>`:''}
+      <span class="acts"><a class="btn-soft" href="tel:${s.t}">связаться с приютом</a><a class="route" href="https://yandex.ru/maps/?rtext=~${s.p[0]},${s.p[1]}" target="_blank" rel="noopener">маршрут ↗</a></span></div>`;
     nbsp(li.querySelector('.addr'));
     const c=li.firstElementChild;c.onclick=e=>{if(e.target.closest('a'))return;active=s;render(false)};c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}};list.append(li)})}
 function render(fit=true){renderList();renderMap(fit)}
@@ -677,7 +702,7 @@ FAQ.forEach((q,i)=>{const d=document.createElement('div');d.className='q'+(i===0
 /* ссылки-заглушки в футере никуда не ведут */
 
 typo();
-render();renderRail('all');
+render();renderRail();
 </script>
 </body>
 </html>
