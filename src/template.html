@@ -265,7 +265,8 @@ button{font:inherit;color:inherit}
 .sh-wrap::before{top:0;background:linear-gradient(var(--cream),rgba(255,246,239,0))}
 .sh-wrap::after{bottom:0;background:linear-gradient(rgba(255,246,239,0),var(--cream))}
 .sh-wrap.fade-t::before,.sh-wrap.fade-b::after{opacity:1}
-.shelter.active{box-shadow:0 u(10) u(30) rgba(104,43,0,.12)}
+/* выбранный приют — без тени (список обрезает её по краям), выделяем цветом названия */
+.shelter.active b{color:var(--orange)}
 .shelter .acts{display:flex;flex-wrap:wrap;align-items:center;gap:u(8) u(16);margin-top:u(8)}
 .btn-soft{display:inline-flex;align-items:center;justify-content:center;height:u(40);padding:0 u(18);border-radius:999px;background:var(--peach);color:var(--orange);font-weight:600;font-size:u(15);text-decoration:none;transition:background .2s,color .2s}
 .btn-soft:hover{background:var(--orange);color:var(--white)}
