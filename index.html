@@ -78,7 +78,7 @@ button{font:inherit;color:inherit}
   -webkit-mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent);mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent)}
 .hero{position:relative;height:calc(680*var(--u))}
 .logo{position:absolute;left:calc(16*var(--u));top:calc(15*var(--u));width:calc(80*var(--u));z-index:6}
-.logo img{width:100%;height:auto}
+.logo img{width:100%;height:auto;rotate:-7deg}
 .nav{display:none}
 /* правый угол шапки: город (тихий, без плашки) + меню */
 .hdr-r{position:absolute;right:calc(16*var(--u));top:calc(20*var(--u));z-index:8;display:flex;align-items:center;gap:calc(10*var(--u))}
@@ -260,7 +260,7 @@ button{font:inherit;color:inherit}
 .opts li[aria-selected="true"]::after{content:"✓"}
 @keyframes drop{from{opacity:0;translate:-50% calc(-6*var(--u))}to{opacity:1;translate:-50% 0}}
 .sel{gap:calc(10*var(--u));align-items:center}
-.map-grid{position:relative;margin-top:calc(20*var(--u));padding:0 calc(16*var(--u))}
+.map-grid{position:relative;margin-top:calc(20*var(--u));padding:0 calc(16*var(--u));display:flex;flex-direction:column}
 /* список приютов: видимая полоса прокрутки + мягкая растушёвка сверху/снизу, когда есть что прокручивать */
 .sh-wrap{position:relative}
 .sh-wrap::before,.sh-wrap::after{content:"";position:absolute;left:0;right:calc(20*var(--u));height:calc(70*var(--u));pointer-events:none;z-index:2;opacity:0;transition:opacity .25s}
@@ -272,6 +272,8 @@ button{font:inherit;color:inherit}
 .shelter .acts{display:flex;flex-wrap:wrap;align-items:center;gap:calc(8*var(--u)) calc(16*var(--u));margin-top:calc(8*var(--u))}
 .btn-soft{display:inline-flex;align-items:center;justify-content:center;height:calc(40*var(--u));padding:0 calc(18*var(--u));border-radius:999px;background:var(--peach);color:var(--orange);font-weight:600;font-size:calc(15*var(--u));text-decoration:none;transition:background .2s,color .2s}
 .btn-soft:hover{background:var(--orange);color:var(--white)}
+.sh-wrap{order:-1;margin-bottom:calc(16*var(--u))}
+.shelters{margin-top:0!important}
 .mapbox{position:relative;height:auto;aspect-ratio:1;border-radius:calc(24*var(--u));overflow:hidden;background:var(--map)}
 .mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .fake{position:absolute;inset:0;background:
@@ -301,7 +303,7 @@ button{font:inherit;color:inherit}
   /* список слева, карта справа; высота под экран, список прокручивается внутри с видимой полосой */
   .map-grid{--mh:clamp(calc(420*var(--u)),calc(100vh - calc(360*var(--u))),calc(620*var(--u)));margin-top:calc(40*var(--u));padding:0 calc(60*var(--u));display:grid;grid-template-columns:calc(440*var(--u)) calc(880*var(--u));gap:calc(55*var(--u));align-items:start}
   .mapbox{order:2;aspect-ratio:auto;height:var(--mh);border-radius:calc(36*var(--u))}
-  .sh-wrap{order:1}
+  .sh-wrap{order:1;margin-bottom:0}
   .shelters{margin:0;gap:calc(14*var(--u));max-height:var(--mh);overflow-y:auto;overscroll-behavior:contain;padding-right:calc(20*var(--u));scrollbar-width:none}
   .shelters::-webkit-scrollbar{display:none}
   /* своя всегда видимая полоса прокрутки — как полоса под анкетами на мобайле */
@@ -420,8 +422,8 @@ button{font:inherit;color:inherit}
     <div class="fr" style="height:100%">
       <a class="logo" href="#top" aria-label="Додо Пицца"><img src="assets/logo.png" alt="Додо Пицца"></a>
       <div class="hdr-r">
-        <nav class="nav" aria-label="Разделы"><a href="#pets">хвостики</a><a href="#map">приюты</a><a href="#faq">вопросы</a></nav>
-        <div class="city cityhdr"><button class="pill pill-s" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><svg viewBox="0 0 44 56" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg><span class="cityLabel">Челябинск</span><i class="caret" aria-hidden="true"></i></button><ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul></div>
+        <nav class="nav" aria-label="Разделы"><a href="#pets">хвостики</a><a href="#map">адреса</a><a href="#faq">вопросы</a></nav>
+        <div class="city cityhdr"><button class="pill pill-s" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><svg viewBox="0 0 44 56" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg><span class="cityLabel">Санкт-Петербург</span><i class="caret" aria-hidden="true"></i></button><ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul></div>
         <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i></i></button>
       </div>
       <h1 style="margin:0">
@@ -443,7 +445,7 @@ button{font:inherit;color:inherit}
 
 <div class="menu" id="menu" hidden>
   <button class="x" id="menuClose" aria-label="Закрыть меню"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>
-  <nav aria-label="Разделы"><a href="#pets"><svg class="idx" viewBox="0 0 22 30" aria-hidden="true"><path d="M5 9 L12 3 L11.5 27"/></svg>хвостики</a><a href="#map"><svg class="idx" viewBox="0 0 22 30" aria-hidden="true"><path d="M4 10 C5 2 17 1 17 9 C17 15 9 20 4 26 L19 25"/></svg>приюты</a><a href="#faq"><svg class="idx" viewBox="0 0 22 30" aria-hidden="true"><path d="M4 6 C10 1 18 3 16 9 C15 12 11 13 9 13 C16 13 19 17 17 22 C15 27 7 27 4 24"/></svg>вопросы</a></nav>
+  <nav aria-label="Разделы"><a href="#pets"><svg class="idx" viewBox="0 0 22 30" aria-hidden="true"><path d="M5 9 L12 3 L11.5 27"/></svg>хвостики</a><a href="#map"><svg class="idx" viewBox="0 0 22 30" aria-hidden="true"><path d="M4 10 C5 2 17 1 17 9 C17 15 9 20 4 26 L19 25"/></svg>адреса</a><a href="#faq"><svg class="idx" viewBox="0 0 22 30" aria-hidden="true"><path d="M4 6 C10 1 18 3 16 9 C15 12 11 13 9 13 C16 13 19 17 17 22 C15 27 7 27 4 24"/></svg>вопросы</a></nav>
 </div>
 
 <section class="why" aria-labelledby="why-h">
@@ -493,9 +495,9 @@ button{font:inherit;color:inherit}
 
 <section class="map-sec" id="map" aria-labelledby="map-h">
   <div class="fr">
-    <h2 class="h2" id="map-h">приюты<br class="m-only"><span class="d-only"> </span>на карте</h2>
+    <h2 class="h2" id="map-h">адреса<br class="m-only"><span class="d-only"> </span>приютов</h2>
     <div class="sel"><div class="city">
-      <button class="pill" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><span class="cityLabel">Челябинск</span><i class="caret" aria-hidden="true"></i></button>
+      <button class="pill" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><span class="cityLabel">Санкт-Петербург</span><i class="caret" aria-hidden="true"></i></button>
       <ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul>
     </div></div>
     <div class="map-grid">
@@ -599,7 +601,7 @@ const CITIES=[
   {id:'ps',n:'Приют «Преданное сердце»',a:'Санкт-Петербург, ул. Автовская, 31, лит. И (метро «Кировский завод»)',h:'Кошки: ср, чт 18:00–20:00, сб, вс 17:00–20:00, без записи. Собаки живут на площадке в Колпино — визит по записи',t:'+79219530918',p:[59.8716,30.2629]}]},
  {name:'Краснодар',c:[45.0304,39.0094],z:13,list:[
   {id:'krasnodog',n:'Приют «Краснодог»',a:'Краснодар, ул. Куйбышева, 2',h:'Визиты ежедневно 12:00–16:00 по записи; к собакам — с 18 лет',t:'+79885052505',p:[45.030385,39.009408]}]}];
-let city=CITIES[0];
+let city=CITIES.find(c=>c.name==='Санкт-Петербург')||CITIES[0];
 const SH={};CITIES.forEach(c=>c.list.forEach(s=>{s.city=c;SH[s.id]=s}));
 
 /* хвостики из анкет приютов: [id, вид, кличка, пол и возраст, цитата, приют] — цитаты написаны по анкетам */
