@@ -80,12 +80,16 @@ button{font:inherit;color:inherit}
 .logo{position:absolute;left:u(16);top:u(15);width:u(80);z-index:6}
 .logo img{width:100%;height:auto}
 .nav{display:none}
-.city.cityhdr{position:absolute;left:u(108);top:u(24);z-index:8}
-.pill-s{gap:u(6);border:0;padding:0 u(14);height:u(40);font-size:u(15);background:rgba(255,255,255,.92)}
-.pill-s svg{width:u(12);height:u(15);flex:none}
-.cityhdr .opts{left:0;translate:none;animation:drop2 .18s ease-out}
+/* правый угол шапки: город (тихий, без плашки) + меню */
+.hdr-r{position:absolute;right:u(16);top:u(20);z-index:8;display:flex;align-items:center;gap:u(10)}
+.city.cityhdr{position:relative}
+.pill.pill-s{gap:u(5);border:0;padding:0 u(6);height:u(40);font-size:u(14);background:none;color:var(--ink)}
+.pill-s:hover .cityLabel{text-decoration:underline;text-underline-offset:u(4)}
+.pill-s svg{width:u(10);height:u(13);flex:none}
+.pill-s .caret{border-width:u(4);border-top-width:u(5)}
+.cityhdr .opts{left:auto;right:0;translate:none;animation:drop2 .18s ease-out}
 @keyframes drop2{from{opacity:0;translate:0 u(-6)}to{opacity:1;translate:0 0}}
-.burger{position:absolute;left:u(326);top:u(20);width:u(48);height:u(48);padding:0;border-radius:50%;border:0;-webkit-tap-highlight-color:transparent;background:rgba(255,255,255,.92);display:grid;place-items:center;cursor:pointer;z-index:6}
+.burger{position:relative;flex:none;width:u(48);height:u(48);padding:0;border-radius:50%;border:0;-webkit-tap-highlight-color:transparent;background:rgba(255,255,255,.92);display:grid;place-items:center;cursor:pointer;z-index:6}
 .burger i{display:block;width:u(20);height:u(10);border-top:u(3) solid var(--orange);border-bottom:u(3) solid var(--orange);box-sizing:border-box}
 /* белая плашка */
 .plate,.ut{font-weight:400;font-synthesis:none}
@@ -101,9 +105,9 @@ button{font:inherit;color:inherit}
   .hero{height:u(865)}
   .logo{left:u(36);top:u(24);width:u(93)}
   .burger{display:none}
-  .city.cityhdr{left:u(152);top:u(30)}
-  .pill-s{height:u(48);padding:0 u(20);font-size:u(19)}.pill-s svg{width:u(14);height:u(18)}
-  .nav{display:flex;position:absolute;right:u(35);top:u(34);gap:u(59);z-index:6}
+  .hdr-r{right:u(35);top:u(24);gap:u(48)}
+  .pill.pill-s{height:u(44);font-size:u(18)}.pill-s svg{width:u(12);height:u(15)}
+  .nav{display:flex;gap:u(48)}
   .nav a{font-weight:900;font-size:var(--nav);line-height:.86;letter-spacing:-.03em;color:var(--orange);text-decoration:none}
   .nav a:hover{text-decoration:underline;text-underline-offset:u(6)}
   .plate{left:u(1000.6);top:u(198.2);width:u(533);height:u(103.6);border-radius:u(34);font-size:u(85.9);--pr:-6.7deg;padding-bottom:u(11.6)}
@@ -122,7 +126,7 @@ button{font:inherit;color:inherit}
 /* высветляем снег под текстом и мягко уводим низ фона в белый */
 .lead-sec::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 85% 46% at 50% 47%,rgba(255,255,255,.66),rgba(255,255,255,.4) 55%,rgba(255,255,255,0) 100%)}
 .lead-sec::after{content:"";position:absolute;left:0;right:0;bottom:0;height:u(90);pointer-events:none;background:linear-gradient(rgba(255,255,255,0),#fff)}
-.lead{position:absolute;left:u(25);top:u(142);width:u(340);margin:0;font-family:var(--f-display);font-size:var(--lead);line-height:.9;letter-spacing:-.01em;color:var(--orange);text-align:center;text-transform:lowercase}
+.lead{position:absolute;left:u(25);top:u(102);width:u(340);margin:0;font-family:var(--f-display);font-size:var(--lead);line-height:.9;letter-spacing:-.01em;color:var(--orange);text-align:center;text-transform:lowercase}
 .lead .p2{color:var(--purple)}
 .lead .w{transition:opacity .35s ease}
 .js .lead .w{opacity:.16}
@@ -132,10 +136,10 @@ button{font:inherit;color:inherit}
 .dd.show{clip-path:inset(0 0 0 0);animation:boil .42s steps(1,end) .7s infinite}
 .dr1.show,.dr2.show{animation-delay:.9s}
 @keyframes boil{0%{transform:none}33%{transform:translate(.6px,-.8px) rotate(1.4deg)}66%{transform:translate(-.7px,.5px) rotate(-1.2deg)}}
-.dl1{left:u(63.5);top:u(81.5);width:u(52);rotate:9.5deg}
-.dl2{left:u(39);top:u(101);width:u(60);rotate:-13.6deg}
-.dr1{left:u(291.5);top:u(476);width:u(66);rotate:-9.3deg;transition-delay:.1s}
-.dr2{left:u(279);top:u(493);width:u(42);transition-delay:.25s}
+.dl1{left:u(63.5);top:u(41.5);width:u(52);rotate:9.5deg}
+.dl2{left:u(39);top:u(61);width:u(60);rotate:-13.6deg}
+.dr1{left:u(291.5);top:u(436);width:u(66);rotate:-9.3deg;transition-delay:.1s}
+.dr2{left:u(279);top:u(453);width:u(42);transition-delay:.25s}
 @media (min-width:900px){
   .lead-sec{height:u(760)}
   .lead-sec::before{background:radial-gradient(ellipse 42% 44% at 50% 45%,rgba(255,255,255,.62),rgba(255,255,255,.36) 55%,rgba(255,255,255,0) 100%)}
@@ -152,6 +156,8 @@ button{font:inherit;color:inherit}
 .why .fr{padding-bottom:u(64)}
 .why-list{list-style:none;margin:u(44) 0 0;padding:0 u(34)}
 .why-item+.why-item{margin-top:u(48)}
+.why-item{opacity:0;translate:0 u(36);transition:opacity .5s ease,translate .7s cubic-bezier(.2,.8,.2,1)}
+.why-item.on{opacity:1;translate:0 0}
 /* .tile = габарит повёрнутой фотки (как во фрейме Figma), бабл позиционируется в % от него */
 .tile{position:relative;width:calc(var(--T)*var(--k));aspect-ratio:1;container-type:inline-size}
 .why-item:nth-child(1) .tile{--k:1.0484}
@@ -160,7 +166,7 @@ button{font:inherit;color:inherit}
 .ph{position:absolute;inset:0;margin:auto;width:calc(100%/var(--k));height:calc(100%/var(--k));border-radius:9.5cqw;overflow:hidden;rotate:var(--r)}
 .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 .say{position:absolute;inset:0;margin:0;pointer-events:none;z-index:2;opacity:0;scale:.3;transform-origin:var(--to,50% 40%);transition:opacity .2s ease,scale .6s cubic-bezier(.34,1.56,.64,1)}
-.why-item.on .say{opacity:1;scale:1}
+.why-item.on .say{opacity:1;scale:1;transition-delay:.45s}
 .say svg{position:absolute;height:auto;translate:-50% -50%}
 .say b{position:absolute;translate:-50% -50%;font-weight:400;font-family:var(--f-display);line-height:.76;letter-spacing:-.03em;text-align:center;text-transform:lowercase;white-space:nowrap;color:var(--white)}
 .why-item .h3{margin-top:u(18);font-size:var(--h3w);transition:color .25s ease}
@@ -168,7 +174,8 @@ button{font:inherit;color:inherit}
 @media (min-width:900px){
   .why{--T:u(240);--h3w:u(41);--bw:u(21.5)}
   .why .fr{padding-bottom:u(110)}
-  .why-list{display:flex;justify-content:center;align-items:flex-start;gap:u(64);margin:u(64) 0 0;padding:0}
+  /* у последней колонки справа остаётся «воздух» от узкой фотки — сдвигаем ряд, чтобы поля слева и справа были равны на глаз */
+  .why-list{display:flex;justify-content:center;align-items:flex-start;gap:u(64);margin:u(64) 0 0;padding:0 0 0 u(48)}
   .why-item{width:u(330)}
   .why-item+.why-item{margin-top:0}
   .why-item:nth-child(n) .tile{margin-left:0}
@@ -192,17 +199,18 @@ button{font:inherit;color:inherit}
 .card{flex:0 0 u(271);scroll-snap-align:start;position:relative;--sw:u(84)}
 .pw{position:relative}
 .photo{position:relative;height:clamp(u(230),calc(100svh - u(500)),u(390));border-radius:u(30);overflow:hidden;background:var(--line)}
-.photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:50% var(--fy,28%);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 .name{margin:u(13) 0 0;font-family:var(--f-display);font-weight:400;font-size:var(--name);line-height:1;color:var(--ink);text-transform:lowercase}
 .meta{margin:u(6) 0 0;font-weight:500;font-size:var(--meta);line-height:1.15;color:var(--ink)}
 .desc{margin:u(10) 0 0;font-weight:500;font-size:var(--desc);line-height:1.28;color:var(--ink);max-width:u(262)}
-.where{display:inline-flex;align-items:center;gap:u(6);margin-top:u(10);font-weight:600;font-size:u(14);color:var(--ink);text-decoration:none}
+.where{display:inline-flex;align-items:flex-start;gap:u(6);line-height:1.3;margin-top:u(10);font-weight:600;font-size:u(14);color:var(--ink);text-decoration:none}
 .where:hover{text-decoration:underline}
+.where svg{flex:none;margin-top:calc((1.3em - u(14))/2)}
 /* стикер: один на фото, ~105 в макете; вылезает только вверх или сидит внутри фото — текст не трогает */
 .sticker{position:absolute;width:var(--sw);height:var(--sw);z-index:3;pointer-events:none;opacity:0;scale:.3;rotate:-25deg;transition:opacity .25s ease,scale .5s cubic-bezier(.34,1.56,.64,1),rotate .5s cubic-bezier(.34,1.56,.64,1)}
-.sticker.s-tr{top:calc(var(--sw)*-.36);right:calc(var(--sw)*-.1)}
-.sticker.s-tl{top:calc(var(--sw)*-.36);left:calc(var(--sw)*-.1)}
-.sticker.s-tc{top:calc(var(--sw)*-.4);left:52%}
+.sticker.s-tr{top:calc(var(--sw)*-.36);right:u(14)}
+.sticker.s-tl{top:calc(var(--sw)*-.36);left:u(14)}
+.sticker.s-tc{top:calc(var(--sw)*-.4);left:calc(50% - var(--sw)/2)}
 .sticker.s-bl{bottom:u(14);left:u(14)}
 .sticker.s-br{bottom:u(14);right:u(14)}
 .card.on .sticker{opacity:1;scale:1;rotate:var(--sr)}
@@ -249,10 +257,15 @@ button{font:inherit;color:inherit}
 .opts li[aria-selected="true"]{color:var(--orange)}
 .opts li[aria-selected="true"]::after{content:"✓"}
 @keyframes drop{from{opacity:0;translate:-50% u(-6)}to{opacity:1;translate:-50% 0}}
-.map-grid{margin-top:u(20);padding:0 u(16)}
+.sel{gap:u(10);align-items:center}
+.view{display:inline-flex;align-items:center;gap:u(8);height:u(48);padding:0 u(18);border:2px solid var(--line);background:var(--white);border-radius:999px;font-weight:600;font-size:u(15);color:var(--ink);cursor:pointer}
+.view:hover{border-color:var(--orange)}
+.view svg{width:u(16);height:u(16)}
+.map-grid{position:relative;margin-top:u(20);padding:0 u(16)}
+.map-grid.is-list .mapbox{display:none}
 .shelter .acts{display:flex;flex-wrap:wrap;align-items:center;gap:u(8) u(16);margin-top:u(8)}
 .btn-soft{display:inline-flex;align-items:center;justify-content:center;height:u(40);padding:0 u(18);border-radius:999px;background:var(--peach);color:var(--orange);font-weight:600;font-size:u(15);text-decoration:none;transition:background .2s,color .2s}
-.btn-soft:hover,.shelter.active .btn-soft{background:var(--orange);color:var(--white)}
+.btn-soft:hover{background:var(--orange);color:var(--white)}
 .mapbox{position:relative;height:auto;aspect-ratio:1;border-radius:u(24);overflow:hidden;background:var(--map)}
 .mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .fake{position:absolute;inset:0;background:
@@ -280,9 +293,13 @@ button{font:inherit;color:inherit}
   .pill{padding:u(14) u(28)}
   .opts{min-width:max(100%,u(300))}
   /* карта и список подстраиваются под высоту экрана; список прокручивается внутри */
-  .map-grid{--mh:clamp(u(420),calc(100vh - u(380)),u(640));margin-top:u(40);padding:0 u(60);display:grid;grid-template-columns:u(440) u(880);gap:u(55);align-items:start}
-  .mapbox{order:2;aspect-ratio:auto;height:var(--mh);border-radius:u(36)}
-  .shelters{order:1;margin:0;gap:u(14);max-height:var(--mh);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line) transparent;padding-right:u(6)}
+  /* по умолчанию — карта по центру, выбранный приют карточкой поверх карты; «списком» — все приюты сеткой */
+  .view{height:u(56);padding:0 u(24);font-size:u(18)}
+  .map-grid{--mh:clamp(u(420),calc(100vh - u(380)),u(640));margin-top:u(40);padding:0 u(60)}
+  .mapbox{aspect-ratio:auto;height:var(--mh);border-radius:u(36)}
+  .map-grid:not(.is-list) .shelters{position:absolute;left:u(84);bottom:u(24);width:u(440);margin:0;z-index:5}
+  .map-grid:not(.is-list) .shelter{box-shadow:0 u(12) u(36) rgba(104,43,0,.16)}
+  .map-grid.is-list .shelters{margin:0;grid-template-columns:repeat(3,1fr);gap:u(16)}
   .btn-soft{height:u(42);font-size:u(16)}
   .shelter{border-radius:u(28);padding:u(24);gap:u(8)}
   .btn{height:u(50);width:auto}
@@ -300,17 +317,18 @@ button{font:inherit;color:inherit}
 .sp .h3{color:var(--white);font-size:u(29)}
 .sp p{margin:u(10) 0 0;font-weight:600;font-size:u(14.5);line-height:1.3;letter-spacing:-.02em}
 .sp1{--r:-2deg}.sp2{--r:1.6deg}.sp3{--r:-1deg}
+/* десктоп: сначала иллюстрация по центру; когда середина блока доходит до середины экрана — она уезжает влево, справа по очереди появляется текст (как в «почему это важно») */
 @media (min-width:900px){
-  .safe .fr{padding-bottom:u(40)}
-  .stage{height:u(800);margin-top:u(30)}
-  .safe-ill{position:absolute;left:50%;top:0;translate:-50% 0;height:u(560);width:auto}
-  .slot{position:absolute;margin:0;width:u(320)}
-  .slot1{left:calc(50% - u(640));top:u(70)}
-  .slot2{left:calc(50% + u(320));top:u(190)}
-  .slot3{left:calc(50% - u(160));top:u(590)}
-  .sp{padding:u(22) u(26) u(24);border-radius:u(28)}
-  .sp .h3{font-size:u(36)}
-  .sp p{font-size:u(17);margin-top:u(12)}
+  .safe .fr{padding-bottom:u(56)}
+  .stage{--sh:clamp(u(420),calc(100vh - u(360)),u(620));height:var(--sh);margin-top:u(36)}
+  .safe-ill{position:absolute;top:0;left:50%;translate:-50% 0;height:100%;width:auto;margin:0;transition:left 1s cubic-bezier(.6,0,.2,1)}
+  .stage.split .safe-ill{left:31%}
+  .safe-txt{position:absolute;left:u(790);width:u(500);top:50%;translate:0 -50%;display:grid;gap:u(34)}
+  .slot{margin:0}
+  .sp{padding:0;border-radius:0;background:none;color:var(--ink-50);opacity:0;transform:translateX(u(50));transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+  .slot.on .sp{opacity:1;transform:none}
+  .sp .h3{color:var(--brown);font-size:u(41)}
+  .sp p{margin-top:u(14);font-size:u(21.5);line-height:1.12;letter-spacing:-.03em}
 }
 
 /* ---------- 07 · FAQ ---------- */
@@ -385,9 +403,11 @@ button{font:inherit;color:inherit}
   <section class="hero" aria-label="Пицца съедена, пора гулять">
     <div class="fr" style="height:100%">
       <a class="logo" href="#top" aria-label="Додо Пицца"><img src="assets/logo.png" alt="Додо Пицца"></a>
-      <div class="city cityhdr"><button class="pill pill-s" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><svg viewBox="0 0 44 56" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg><span class="cityLabel">Челябинск</span><i class="caret" aria-hidden="true"></i></button><ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul></div>
-      <nav class="nav" aria-label="Разделы"><a href="#pets">хвостики</a><a href="#map">приюты</a><a href="#faq">вопросы</a></nav>
-      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i></i></button>
+      <div class="hdr-r">
+        <nav class="nav" aria-label="Разделы"><a href="#pets">хвостики</a><a href="#map">приюты</a><a href="#faq">вопросы</a></nav>
+        <div class="city cityhdr"><button class="pill pill-s" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><svg viewBox="0 0 44 56" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg><span class="cityLabel">Челябинск</span><i class="caret" aria-hidden="true"></i></button><ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul></div>
+        <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i></i></button>
+      </div>
       <h1 style="margin:0">
         <span class="plate">пицца съедена</span>
         <span class="obub"><svg class="union m-only" viewBox="0 0 267 191" aria-hidden="true"><path d="M38.9227 16.7317C39.632 6.80749 48.2519 -0.6627 58.1761 0.0466102L215.911 11.3203C225.835 12.0296 233.305 20.6495 232.596 30.5737L229.229 77.6707L249.352 79.1093C259.276 79.8186 266.746 88.4385 266.037 98.3626L262.345 150.018C261.635 159.943 253.016 167.413 243.091 166.703L208.596 164.237C208.41 164.675 208.236 165.107 208.079 165.533C204.974 173.98 205.031 190.323 205.031 190.409L180.664 162.241L16.7317 150.525C6.80749 149.816 -0.6627 141.195 0.0466102 131.271L3.73779 79.6153C4.44726 69.6912 13.068 62.2209 22.9922 62.9302L35.556 63.8277L38.9227 16.7317Z" fill="#FF5F00"/></svg><svg class="union d-only" viewBox="0 0 589 393" aria-hidden="true"><path d="M86.0599 36.9982C87.6285 15.0537 106.689 -1.46503 128.634 0.103011L477.424 25.0321C499.368 26.6006 515.887 45.6621 514.319 67.6069L506.876 171.74L551.378 174.921C573.323 176.49 589.841 195.551 588.273 217.496L580.109 331.719C578.541 353.664 559.479 370.182 537.534 368.614L179.436 343.019L103.348 392.65C103.362 392.603 113.403 358.136 112.072 338.204L36.9973 332.839C15.0526 331.271 -1.46538 312.209 0.103067 290.264L8.26642 176.041C9.83515 154.096 28.8967 137.578 50.8412 139.146L78.6164 141.131L86.0599 36.9982Z" fill="#FF5F00"/></svg><span class="ut">пора<br>гулять</span></span>
@@ -461,7 +481,7 @@ button{font:inherit;color:inherit}
     <div class="sel"><div class="city">
       <button class="pill" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><span class="cityLabel">Челябинск</span><i class="caret" aria-hidden="true"></i></button>
       <ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul>
-    </div></div>
+    </div><button class="view" id="viewBtn" aria-pressed="false"></button></div>
     <div class="map-grid">
       <div class="mapbox" id="mapbox"></div>
       <ul class="shelters" id="shelters"></ul>
@@ -474,9 +494,11 @@ button{font:inherit;color:inherit}
     <h2 class="h2" id="safe-h">это<br class="m-only"><span class="d-only"> </span>безопасно<br>и просто</h2>
     <div class="stage">
       <img class="safe-ill" src="assets/safe.webp" width="1518" height="1403" alt="Человек обнимает собаку, рядом ластится кошка" loading="lazy">
+      <div class="safe-txt">
       <div class="slot slot1"><div class="sp sp1"><h3 class="h3">всё под контролем волонтеров</h3><p>Волонтёры знают характер каждого хвостика и будут рядом всю встречу</p></div></div>
       <div class="slot slot2"><div class="sp sp2"><h3 class="h3">дадим поводок и расскажем про правила</h3><p>Всё нужное для прогулки уже есть в приюте. Перед встречей объяснят, чем угощать и как понять настроение питомца</p></div></div>
       <div class="slot slot3"><div class="sp sp3"><h3 class="h3">можно прийти даже без опыта</h3><p>Не нужно быть кинологом. Достаточно желания провести время вместе — остальному научат на месте</p></div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -591,17 +613,17 @@ const PETS=[
  ['terabait','dog','Терабайт','мальчик, 10 месяцев','Скромный и спокойный, внимание к себе не привлекаю. Идеальная компания для тихой прогулки','krasnodog'],
  ['leha','dog','Лёха','мальчик, 10 месяцев','Пока побаиваюсь поводка и новых людей. Нужен спокойный друг, который не торопит','krasnodog']];
 /* стикеры: косточка и мячик — только у собак; место и наклон чередуются */
-const ST_DOG=['bone','ball','heart','hearts','sparkle'],ST_CAT=['heart','hearts','sparkle'],SPOTS=['s-tr','s-tl','s-br','s-tc','s-bl'],ROTS=[-12,10,-8,6,12,-6,14,-10];
-PETS.forEach((p,i)=>{const L=p[1]==='dog'?ST_DOG:ST_CAT;p[6]=L[i%L.length];p[7]=SPOTS[i%5];p[8]=ROTS[i%8]});
+const ST_DOG=['bone','ball','heart','hearts','sparkle'],ST_CAT=['heart','hearts','sparkle'],SPOTS=['s-tc','s-br','s-tl','s-bl','s-tr'],ROTS=[-12,10,-8,6,12,-6,14,-10];
+PETS.forEach((p,i)=>{const L=p[1]==='dog'?ST_DOG:ST_CAT;p[6]=L[i%L.length];p[8]=ROTS[i%8]});
 const rail=document.getElementById('rail'),dots=document.getElementById('dots');
 const pin='<svg viewBox="0 0 44 56" width="11" height="14" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg>';
 /* лента: хвостики выбранного города, фильтр по виду; старт с первой карточки, стрелка «назад» неактивна */
 let set=PETS,cards=[],kind='all';
 /* стикеры появляются по очереди на карточках, которые видны на экране */
 let io=null;
-function card(p){const s=SH[p[5]];const el=document.createElement('article');el.className='card';
+function card(p,i=0){const s=SH[p[5]];const el=document.createElement('article');el.className='card';
   el.innerHTML=`<div class="pw"><div class="photo"><img src="assets/pets/${p[0]}.webp" alt="${p[2]}, ${p[3]}" loading="lazy"></div>
-   <img class="sticker ${p[7]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"></div>
+   <img class="sticker ${SPOTS[i%5]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"></div>
    <h3 class="name">${p[2]}</h3><p class="meta">${p[3]}</p>
    <p class="desc">«${p[4]}»</p>
    <a class="where" href="#map" data-sh="${s.id}">${pin}${s.n.replace(/^Приют /,'')}, ${s.city.name}</a>`;
@@ -615,7 +637,7 @@ function renderRail(k=kind){const inCity=PETS.filter(p=>SH[p[5]].city===city);
   if(k!=='all'&&!has[k])k='all';kind=k;
   document.querySelectorAll('.chip').forEach(x=>{const f=x.dataset.f;x.setAttribute('aria-pressed',f===kind);x.hidden=f!=='all'&&!has[f]});
   set=kind==='all'?inCity:inCity.filter(p=>p[1]===kind);io?.disconnect();rail.innerHTML='';
-  set.forEach(p=>rail.append(card(p)));
+  set.forEach((p,i)=>rail.append(card(p,i)));
   cards=[...rail.children];io=revealOn(cards,230,.6);rail.scrollLeft=0;arrows();drawDots()}
 rail.addEventListener('scroll',()=>requestAnimationFrame(()=>{arrows();drawDots()}),{passive:true});
 document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>renderRail(b.dataset.f));
@@ -670,17 +692,27 @@ function renderMap(fit){
     b.style.left=(pad+(1-2*pad)*((s.p[1]-o0)/((o1-o0)||1)))*100+'%';b.style.top=(pad+.06+(1-2*pad-.1)*(1-(s.p[0]-a0)/((a1-a0)||1)))*100+'%';
     b.innerHTML=pinSvg(s===active);b.onclick=()=>{active=s;render(false)};mapbox.append(b)})}
 /* все приюты города списком, у каждого — «связаться с приютом» */
+/* вид: карта (по умолчанию) или список */
+let view='map';const grid=document.querySelector('.map-grid'),viewBtn=document.getElementById('viewBtn');
+const IC_LIST='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12M2 8h12M2 13h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',IC_MAP='<svg viewBox="0 0 44 56" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg>';
+function setView(v){view=v;grid.classList.toggle('is-list',v==='list');viewBtn.setAttribute('aria-pressed',v==='list');viewBtn.innerHTML=v==='list'?IC_MAP+'на карте':IC_LIST+'списком';renderList();if(v==='map'&&ymap)ymap.container.fitToViewport()}
+viewBtn.onclick=()=>setView(view==='map'?'list':'map');
 function renderList(){list.innerHTML='';
-  city.list.forEach(s=>{const li=document.createElement('li');
+  (view==='map'?[active]:city.list).forEach(s=>{const li=document.createElement('li');
     li.innerHTML=`<div class="shelter${s===active?' active':''}" role="button" tabindex="0" aria-pressed="${s===active}"><b>${s.n}</b><span class="addr">${s.a}</span>${s.h?`<span class="hrs">${s.h}</span>`:''}${s.k?`<span class="tag">${s.k}</span>`:''}
       <span class="acts"><a class="btn-soft" href="tel:${s.t}">связаться с приютом</a><a class="route" href="https://yandex.ru/maps/?rtext=~${s.p[0]},${s.p[1]}" target="_blank" rel="noopener">маршрут ↗</a></span></div>`;
     nbsp(li.querySelector('.addr'));
-    const c=li.firstElementChild;c.onclick=e=>{if(e.target.closest('a'))return;active=s;render(false)};c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}};list.append(li)})}
+    const c=li.firstElementChild;c.onclick=e=>{if(e.target.closest('a'))return;active=s;if(view==='list'){view='map';setView('map')}render(false)};c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}};list.append(li)})}
 function render(fit=true){renderList();renderMap(fit)}
+setView('map');
 document.addEventListener('click',e=>{if(e.target.closest('[data-nolink]'))e.preventDefault();const a=e.target.closest('.where');if(!a)return;const s=SH[a.dataset.sh];setCity(s.city,s)});
 
 /* безопасно и просто: плашки опускаются по очереди, когда их место показалось на экране */
-revealOn([...document.querySelectorAll('.slot')],550,.5);
+if(desk.matches){
+  const stage=document.querySelector('.stage'),slots=[...document.querySelectorAll('.slot')];
+  const onSplit=()=>{const r=stage.getBoundingClientRect();if(r.top+r.height/2<=innerHeight*.58){removeEventListener('scroll',onSplit);stage.classList.add('split');const q=queue(380);setTimeout(()=>slots.forEach(q),reduce?0:550)}};
+  addEventListener('scroll',onSplit,{passive:true});onSplit();
+}else revealOn([...document.querySelectorAll('.slot')],550,.5);
 
 /* почему это важно: баблы всплывают на фото по очереди */
 revealOn([...document.querySelectorAll('.why-item')],600,.45);
