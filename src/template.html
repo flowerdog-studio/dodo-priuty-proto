@@ -372,9 +372,11 @@ button{font:inherit;color:inherit}
 .f-soc a{display:grid;place-items:center;width:u(40);height:u(40);border-radius:50%;background:var(--cream);color:var(--ink);transition:background .2s,color .2s}
 .f-soc a:hover{background:var(--orange);color:var(--white)}
 .f-soc svg{width:52%;height:52%;fill:currentColor}
-.f-pets{display:block;width:100%;height:auto}
+.f-pets{display:block;width:100%;height:u(118);object-fit:cover;object-position:50% 100%}
+@media (max-width:899px){.foot-in{position:static;padding:u(28) 0 u(6);margin:0 u(16)}}
 @media (min-width:900px){
   .foot-in{left:calc(50% - u(540));right:calc(50% - u(540));padding-top:u(56)}
+  .f-pets{height:auto}
   .f-copy{gap:u(14)}
   .f-logo{font-size:u(36)}
   .f-year{font-size:u(20)}
@@ -536,6 +538,9 @@ button{font:inherit;color:inherit}
 </footer>
 
 <script>
+/* при перезагрузке страница всегда открывается с начала */
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+if(!location.hash)addEventListener('load',()=>scrollTo(0,0));
 const root=document.documentElement;root.classList.add('js');
 const setVw=()=>root.style.setProperty('--vw',root.clientWidth+'px');setVw();addEventListener('resize',setVw);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
