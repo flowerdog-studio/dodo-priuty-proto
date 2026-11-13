@@ -73,8 +73,8 @@ button{font:inherit;color:inherit}
 
 /* ---------- 01 · хиро + 02 · текст: один фон из макета ---------- */
 .snow{position:relative;background:#E9E8F2 url(assets/snow.webp) center top/cover no-repeat;overflow:hidden}
-/* мобайл: экспорт десктопного кадра, уменьшенный так, чтобы иллюстрация встала по мобильному макету (x −180, w 623, y 218) */
-.hbg{position:absolute;left:50%;top:u(177);width:u(800);height:auto;margin-left:u(-294);pointer-events:none;
+/* мобайл: экспорт десктопного кадра (1495×1899), уменьшенный так, чтобы иллюстрация встала по мобильному макету (x −180, w 623, y 218) */
+.hbg{position:absolute;left:50%;top:u(177);width:u(800);height:auto;margin-left:u(-318.4);pointer-events:none;
   -webkit-mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent);mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent)}
 .hero{position:relative;height:u(811)}
 .logo{position:absolute;left:u(16);top:u(15);width:u(80);z-index:6}
@@ -110,12 +110,11 @@ button{font:inherit;color:inherit}
   .nav{display:flex;gap:u(48)}
   .nav a{font-weight:900;font-size:var(--nav);line-height:.86;letter-spacing:-.03em;color:var(--orange);text-decoration:none}
   .nav a:hover{text-decoration:underline;text-underline-offset:u(6)}
-  /* Figma 209-1247: баблы ближе к иллюстрации, наклоны новые. Координаты сдвинуты на −46.2 по x вместе с иллюстрацией,
-     т.к. фон пока прежний (иллюстрация в нём на старом месте) — взаимное положение как в макете */
-  .plate{left:u(924.1);top:u(168.2);width:u(533.1);height:u(103.6);border-radius:u(34);font-size:u(85.9);--pr:-6.7deg;padding-bottom:u(11.8)}
-  .obub{transform-origin:u(886) u(592)}
-  .union{left:u(782.8);top:u(200.2);width:u(588.4);rotate:-2.5deg}
-  .ut{left:u(1082);top:u(365.1);font-size:u(188.9);rotate:1.1deg}
+  /* Figma 209-1247: баблы ближе к иллюстрации, наклоны новые */
+  .plate{left:u(970.3);top:u(167.9);width:u(533.1);height:u(103.6);border-radius:u(34);font-size:u(85.9);--pr:-6.7deg;padding-bottom:u(11.8)}
+  .obub{transform-origin:u(932) u(592)}
+  .union{left:u(829);top:u(199.9);width:u(588.4);rotate:-2.5deg}
+  .ut{left:u(1128.2);top:u(364.8);font-size:u(188.9);rotate:1.1deg}
 }
 .js .plate,.js .obub{opacity:0}
 .go .plate{animation:pop .7s cubic-bezier(.34,1.56,.64,1) .25s both}
@@ -143,14 +142,14 @@ button{font:inherit;color:inherit}
 .dr1{left:u(291.5);top:u(406);width:u(66);rotate:-9.3deg;transition-delay:.1s}
 .dr2{left:u(279);top:u(423);width:u(42);transition-delay:.25s}
 @media (min-width:900px){
-  .lead-sec{height:u(760)}
+  .lead-sec{height:u(1034)}
   .lead-sec::before{background:radial-gradient(ellipse 42% 44% at 50% 45%,rgba(255,255,255,.62),rgba(255,255,255,.36) 55%,rgba(255,255,255,0) 100%)}
   .lead-sec::after{height:u(140)}
-  .lead{left:u(369);top:u(134);width:u(757)}
-  .dl1{left:u(248);top:u(124);width:u(110);rotate:0deg}
-  .dl2{left:u(205);top:u(202);width:u(137);rotate:0deg}
-  .dr1{left:u(1145);top:u(512);width:u(124);rotate:0deg}
-  .dr2{left:u(1135);top:u(562);width:u(81);rotate:0deg}
+  .lead{left:u(369);top:u(250);width:u(757)}
+  .dl1{left:u(248);top:u(240);width:u(110);rotate:0deg}
+  .dl2{left:u(205);top:u(318);width:u(137);rotate:0deg}
+  .dr1{left:u(1145);top:u(628);width:u(124);rotate:0deg}
+  .dr2{left:u(1135);top:u(678);width:u(81);rotate:0deg}
 }
 
 /* ---------- 03 · почему это важно: три карточки в ряд, баблы всплывают по очереди ---------- */
@@ -404,7 +403,7 @@ button{font:inherit;color:inherit}
 </svg>
 
 <div class="snow" id="snow">
-  <img class="hbg" src="assets/hero-bg-m.webp" width="1600" height="1739" alt="Человек гуляет по снегу с собакой на поводке и держит кота на руках">
+  <img class="hbg" src="assets/hero-bg-m.webp" width="1600" height="2032" alt="Человек гуляет по снегу с собакой на поводке и держит кота на руках">
   <section class="hero" aria-label="Пицца съедена, пора гулять">
     <div class="fr" style="height:100%">
       <a class="logo" href="#top" aria-label="Додо Пицца"><img src="assets/logo.png" alt="Додо Пицца"></a>
