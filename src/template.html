@@ -84,7 +84,6 @@ button{font:inherit;color:inherit}
 .hdr-r{position:absolute;right:u(16);top:u(20);z-index:8;display:flex;align-items:center;gap:u(10)}
 .city.cityhdr{position:relative}
 .pill.pill-s{gap:u(5);border:0;padding:0 u(6);height:u(40);font-size:u(14);background:none;color:var(--ink)}
-.pill-s:hover .cityLabel{text-decoration:underline;text-underline-offset:u(4)}
 .pill-s svg{width:u(10);height:u(13);flex:none}
 .pill-s .caret{border-width:u(4);border-top-width:u(5)}
 .cityhdr .opts{left:auto;right:0;translate:none;animation:drop2 .18s ease-out}
@@ -362,18 +361,26 @@ button{font:inherit;color:inherit}
   .q.open button{padding-bottom:u(14)}
 }
 
-/* ---------- 08 · футер (базовый) ---------- */
+/* ---------- 08 · футер: текст по левому краю FAQ, соцсети справа, внизу выглядывают хвостики ---------- */
 .foot{background:var(--white)}
-.foot-fr{display:grid;gap:u(14);padding:u(28) u(16) calc(u(28) + env(safe-area-inset-bottom,0px));font-weight:500;font-size:u(14);line-height:1.3;color:var(--ink)}
-.f-brand{font-weight:800;font-size:u(16);color:var(--ink)}
-.f-legal{display:flex;flex-wrap:wrap;gap:u(6) u(18)}
-.f-legal span{flex-basis:100%}
-.f-legal a{color:var(--ink);text-decoration:none}
-.f-legal a:hover{text-decoration:underline}
+.foot-in{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:u(20);margin:0 u(16);padding:u(28) 0 u(20);color:var(--ink)}
+.f-txt{display:grid;gap:u(6);font-weight:500;font-size:u(14);line-height:1.35}
+.f-brand{font-weight:800;font-size:u(16);margin-bottom:u(4)}
+.f-legal{display:flex;flex-wrap:wrap;gap:u(4) u(16)}
+.f-txt a{color:var(--ink);text-decoration:none}
+.f-txt a:hover{text-decoration:underline}
+.f-soc{display:flex;gap:u(10);list-style:none;margin:0;padding:0}
+.f-soc a{display:grid;place-items:center;width:u(40);height:u(40);border-radius:50%;background:var(--cream);color:var(--ink);transition:background .2s,color .2s}
+.f-soc a:hover{background:var(--orange);color:var(--white)}
+.f-soc svg{width:52%;height:52%;fill:currentColor}
+.f-pets{display:block;width:100%;height:u(110);object-fit:cover;object-position:50% 100%}
 @media (min-width:900px){
-  .foot-fr{grid-template-columns:auto 1fr;align-items:center;padding:u(40) u(87);font-size:u(16)}
+  .foot-in{width:u(1080);margin:0 auto;padding:u(56) 0 u(24);align-items:center}
+  .f-txt{font-size:u(16);gap:u(8)}
   .f-brand{font-size:u(20)}
-  .f-legal{justify-content:flex-end;gap:u(32)}.f-legal span{flex-basis:auto}
+  .f-legal{display:flex;gap:u(28)}
+  .f-soc{gap:u(12)}.f-soc a{width:u(48);height:u(48)}
+  .f-pets{height:auto;aspect-ratio:1495/288;width:u(1495);margin:0 auto}
 }
 
 /* меню (мобайл) */
@@ -517,9 +524,22 @@ button{font:inherit;color:inherit}
 </section>
 
 <footer class="foot" id="footer">
-  <div class="fr foot-fr">
-    <div class="f-brand">Додо Пицца × Помощь приютам</div>
-    <div class="f-legal"><span>© 2026 Додо Пицца</span><a href="#" data-nolink>Политика конфиденциальности</a><a href="#" data-nolink>Пользовательское соглашение</a></div>
+  <div class="fr">
+    <div class="foot-in">
+      <div class="f-txt">
+        <div class="f-brand">Додо Пицца × Помощь приютам</div>
+        <span>© 2026 Додо Пицца</span>
+        <div class="f-legal"><a href="#" data-nolink>Политика конфиденциальности</a><a href="#" data-nolink>Пользовательское соглашение</a></div>
+      </div>
+      <!-- ссылки на соцсети Додо — сверить с футером dodopizza.ru -->
+      <ul class="f-soc" aria-label="Додо Пицца в соцсетях">
+        <li><a href="https://vk.com/dodopizza" target="_blank" rel="noopener" aria-label="ВКонтакте"><svg viewBox="0 0 24 24"><path d="M12.8 17.3c-5.5 0-8.7-3.8-8.8-10.1h2.8c.1 4.6 2.1 6.6 3.7 7V7.2h2.6v4c1.6-.2 3.3-2 3.8-4h2.6c-.4 2.4-2.2 4.2-3.4 5 1.2.6 3.2 2.1 4 5.1h-2.9c-.6-1.9-2.2-3.4-4.1-3.6v3.6h-.3z"/></svg></a></li>
+        <li><a href="https://t.me/dodopizza" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.5-1.5zM9.7 14.6l-.4 4.2-1.3-4.5 10.4-6.6-8.7 6.9z"/></svg></a></li>
+        <li><a href="https://www.youtube.com/@dodopizza" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 7.2a2.8 2.8 0 0 0-2-2C18.3 4.8 12 4.8 12 4.8s-6.3 0-8 .4a2.8 2.8 0 0 0-2 2C1.6 8.9 1.6 12 1.6 12s0 3.1.4 4.8a2.8 2.8 0 0 0 2 2c1.7.4 8 .4 8 .4s6.3 0 8-.4a2.8 2.8 0 0 0 2-2c.4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8zM10 15.1V8.9l5.2 3.1-5.2 3.1z"/></svg></a></li>
+        <li><a href="https://ok.ru/dodopizza" target="_blank" rel="noopener" aria-label="Одноклассники"><svg viewBox="0 0 24 24"><path d="M12 12.3a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4zm0-6a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6zm4.9 7.1a1.2 1.2 0 0 0-1.7-.3 6 6 0 0 1-6.4 0 1.2 1.2 0 1 0-1.4 2c.9.6 1.9 1 3 1.2l-2.9 2.9a1.2 1.2 0 1 0 1.7 1.7L12 18.1l2.8 2.8a1.2 1.2 0 1 0 1.7-1.7l-2.9-2.9c1.1-.2 2.1-.6 3-1.2.6-.4.7-1.1.3-1.7z"/></svg></a></li>
+      </ul>
+    </div>
+    <img class="f-pets" src="assets/footer-pets.webp" width="2990" height="576" alt="Из-за края выглядывают кошки и собаки" loading="lazy">
   </div>
 </footer>
 
