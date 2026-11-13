@@ -361,26 +361,24 @@ button{font:inherit;color:inherit}
   .q.open button{padding-bottom:calc(14*var(--u))}
 }
 
-/* ---------- 08 · футер: текст по левому краю FAQ, соцсети справа, внизу выглядывают хвостики ---------- */
+/* ---------- 08 · футер: «додо пицца» © 2026 по левому краю FAQ, соцсети справа, внизу выглядывают хвостики ---------- */
 .foot{background:var(--white)}
-.foot-in{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:calc(20*var(--u));margin:0 calc(16*var(--u));padding:calc(28*var(--u)) 0 calc(20*var(--u));color:var(--ink)}
-.f-txt{display:grid;gap:calc(6*var(--u));font-weight:500;font-size:calc(14*var(--u));line-height:1.35}
-.f-brand{font-weight:800;font-size:calc(16*var(--u));margin-bottom:calc(4*var(--u))}
-.f-legal{display:flex;flex-wrap:wrap;gap:calc(4*var(--u)) calc(16*var(--u))}
-.f-txt a{color:var(--ink);text-decoration:none}
-.f-txt a:hover{text-decoration:underline}
-.f-soc{display:flex;gap:calc(10*var(--u));list-style:none;margin:0;padding:0}
+.foot .fr{position:relative}
+.foot-in{position:absolute;top:0;left:calc(16*var(--u));right:calc(16*var(--u));z-index:1;display:flex;align-items:center;justify-content:space-between;gap:calc(16*var(--u));padding-top:calc(28*var(--u));color:var(--ink);opacity:1}
+.f-copy{display:flex;align-items:baseline;gap:calc(10*var(--u));color:rgba(104,43,0,.5)}
+.f-logo{font-family:var(--f-display);font-size:calc(26*var(--u));line-height:1;letter-spacing:-.02em;text-transform:lowercase}
+.f-year{font-weight:500;font-size:calc(15*var(--u))}
+.f-soc{display:flex;gap:calc(8*var(--u));list-style:none;margin:0;padding:0}
 .f-soc a{display:grid;place-items:center;width:calc(40*var(--u));height:calc(40*var(--u));border-radius:50%;background:var(--cream);color:var(--ink);transition:background .2s,color .2s}
 .f-soc a:hover{background:var(--orange);color:var(--white)}
 .f-soc svg{width:52%;height:52%;fill:currentColor}
-.f-pets{display:block;width:100%;height:calc(110*var(--u));object-fit:cover;object-position:50% 100%}
+.f-pets{display:block;width:100%;height:auto}
 @media (min-width:900px){
-  .foot-in{width:calc(1080*var(--u));margin:0 auto;padding:calc(56*var(--u)) 0 calc(24*var(--u));align-items:center}
-  .f-txt{font-size:calc(16*var(--u));gap:calc(8*var(--u))}
-  .f-brand{font-size:calc(20*var(--u))}
-  .f-legal{display:flex;gap:calc(28*var(--u))}
+  .foot-in{left:calc(50% - calc(540*var(--u)));right:calc(50% - calc(540*var(--u)));padding-top:calc(56*var(--u))}
+  .f-copy{gap:calc(14*var(--u))}
+  .f-logo{font-size:calc(36*var(--u))}
+  .f-year{font-size:calc(20*var(--u))}
   .f-soc{gap:calc(12*var(--u))}.f-soc a{width:calc(48*var(--u));height:calc(48*var(--u))}
-  .f-pets{height:auto;aspect-ratio:1495/288;width:calc(1495*var(--u));margin:0 auto}
 }
 
 /* меню (мобайл) */
@@ -526,20 +524,14 @@ button{font:inherit;color:inherit}
 <footer class="foot" id="footer">
   <div class="fr">
     <div class="foot-in">
-      <div class="f-txt">
-        <div class="f-brand">Додо Пицца × Помощь приютам</div>
-        <span>© 2026 Додо Пицца</span>
-        <div class="f-legal"><a href="#" data-nolink>Политика конфиденциальности</a><a href="#" data-nolink>Пользовательское соглашение</a></div>
-      </div>
-      <!-- ссылки на соцсети Додо — сверить с футером dodopizza.ru -->
+      <div class="f-copy"><span class="f-logo">додо пицца</span><span class="f-year">© 2026</span></div>
       <ul class="f-soc" aria-label="Додо Пицца в соцсетях">
-        <li><a href="https://vk.com/dodopizza" target="_blank" rel="noopener" aria-label="ВКонтакте"><svg viewBox="0 0 24 24"><path d="M12.8 17.3c-5.5 0-8.7-3.8-8.8-10.1h2.8c.1 4.6 2.1 6.6 3.7 7V7.2h2.6v4c1.6-.2 3.3-2 3.8-4h2.6c-.4 2.4-2.2 4.2-3.4 5 1.2.6 3.2 2.1 4 5.1h-2.9c-.6-1.9-2.2-3.4-4.1-3.6v3.6h-.3z"/></svg></a></li>
-        <li><a href="https://t.me/dodopizza" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.5-1.5zM9.7 14.6l-.4 4.2-1.3-4.5 10.4-6.6-8.7 6.9z"/></svg></a></li>
-        <li><a href="https://www.youtube.com/@dodopizza" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 7.2a2.8 2.8 0 0 0-2-2C18.3 4.8 12 4.8 12 4.8s-6.3 0-8 .4a2.8 2.8 0 0 0-2 2C1.6 8.9 1.6 12 1.6 12s0 3.1.4 4.8a2.8 2.8 0 0 0 2 2c1.7.4 8 .4 8 .4s6.3 0 8-.4a2.8 2.8 0 0 0 2-2c.4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8zM10 15.1V8.9l5.2 3.1-5.2 3.1z"/></svg></a></li>
         <li><a href="https://ok.ru/dodopizza" target="_blank" rel="noopener" aria-label="Одноклассники"><svg viewBox="0 0 24 24"><path d="M12 12.3a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4zm0-6a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6zm4.9 7.1a1.2 1.2 0 0 0-1.7-.3 6 6 0 0 1-6.4 0 1.2 1.2 0 1 0-1.4 2c.9.6 1.9 1 3 1.2l-2.9 2.9a1.2 1.2 0 1 0 1.7 1.7L12 18.1l2.8 2.8a1.2 1.2 0 1 0 1.7-1.7l-2.9-2.9c1.1-.2 2.1-.6 3-1.2.6-.4.7-1.1.3-1.7z"/></svg></a></li>
+        <li><a href="https://vk.com/dodopizza" target="_blank" rel="noopener" aria-label="ВКонтакте"><svg viewBox="0 0 24 24"><path d="M12.8 17.3c-5.5 0-8.7-3.8-8.8-10.1h2.8c.1 4.6 2.1 6.6 3.7 7V7.2h2.6v4c1.6-.2 3.3-2 3.8-4h2.6c-.4 2.4-2.2 4.2-3.4 5 1.2.6 3.2 2.1 4 5.1h-2.9c-.6-1.9-2.2-3.4-4.1-3.6v3.6h-.3z"/></svg></a></li>
+        <li><a href="https://www.youtube.com/dodomovie" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22 7.2a2.8 2.8 0 0 0-2-2C18.3 4.8 12 4.8 12 4.8s-6.3 0-8 .4a2.8 2.8 0 0 0-2 2C1.6 8.9 1.6 12 1.6 12s0 3.1.4 4.8a2.8 2.8 0 0 0 2 2c1.7.4 8 .4 8 .4s6.3 0 8-.4a2.8 2.8 0 0 0 2-2c.4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8zM10 15.1V8.9l5.2 3.1-5.2 3.1z"/></svg></a></li>
       </ul>
     </div>
-    <img class="f-pets" src="assets/footer-pets.webp" width="2990" height="576" alt="Из-за края выглядывают кошки и собаки" loading="lazy">
+    <picture><source media="(min-width:900px)" srcset="assets/footer-pets.webp"><img class="f-pets" src="assets/footer-pets-m.webp" width="1170" height="840" alt="Из-за края выглядывают кошки и собаки" loading="lazy"></picture>
   </div>
 </footer>
 
