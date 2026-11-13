@@ -198,7 +198,7 @@ button{font:inherit;color:inherit}
 .rail::-webkit-scrollbar{display:none}
 .card{flex:0 0 calc(271*var(--u));scroll-snap-align:start;position:relative;--sw:calc(84*var(--u))}
 .pw{position:relative}
-.photo{position:relative;height:clamp(calc(230*var(--u)),calc(100svh - calc(500*var(--u))),calc(390*var(--u)));border-radius:calc(30*var(--u));overflow:hidden;background:var(--line)}
+.photo{position:relative;height:clamp(calc(300*var(--u)),calc(100svh - calc(440*var(--u))),calc(390*var(--u)));border-radius:calc(30*var(--u));overflow:hidden;background:var(--line)}
 .photo img{width:100%;height:100%;object-fit:cover;object-position:50% var(--fy,28%);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 .name{margin:calc(13*var(--u)) 0 0;font-family:var(--f-display);font-weight:400;font-size:var(--name);line-height:1;color:var(--ink);text-transform:lowercase}
 .meta{margin:calc(6*var(--u)) 0 0;font-weight:500;font-size:var(--meta);line-height:1.15;color:var(--ink)}
@@ -219,7 +219,7 @@ button{font:inherit;color:inherit}
 .dots::after{content:"";position:absolute;top:0;bottom:0;width:var(--w,30%);left:calc((100% - var(--w,30%))*var(--f,0));border-radius:calc(3*var(--u));background:var(--orange)}
 @media (min-width:900px){
   /* высота фото подстраивается под экран, чтобы блок целиком влезал; 4 карточки по центру с полями по бокам */
-  .pets{--ph:clamp(calc(300*var(--u)),calc(100vh - calc(600*var(--u))),calc(498*var(--u)));--cw:calc(330*var(--u))}
+  .pets{--ph:clamp(calc(390*var(--u)),calc(100vh - calc(520*var(--u))),calc(498*var(--u)));--cw:calc(340*var(--u))}
   .pets .fr{padding-bottom:calc(44*var(--u))}
   .bar{margin-top:calc(43*var(--u))}
   .chips{gap:calc(10*var(--u))}
@@ -258,12 +258,14 @@ button{font:inherit;color:inherit}
 .opts li[aria-selected="true"]::after{content:"✓"}
 @keyframes drop{from{opacity:0;translate:-50% calc(-6*var(--u))}to{opacity:1;translate:-50% 0}}
 .sel{gap:calc(10*var(--u));align-items:center}
-.view{display:inline-flex;align-items:center;gap:calc(8*var(--u));height:calc(48*var(--u));padding:0 calc(18*var(--u));border:2px solid var(--line);background:var(--white);border-radius:999px;font-weight:600;font-size:calc(15*var(--u));color:var(--ink);cursor:pointer}
-.view:hover{border-color:var(--orange)}
-.view svg{width:calc(16*var(--u));height:calc(16*var(--u))}
 .map-grid{position:relative;margin-top:calc(20*var(--u));padding:0 calc(16*var(--u))}
-.map-grid.is-list .mapbox{display:none}
-.map-grid:not(.is-list) .shelters{display:none}
+/* список приютов: видимая полоса прокрутки + мягкая растушёвка сверху/снизу, когда есть что прокручивать */
+.sh-wrap{position:relative}
+.sh-wrap::before,.sh-wrap::after{content:"";position:absolute;left:0;right:calc(20*var(--u));height:calc(70*var(--u));pointer-events:none;z-index:2;opacity:0;transition:opacity .25s}
+.sh-wrap::before{top:0;background:linear-gradient(var(--cream),rgba(255,246,239,0))}
+.sh-wrap::after{bottom:0;background:linear-gradient(rgba(255,246,239,0),var(--cream))}
+.sh-wrap.fade-t::before,.sh-wrap.fade-b::after{opacity:1}
+.shelter.active{box-shadow:0 calc(10*var(--u)) calc(30*var(--u)) rgba(104,43,0,.12)}
 .shelter .acts{display:flex;flex-wrap:wrap;align-items:center;gap:calc(8*var(--u)) calc(16*var(--u));margin-top:calc(8*var(--u))}
 .btn-soft{display:inline-flex;align-items:center;justify-content:center;height:calc(40*var(--u));padding:0 calc(18*var(--u));border-radius:999px;background:var(--peach);color:var(--orange);font-weight:600;font-size:calc(15*var(--u));text-decoration:none;transition:background .2s,color .2s}
 .btn-soft:hover{background:var(--orange);color:var(--white)}
@@ -293,12 +295,16 @@ button{font:inherit;color:inherit}
   .pill{padding:calc(14*var(--u)) calc(28*var(--u))}
   .opts{min-width:max(100%,calc(300*var(--u)))}
   /* карта и список подстраиваются под высоту экрана; список прокручивается внутри */
-  /* по умолчанию — карта по центру, выбранный приют карточкой поверх карты; «списком» — все приюты сеткой */
-  .view{height:calc(56*var(--u));padding:0 calc(24*var(--u));font-size:calc(18*var(--u))}
-  /* карта — аккуратный прямоугольник по центру; приюты только во вкладке «списком», по центру */
-  .map-grid{margin-top:calc(40*var(--u));padding:0 calc(60*var(--u))}
-  .mapbox{aspect-ratio:auto;width:calc(1000*var(--u));height:clamp(calc(380*var(--u)),calc(100vh - calc(360*var(--u))),calc(600*var(--u)));margin:0 auto;border-radius:calc(36*var(--u))}
-  .shelters{margin:0;grid-template-columns:repeat(auto-fit,calc(420*var(--u)));justify-content:center;gap:calc(16*var(--u))}
+  /* список слева, карта справа; высота под экран, список прокручивается внутри с видимой полосой */
+  .map-grid{--mh:clamp(calc(420*var(--u)),calc(100vh - calc(360*var(--u))),calc(620*var(--u)));margin-top:calc(40*var(--u));padding:0 calc(60*var(--u));display:grid;grid-template-columns:calc(440*var(--u)) calc(880*var(--u));gap:calc(55*var(--u));align-items:start}
+  .mapbox{order:2;aspect-ratio:auto;height:var(--mh);border-radius:calc(36*var(--u))}
+  .sh-wrap{order:1}
+  .shelters{margin:0;gap:calc(14*var(--u));max-height:var(--mh);overflow-y:auto;overscroll-behavior:contain;padding-right:calc(20*var(--u));scrollbar-width:none}
+  .shelters::-webkit-scrollbar{display:none}
+  /* своя всегда видимая полоса прокрутки — как полоса под анкетами на мобайле */
+  .sh-bar{position:absolute;top:0;right:0;width:calc(6*var(--u));height:100%;border-radius:calc(3*var(--u));background:var(--dots)}
+  .sh-bar i{position:absolute;left:0;right:0;top:var(--t,0);height:var(--h,30%);border-radius:calc(3*var(--u));background:var(--orange)}
+  .sh-wrap:not(.scroll) .sh-bar{display:none}
   .btn-soft{height:calc(42*var(--u));font-size:calc(16*var(--u))}
   .shelter{border-radius:calc(28*var(--u));padding:calc(24*var(--u));gap:calc(8*var(--u))}
   .btn{height:calc(50*var(--u));width:auto}
@@ -492,10 +498,10 @@ button{font:inherit;color:inherit}
     <div class="sel"><div class="city">
       <button class="pill" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><span class="cityLabel">Челябинск</span><i class="caret" aria-hidden="true"></i></button>
       <ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul>
-    </div><button class="view" id="viewBtn" aria-pressed="false"></button></div>
+    </div></div>
     <div class="map-grid">
       <div class="mapbox" id="mapbox"></div>
-      <ul class="shelters" id="shelters"></ul>
+      <div class="sh-wrap"><ul class="shelters" id="shelters"></ul><span class="sh-bar" aria-hidden="true"><i></i></span></div>
     </div>
   </div>
 </section>
@@ -719,19 +725,17 @@ function renderMap(fit){
     b.style.left=(pad+(1-2*pad)*((s.p[1]-o0)/((o1-o0)||1)))*100+'%';b.style.top=(pad+.06+(1-2*pad-.1)*(1-(s.p[0]-a0)/((a1-a0)||1)))*100+'%';
     b.innerHTML=pinSvg(s===active);b.onclick=()=>{active=s;render(false)};mapbox.append(b)})}
 /* все приюты города списком, у каждого — «связаться с приютом» */
-/* вид: карта (по умолчанию) или список */
-let view='map';const grid=document.querySelector('.map-grid'),viewBtn=document.getElementById('viewBtn');
-const IC_LIST='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12M2 8h12M2 13h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',IC_MAP='<svg viewBox="0 0 44 56" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg>';
-function setView(v){view=v;grid.classList.toggle('is-list',v==='list');viewBtn.setAttribute('aria-pressed',v==='list');viewBtn.innerHTML=v==='list'?IC_MAP+'на карте':IC_LIST+'списком';renderList();if(v==='map'&&ymap)ymap.container.fitToViewport()}
-viewBtn.onclick=()=>setView(view==='map'?'list':'map');
 function renderList(){list.innerHTML='';
   city.list.forEach(s=>{const li=document.createElement('li');
     li.innerHTML=`<div class="shelter${s===active?' active':''}" role="button" tabindex="0" aria-pressed="${s===active}"><b>${s.n}</b><span class="addr">${s.a}</span>${s.h?`<span class="hrs">${s.h}</span>`:''}${s.k?`<span class="tag">${s.k}</span>`:''}
       <span class="acts"><a class="btn-soft" href="tel:${s.t}">связаться с приютом</a><a class="route" href="https://yandex.ru/maps/?rtext=~${s.p[0]},${s.p[1]}" target="_blank" rel="noopener">маршрут ↗</a></span></div>`;
     nbsp(li.querySelector('.addr'));
-    const c=li.firstElementChild;c.onclick=e=>{if(e.target.closest('a'))return;active=s;if(view==='list'){view='map';setView('map')}render(false)};c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}};list.append(li)})}
-function render(fit=true){renderList();renderMap(fit)}
-setView('map');
+    const c=li.firstElementChild;c.onclick=e=>{if(e.target.closest('a'))return;active=s;render(false)};c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}};list.append(li)})}
+function render(fit=true){const st=list.scrollTop;renderList();list.scrollTop=st;shFade();renderMap(fit)}
+const shWrap=document.querySelector('.sh-wrap');
+function shFade(){const l=list,max=l.scrollHeight-l.clientHeight,can=max>4;shWrap.classList.toggle('scroll',can);shWrap.classList.toggle('fade-t',can&&l.scrollTop>4);shWrap.classList.toggle('fade-b',can&&l.scrollTop<max-4);
+  if(can){const h=l.clientHeight/l.scrollHeight;shWrap.style.setProperty('--h',h*100+'%');shWrap.style.setProperty('--t',(l.scrollTop/max)*(1-h)*100+'%')}}
+list.addEventListener('scroll',shFade,{passive:true});addEventListener('resize',shFade);
 document.addEventListener('click',e=>{if(e.target.closest('[data-nolink]'))e.preventDefault();const a=e.target.closest('.where');if(!a)return;const s=SH[a.dataset.sh];setCity(s.city,s)});
 
 /* безопасно и просто: плашки опускаются по очереди, когда их место показалось на экране */
@@ -740,7 +744,7 @@ if(desk.matches&&!reduce){
   const onSafe=()=>{const r=track.getBoundingClientRect(),p=-r.top/Math.max(1,r.height-innerHeight);
     stage.classList.toggle('split',p>.06);slots.forEach((s,i)=>s.classList.toggle('on',p>.24+i*.2))};
   addEventListener('scroll',onSafe,{passive:true});onSafe();
-}else revealOn([...document.querySelectorAll('.slot')],550,.5);
+}else revealOn([...document.querySelectorAll('.slot')],450,.12);
 
 /* почему это важно: баблы всплывают на фото по очереди */
 /* десктоп: карточки появляются слева направо, когда до ряда доскроллили; мобайл — каждая по мере появления */
