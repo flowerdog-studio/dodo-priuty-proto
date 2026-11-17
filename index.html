@@ -134,7 +134,7 @@ button{font:inherit;color:inherit}
    Персонажи идут на месте (цикл 30 кадров, спрайт walk.webp, рисуем в canvas),
    снег (бесшовная полоса snow-tile.webp) едет справа налево. Снег — полоса со склеенными краями (кроссфейд 320px), повторяется без шва. Включается после загрузки спрайта;
    до этого и при «уменьшить движение» — статичная картинка. */
-.walk-cv{position:absolute;left:calc(-93.4*var(--u));top:calc(242.3*var(--u));width:calc(472.4*var(--u));height:calc(365.9*var(--u));z-index:3;pointer-events:none;display:none}
+.walk-cv{position:absolute;left:calc(-93.4*var(--u));top:calc(244.4*var(--u));width:calc(472.4*var(--u));height:calc(365.9*var(--u));z-index:3;pointer-events:none;display:none}
 .wsh{position:absolute;z-index:2;display:none;border-radius:50%;background:radial-gradient(closest-side,rgba(48,48,83,.22),rgba(48,48,83,0));pointer-events:none}
 .wsh1{left:calc(-64.5*var(--u));top:calc(591.6*var(--u));width:calc(203*var(--u));height:calc(21*var(--u))}
 .wsh2{left:calc(197.6*var(--u));top:calc(594*var(--u));width:calc(160*var(--u));height:calc(18*var(--u))}
@@ -143,7 +143,7 @@ button{font:inherit;color:inherit}
 .walk-on .hbg{display:none}
 .snow.walk-on{background:url(assets/snow-tile.webp) 0 0/auto 100% repeat-x}
 @media (min-width:900px){
-  .walk-cv{left:calc(56*var(--u));top:calc(122*var(--u));width:calc(883*var(--u));height:calc(684*var(--u))}
+  .walk-cv{left:calc(56*var(--u));top:calc(126*var(--u));width:calc(883*var(--u));height:calc(684*var(--u))}
   .wsh1{left:calc(110*var(--u));top:calc(775*var(--u));width:calc(380*var(--u));height:calc(40*var(--u))}
   .wsh2{left:calc(600*var(--u));top:calc(780*var(--u));width:calc(300*var(--u));height:calc(34*var(--u))}
   .snow.walk-on{background:#E9E8F2}
@@ -800,15 +800,15 @@ if(desk.matches)revealGroup(document.querySelector('.stage'),[...document.queryS
 else revealOn([...document.querySelectorAll('.slot')],450,.12);
 
 
-/* первый экран: фон статичный; персонажи стартуют чуть левее (на 10% ширины экрана)
+/* первый экран: фон статичный; персонажи стартуют чуть левее (10% ширины экрана на десктопе, 6% на мобайле)
    и, шагая, доходят до своего места, пока скроллишь первый экран. Дошли — останавливаются. Скролл назад — возвращаются. */
 (()=>{if(reduce)return;const cv=document.querySelector('.walk-cv'),walker=document.querySelector('.walker'),ctx=cv.getContext('2d'),N=30,COLS=6,ROWS=5;
   const img=new Image();img.src='assets/walk.webp';
-  const SHIFT=.10,RUN=()=>document.querySelector('.hero').offsetHeight*.55; /* путь: первые ~55% высоты первого экрана */
+  const SHIFT=desk.matches?.10:.06,RUN=()=>document.querySelector('.hero').offsetHeight*.55; /* путь: первые ~55% высоты первого экрана */
   let fw,fh,cur=0,raf=0,shown=-1;
   const prog=()=>Math.min(1,Math.max(0,scrollY/RUN()));
   const size=()=>{const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);shown=-1;draw()};
-  const F0=2; /* стартовый кадр: обе ноги на земле; за весь путь — ровно один цикл (пара шагов), финиш на том же кадре */
+  const F0=21; /* кадр, совпадающий с позой статичной иллюстрации (шаг, обе ноги на земле): с него стартуем и на нём же останавливаемся — за путь ровно один цикл */
   function draw(){const f=(F0+Math.floor(cur*N))%N;
     if(f!==shown){shown=f;ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(img,(f%COLS)*fw,Math.floor(f/COLS)*fh,fw,fh,0,0,cv.width,cv.height)}
     walker.style.transform=`translateX(${(-(1-cur)*SHIFT*innerWidth).toFixed(1)}px)`}
