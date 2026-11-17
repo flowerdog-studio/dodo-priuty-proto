@@ -226,6 +226,9 @@ button{font:inherit;color:inherit}
 }
 
 /* ---------- как это работает: три шага с рукописными цифрами ---------- */
+/* нижний отступ = как у «почему это важно», чтобы расстояние до следующего заголовка было одинаковым */
+.how .fr{padding-bottom:u(64)}
+@media (min-width:900px){.how .fr{padding-bottom:0}}
 .steps{list-style:none;margin:u(32) 0 0;padding:0 u(24);display:grid;gap:u(22)}
 .steps li{display:flex;flex-direction:column;align-items:center;gap:u(10);text-align:center}
 .num{flex:none;width:u(32);height:u(44);overflow:visible;filter:url(#rough);animation:boil .42s steps(1,end) infinite}
