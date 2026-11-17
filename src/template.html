@@ -78,7 +78,7 @@ button{font:inherit;color:inherit}
   -webkit-mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent);mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent)}
 .hero{position:relative;height:u(712)}
 /* главная кнопка первого экрана → анкеты */
-.cta{position:absolute;left:50%;top:u(636);translate:-50% 0;z-index:6;display:inline-flex;align-items:center;justify-content:center;height:u(52);padding:0 u(28);border-radius:999px;background:var(--orange);color:var(--white);font-weight:600;font-size:u(18);letter-spacing:-.02em;text-decoration:none;white-space:nowrap;box-shadow:0 u(8) u(24) rgba(255,95,0,.28);transition:transform .2s,box-shadow .2s}
+.cta{position:absolute;left:50%;top:min(u(636),calc(100svh - u(52) - u(24)));translate:-50% 0;z-index:6;display:inline-flex;align-items:center;justify-content:center;height:u(52);padding:0 u(28);border-radius:999px;background:var(--orange);color:var(--white);font-weight:600;font-size:u(18);letter-spacing:-.02em;text-decoration:none;white-space:nowrap;box-shadow:0 u(8) u(24) rgba(255,95,0,.28);transition:transform .2s,box-shadow .2s}
 .cta:hover{transform:translateY(u(-2));box-shadow:0 u(12) u(28) rgba(255,95,0,.34)}
 .logo{position:absolute;left:u(16);top:u(15);width:u(80);z-index:6}
 .logo img{width:100%;height:auto;rotate:-7deg}
@@ -107,7 +107,7 @@ button{font:inherit;color:inherit}
   .snow::before{content:"";position:absolute;left:50%;top:0;width:u(1495);height:u(1899);translate:-50% 0;pointer-events:none;background:url(assets/hero-bg.webp) 0 0/100% auto no-repeat;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
   .hbg{display:none}
   .hero{height:u(865)}
-  .cta{left:u(1128);top:u(640);height:u(64);padding:0 u(36);font-size:u(22)}
+  .cta{left:u(1128);top:min(u(640),calc(100svh - u(64) - u(32)));height:u(64);padding:0 u(36);font-size:u(22)}
   .logo{left:u(36);top:u(24);width:u(93)}
   .burger{display:none}
   .hdr-r{right:u(35);top:u(24);gap:u(48)}
@@ -244,10 +244,19 @@ button{font:inherit;color:inherit}
   .card:hover .sticker.s-bl,.card:hover .sticker.s-br{opacity:0!important}}
 .card{cursor:pointer}
 /* «уже дома»: фото приглушено, плашка на фото, вместо кнопки — подпись */
-.home-tag{position:absolute;left:u(14);bottom:u(14);z-index:2;display:none;align-items:center;gap:u(6);height:u(34);padding:0 u(14);border-radius:999px;background:var(--white);color:var(--orange);font-weight:600;font-size:var(--desc)}
-.card.is-home .home-tag{display:inline-flex}
-.card.is-home .photo img{filter:saturate(.35) brightness(1.06)}
-.card.is-home .c-acts{display:none}
+/* статус «уже дома» — не кнопка: без заливки, тонкая рамка, приглушённый цвет, иконка домика, без ховера */
+.status{display:inline-flex;align-items:center;gap:u(6);height:u(36);padding:0 u(14);border:1.5px solid var(--line);border-radius:999px;color:var(--ink-50);font-weight:500;font-size:var(--desc);cursor:default;user-select:none}
+.status svg{width:u(15);height:u(15)}
+.home-tag{position:absolute;left:u(14);bottom:u(14);z-index:2;display:none;background:rgba(255,255,255,.88);border-color:transparent}
+.card.is-home .photo img{filter:saturate(.3) brightness(1.06)}
+.card.is-home .c-acts,.card.is-home .c-btm .btn-soft{display:none}
+.card:not(.is-home) .c-btm .status{display:none}
+.card.is-home .sticker.s-bl,.card.is-home .sticker.s-br{display:none}
+/* мобайл/тач: вместо адреса внизу карточки — кнопка «связаться с приютом» (или статус «уже дома») */
+.c-btm{margin-top:u(12)}
+.c-btm .btn-soft{height:u(40);padding:0 u(18);font-size:var(--desc)}
+@media (hover:hover) and (pointer:fine){.c-btm{display:none}.card.is-home .home-tag{display:inline-flex}}
+@media not ((hover:hover) and (pointer:fine)){.where,.c-acts{display:none}}
 .toast{position:fixed;left:50%;bottom:u(24);translate:-50% u(20);z-index:60;padding:u(12) u(20);border-radius:999px;background:var(--ink);color:var(--white);font-weight:600;font-size:u(15);opacity:0;transition:opacity .25s,translate .25s;pointer-events:none}
 .toast.on{opacity:1;translate:-50% 0}
 .where:hover{text-decoration:underline}
@@ -363,7 +372,14 @@ button{font:inherit;color:inherit}
 /* ---------- 06 · безопасно и просто: обычный скролл, плашки опускаются по очереди, когда доходят до экрана ---------- */
 .safe .fr{padding-bottom:u(56)}
 .stage{position:relative;margin-top:u(24)}
-.safe-ill{display:block;width:u(330);height:auto;margin:0 auto}
+.ill-wrap{position:relative;width:u(330);margin:0 auto}
+.safe-ill{display:block;width:100%;height:auto}
+/* лёгкие штрихи вокруг иллюстрации — «дрожат» так же, как почеркушки у текста под первым экраном */
+.sdd{position:absolute;height:auto;pointer-events:none;animation:boil .42s steps(1,end) infinite}
+.sdd.s1{left:18%;top:2%;width:13%;rotate:-28deg}
+.sdd.s2{left:80%;top:4%;width:12%;rotate:20deg;animation-delay:.14s}
+.sdd.s3{left:93%;top:44%;width:10%;rotate:70deg;animation-delay:.28s}
+.sdd.s4{left:-4%;top:58%;width:11%;rotate:-60deg;animation-delay:.07s}
 .slot{margin:u(16) u(24) 0}
 .sp{padding:u(18) u(20) u(20);border-radius:u(24);background:var(--orange);color:var(--white);
   opacity:0;transform:translateY(u(-70)) rotate(calc(var(--r) - 9deg));transition:transform .8s cubic-bezier(.3,1.35,.5,1),opacity .3s ease}
@@ -375,8 +391,8 @@ button{font:inherit;color:inherit}
 @media (min-width:900px){
   .safe .fr{padding-bottom:u(80)}
   .stage{height:clamp(u(420),calc(100vh - u(340)),u(580));margin-top:u(60)}
-  .safe-ill{position:absolute;top:0;left:50%;translate:-50% 0;height:100%;width:auto;max-width:none;margin:0;transition:left 1s cubic-bezier(.6,0,.2,1)}
-  .safe-ill{left:31%}
+  .ill-wrap{position:absolute;top:0;left:31%;translate:-50% 0;height:100%;width:auto;margin:0}
+  .safe-ill{height:100%;width:auto}
   .safe-txt{position:absolute;left:u(790);width:u(500);top:50%;translate:0 -50%;display:grid;gap:u(34)}
   .slot{margin:0}
   .sp{padding:0;border-radius:0;background:none;color:var(--ink-50);opacity:0;transform:translateY(u(-40));transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
@@ -558,7 +574,8 @@ button{font:inherit;color:inherit}
   <div class="fr">
     <h2 class="h2" id="safe-h">это<br class="m-only"><span class="d-only"> </span>безопасно<br>и просто</h2>
     <div class="stage">
-      <img class="safe-ill" src="assets/safe.webp" width="1518" height="1403" alt="Человек обнимает собаку, рядом ластится кошка" loading="lazy">
+      <div class="ill-wrap"><img class="safe-ill" src="assets/safe.webp" width="1518" height="1403" alt="Человек обнимает собаку, рядом ластится кошка" loading="lazy">
+        <img class="sdd s1" src="assets/doodle-a.png" alt=""><img class="sdd s2" src="assets/doodle-b.png" alt=""><img class="sdd s3" src="assets/doodle-a.png" alt=""><img class="sdd s4" src="assets/doodle-b.png" alt=""></div>
       <div class="safe-txt">
       <div class="slot slot1"><div class="sp sp1"><h3 class="h3">всё под контролем волонтёров</h3><p>Волонтёры знают характер каждого хвостика и будут рядом всю встречу</p></div></div>
       <div class="slot slot2"><div class="sp sp2"><h3 class="h3">дадим поводок и расскажем про правила</h3><p>Всё нужное для прогулки уже есть в приюте. Перед встречей объяснят, чем угощать и как понять настроение питомца</p></div></div>
@@ -694,7 +711,9 @@ const PETS=[
 /* стикеры: косточка и мячик — только у собак; место и наклон чередуются */
 const ST_DOG=['bone','ball','heart','hearts','sparkle'],ST_CAT=['heart','hearts','sparkle'],SPOTS=['s-tr','s-bl','s-tl','s-br'],ROTS=[-12,10,-8,6,12,-6,14,-10];
 PETS.forEach((p,i)=>{const L=p[1]==='dog'?ST_DOG:ST_CAT;p[6]=L[i%L.length];p[8]=ROTS[i%8]});
-/* «уже дома»: HOME_ON=false отключает статус целиком; у питомца — 10-е поле true. Превью дизайна: ?home=<id>, напр. ?home=jek */
+/* «уже дома»: HOME_ON=false отключает статус целиком; у питомца — 10-е поле true. Превью: ?home=<id>.
+   ДЕМО: статус включён у Джека и Моти, чтобы показать дизайн — перед запуском убрать из HOME_DEMO */
+const HOME_DEMO=['jek','moti'];
 const HOME_ON=true,DEMO_HOME=new URLSearchParams(location.search).get('home');
 const toast=Object.assign(document.createElement('div'),{className:'toast'});document.body.append(toast);
 const say=t=>{toast.textContent=t;toast.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove('on'),2200)};
@@ -704,12 +723,13 @@ const pin='<svg viewBox="0 0 44 56" width="11" height="14" aria-hidden="true"><p
 let set=PETS,cards=[],kind='all';
 /* стикеры появляются по очереди на карточках, которые видны на экране */
 let io=null;
-function card(p,i=0){const s=SH[p[5]],home=HOME_ON&&(p[9]||DEMO_HOME===p[0]);const el=document.createElement('article');el.className='card';
+function card(p,i=0){const s=SH[p[5]],home=HOME_ON&&(p[9]||DEMO_HOME===p[0]||HOME_DEMO.includes(p[0]));const el=document.createElement('article');el.className='card';
   el.innerHTML=`<div class="pw"><div class="photo"><img src="assets/pets/${p[0]}.webp" alt="${p[2]}, ${p[3]}" loading="lazy"></div>
-   <img class="sticker ${SPOTS[i%4]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"><span class="home-tag">уже дома</span><div class="c-acts"><a class="btn-soft" href="tel:${s.t}">связаться с приютом</a></div></div>
+   <img class="sticker ${SPOTS[i%4]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"><span class="status home-tag"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13a.8.8 0 0 1-.8.8H9.8V10H6.2v3.8H3.3a.8.8 0 0 1-.8-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>уже дома</span><div class="c-acts"><a class="btn-soft" href="tel:${s.t}">связаться с приютом</a></div></div>
    <h3 class="name">${p[2]}</h3><p class="meta">${p[3]}</p>
    <p class="desc">«${p[4]}»</p>
-   <a class="where" href="#map">${pin}<span>${s.n.replace(/^Приют /,'')}, ${s.city.name}</span></a>`;
+   <a class="where" href="#map">${pin}<span>${s.n.replace(/^Приют /,'')}, ${s.city.name}</span></a>
+   <div class="c-btm"><a class="btn-soft" href="tel:${s.t}">связаться с приютом</a><span class="status"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13a.8.8 0 0 1-.8.8H9.8V10H6.2v3.8H3.3a.8.8 0 0 1-.8-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>уже дома</span></div>`;
   el.id='pet-'+p[0];if(home)el.classList.add('is-home');el.dataset.sh=s.id;
   nbsp(el.querySelector('.desc'));return el}
 const stepW=()=>cards[1]?cards[1].offsetLeft-cards[0].offsetLeft:300;
@@ -727,7 +747,7 @@ function renderRail(k=kind){const inCity=PETS.filter(p=>SH[p[5]].city===city);
 rail.addEventListener('scroll',()=>requestAnimationFrame(()=>{arrows();drawDots()}),{passive:true});
 /* клик по карточке (и по адресу) → приют этого хвостика в «адресах приютов» */
 rail.addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;
-  if(e.target.closest('.c-acts'))return;e.preventDefault();const s=SH[c.dataset.sh];setCity(s.city,s);document.getElementById('map').scrollIntoView({behavior:'smooth'})});
+  if(e.target.closest('.c-acts,.c-btm'))return;e.preventDefault();const s=SH[c.dataset.sh];setCity(s.city,s);document.getElementById('map').scrollIntoView({behavior:'smooth'})});
 document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>renderRail(b.dataset.f));
 prev.onclick=()=>rail.scrollBy({left:-stepW()*2,behavior:'smooth'});
 next.onclick=()=>rail.scrollBy({left:stepW()*2,behavior:'smooth'});
