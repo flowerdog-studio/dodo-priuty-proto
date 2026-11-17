@@ -47,7 +47,7 @@
   --u:calc(min(var(--vw,100vw),1600px)/1495);
   --h2:calc(104*var(--u)); --h3:calc(49.2*var(--u)); --lead:calc(68.4*var(--u));
   --body:calc(25.6*var(--u)); --body-lh:1.08;
-  --name:calc(32*var(--u)); --meta:calc(24*var(--u)); --desc:calc(20*var(--u)); --chip:calc(25.6*var(--u));
+  --name:calc(32*var(--u)); --meta:calc(24*var(--u)); --desc:calc(17*var(--u)); --chip:calc(25.6*var(--u));
   --q:calc(26*var(--u)); --a:calc(22*var(--u));
   --sh-name:calc(24*var(--u)); --sh-addr:calc(18*var(--u)); --sh-tag:calc(16*var(--u)); --btn:calc(18*var(--u));
   --title-top:calc(96*var(--u));
@@ -73,10 +73,13 @@ button{font:inherit;color:inherit}
 
 /* ---------- 01 · хиро + 02 · текст: один фон из макета ---------- */
 .snow{position:relative;background:#E9E8F2 url(assets/snow.webp) center top/cover no-repeat;overflow:hidden}
-/* мобайл: экспорт десктопного кадра (1495×1899), уменьшенный так, чтобы иллюстрация встала по мобильному макету (x −180, w 623, y 218) */
-.hbg{position:absolute;left:50%;top:calc(177*var(--u));width:calc(800*var(--u));height:auto;margin-left:calc(-318.4*var(--u));pointer-events:none;
-  -webkit-mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent);mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent)}
-.hero{position:relative;height:calc(680*var(--u))}
+/* мобайл: экспорт десктопного кадра (1495×1899) в масштабе 0.42 — иллюстрация (x 63–932 в кадре) целиком влезает в ширину экрана, под баблами */
+.hbg{position:absolute;left:50%;top:calc(324*var(--u));width:calc(628*var(--u));height:auto;margin-left:calc(-209.5*var(--u));pointer-events:none;
+  -webkit-mask-image:linear-gradient(transparent,#000 5%,#000 84%,transparent);mask-image:linear-gradient(transparent,#000 5%,#000 84%,transparent)}
+.hero{position:relative;height:calc(760*var(--u))}
+/* главная кнопка первого экрана → анкеты */
+.cta{position:absolute;left:50%;top:calc(684*var(--u));translate:-50% 0;z-index:6;display:inline-flex;align-items:center;justify-content:center;height:calc(52*var(--u));padding:0 calc(28*var(--u));border-radius:999px;background:var(--orange);color:var(--white);font-weight:600;font-size:calc(18*var(--u));letter-spacing:-.02em;text-decoration:none;white-space:nowrap;box-shadow:0 calc(8*var(--u)) calc(24*var(--u)) rgba(255,95,0,.28);transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translateY(calc(-2*var(--u)));box-shadow:0 calc(12*var(--u)) calc(28*var(--u)) rgba(255,95,0,.34)}
 .logo{position:absolute;left:calc(16*var(--u));top:calc(15*var(--u));width:calc(80*var(--u));z-index:6}
 .logo img{width:100%;height:auto;rotate:-7deg}
 .nav{display:none}
@@ -99,9 +102,12 @@ button{font:inherit;color:inherit}
 .union{position:absolute;left:calc(112.9*var(--u));top:calc(205.3*var(--u));width:calc(266.1*var(--u));height:auto}
 .ut{position:absolute;left:calc(249.1*var(--u));top:calc(279.9*var(--u));translate:-50% -50%;rotate:3.6deg;font-family:var(--f-display);font-size:calc(85.4*var(--u));line-height:.76;letter-spacing:-.03em;color:var(--white);text-align:center;text-transform:lowercase;white-space:nowrap}
 @media (min-width:900px){
-  .snow{background:url(assets/hero-bg.webp) 50% 0/calc(1495*var(--u)) auto no-repeat,#E9E8F2 url(assets/snow.webp) center top/cover no-repeat}
+  /* первый экран целиком: если окно невысокое, весь снежный блок уменьшается по высоте экрана; фон-иллюстрация мягко растворяется по бокам в снег */
+  .snow{--u:min(calc(min(var(--vw,100vw),1600px)/1495),calc(100svh/850))}
+  .snow::before{content:"";position:absolute;left:50%;top:0;width:calc(1495*var(--u));height:calc(1899*var(--u));translate:-50% 0;pointer-events:none;background:url(assets/hero-bg.webp) 0 0/100% auto no-repeat;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
   .hbg{display:none}
   .hero{height:calc(865*var(--u))}
+  .cta{left:calc(1128*var(--u));top:calc(640*var(--u));height:calc(64*var(--u));padding:0 calc(36*var(--u));font-size:calc(22*var(--u))}
   .logo{left:calc(36*var(--u));top:calc(24*var(--u));width:calc(93*var(--u))}
   .burger{display:none}
   .hdr-r{right:calc(35*var(--u));top:calc(24*var(--u));gap:calc(48*var(--u))}
@@ -202,9 +208,23 @@ button{font:inherit;color:inherit}
 .pw{position:relative}
 .photo{position:relative;height:clamp(calc(300*var(--u)),calc(100svh - calc(440*var(--u))),calc(390*var(--u)));border-radius:calc(30*var(--u));overflow:hidden;background:var(--line)}
 .photo img{width:100%;height:100%;object-fit:cover;object-position:50% var(--fy,28%);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-.name{margin:calc(13*var(--u)) 0 0;font-family:var(--f-display);font-weight:400;font-size:var(--name);line-height:1;color:var(--ink);text-transform:lowercase}
-.meta{margin:calc(6*var(--u)) 0 0;font-weight:500;font-size:var(--meta);line-height:1.15;color:var(--ink-50)}
-.desc{margin:calc(10*var(--u)) 0 0;font-weight:500;font-size:var(--desc);line-height:1.28;color:var(--ink);max-width:calc(262*var(--u))}
+/* текст анкеты: кличка (Dodo) + один кегль Inter 500 для всего остального, различаются только цветом */
+.name{margin:calc(13*var(--u)) 0 0;font-family:var(--f-display);font-weight:400;font-size:var(--name);line-height:1;color:var(--ink)}
+.meta{margin:calc(6*var(--u)) 0 0;font-weight:500;font-size:var(--desc);line-height:1.3;color:var(--ink-50)}
+.desc{margin:calc(8*var(--u)) 0 0;font-weight:500;font-size:var(--desc);line-height:1.3;color:var(--ink);max-width:calc(262*var(--u))}
+.c-acts{display:flex;align-items:center;gap:calc(8*var(--u));margin-top:calc(14*var(--u))}
+.c-acts .btn-soft{height:calc(38*var(--u));padding:0 calc(16*var(--u));font-size:var(--desc)}
+.share{flex:none;display:grid;place-items:center;width:calc(38*var(--u));height:calc(38*var(--u));border:0;border-radius:50%;background:var(--cream);color:var(--orange);cursor:pointer;transition:background .2s,color .2s}
+.share:hover{background:var(--orange);color:var(--white)}
+.share svg{width:calc(17*var(--u));height:calc(17*var(--u))}
+.card{cursor:pointer}
+/* «уже дома»: фото приглушено, плашка на фото, вместо кнопки — подпись */
+.home-tag{position:absolute;left:calc(14*var(--u));bottom:calc(14*var(--u));z-index:2;display:none;align-items:center;gap:calc(6*var(--u));height:calc(34*var(--u));padding:0 calc(14*var(--u));border-radius:999px;background:var(--white);color:var(--orange);font-weight:600;font-size:var(--desc)}
+.card.is-home .home-tag{display:inline-flex}
+.card.is-home .photo img{filter:saturate(.35) brightness(1.06)}
+.card.is-home .c-acts .btn-soft{pointer-events:none;background:none;padding:0;color:var(--ink-50)}
+.toast{position:fixed;left:50%;bottom:calc(24*var(--u));translate:-50% calc(20*var(--u));z-index:60;padding:calc(12*var(--u)) calc(20*var(--u));border-radius:999px;background:var(--ink);color:var(--white);font-weight:600;font-size:calc(15*var(--u));opacity:0;transition:opacity .25s,translate .25s;pointer-events:none}
+.toast.on{opacity:1;translate:-50% 0}
 .where{display:inline-flex;align-items:flex-start;gap:calc(6*var(--u));line-height:1.3;margin-top:calc(10*var(--u));font-weight:600;font-size:calc(14*var(--u));color:var(--ink);text-decoration:none}
 .where:hover{text-decoration:underline}
 .where svg{flex:none;margin-top:calc((1.3em - calc(14*var(--u)))/2)}
@@ -235,8 +255,9 @@ button{font:inherit;color:inherit}
   .card{flex-basis:var(--cw);--sw:calc(105*var(--u))}
   .photo{height:var(--ph);border-radius:calc(40*var(--u))}
   .name{margin-top:calc(17*var(--u))}
-  .desc{max-width:100%;line-height:1.3;font-size:calc(17*var(--u))}
-  .where{font-size:calc(16*var(--u))}
+  .desc{max-width:100%}
+  .c-acts .btn-soft,.home-tag{font-size:calc(16*var(--u))}
+  .c-acts .btn-soft,.share{height:calc(42*var(--u))}.share{width:calc(42*var(--u))}
   .dots{display:none}
 }
 @media (hover:hover) and (pointer:fine){
@@ -426,6 +447,7 @@ button{font:inherit;color:inherit}
         <div class="city cityhdr"><button class="pill pill-s" aria-haspopup="listbox" aria-expanded="false" aria-label="Город"><svg viewBox="0 0 44 56" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg><span class="cityLabel">Санкт-Петербург</span><i class="caret" aria-hidden="true"></i></button><ul class="opts" role="listbox" aria-label="Город" tabindex="-1" hidden></ul></div>
         <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i></i></button>
       </div>
+      <a class="cta" href="#pets">выбрать хвостика</a>
       <h1 style="margin:0">
         <span class="plate">пицца съедена</span>
         <span class="obub"><svg class="union m-only" viewBox="0 0 267 191" aria-hidden="true"><path d="M38.9227 16.7317C39.632 6.80749 48.2519 -0.6627 58.1761 0.0466102L215.911 11.3203C225.835 12.0296 233.305 20.6495 232.596 30.5737L229.229 77.6707L249.352 79.1093C259.276 79.8186 266.746 88.4385 266.037 98.3626L262.345 150.018C261.635 159.943 253.016 167.413 243.091 166.703L208.596 164.237C208.41 164.675 208.236 165.107 208.079 165.533C204.974 173.98 205.031 190.323 205.031 190.409L180.664 162.241L16.7317 150.525C6.80749 149.816 -0.6627 141.195 0.0466102 131.271L3.73779 79.6153C4.44726 69.6912 13.068 62.2209 22.9922 62.9302L35.556 63.8277L38.9227 16.7317Z" fill="#FF5F00"/></svg><svg class="union d-only" viewBox="0 0 589 393" aria-hidden="true"><path d="M86.0599 36.9982C87.6285 15.0537 106.689 -1.46503 128.634 0.103011L477.424 25.0321C499.368 26.6006 515.887 45.6621 514.319 67.6069L506.876 171.74L551.378 174.921C573.323 176.49 589.841 195.551 588.273 217.496L580.109 331.719C578.541 353.664 559.479 370.182 537.534 368.614L179.436 343.019L103.348 392.65C103.362 392.603 113.403 358.136 112.072 338.204L36.9973 332.839C15.0526 331.271 -1.46538 312.209 0.103067 290.264L8.26642 176.041C9.83515 154.096 28.8967 137.578 50.8412 139.146L78.6164 141.131L86.0599 36.9982Z" fill="#FF5F00"/></svg><span class="ut">пора<br>гулять</span></span>
@@ -466,7 +488,7 @@ button{font:inherit;color:inherit}
       </li>
       <li class="why-item">
         <div class="tile"><div class="ph" style="--r:-5deg"><img src="assets/why-3.webp" alt="Пса чешут за ухом, он зажмурился" loading="lazy"></div>
-          <p class="say" aria-label="с тобой весело" style="--to:37% 92%"><svg viewBox="0 0 146 96" style="left:36.8%;top:77.5%;width:46.4%" aria-hidden="true"><path d="M135.617 -2.77911e-07C141.223 0.000248865 145.767 4.5446 145.768 10.1504L145.768 31.8721C145.768 37.4781 141.223 42.0232 135.617 42.0234L133.732 42.0234L133.732 62.8721C133.732 68.4781 129.188 73.0232 123.582 73.0234L90.7588 73.0234C90.6713 73.095 84.4514 78.1876 81.8477 82.5127C79.2255 86.8685 77.5195 95.9551 77.5195 95.9551L64.2803 73.0234L22.1865 73.0234C16.5806 73.0232 12.0361 68.4781 12.0361 62.8721L12.0361 42.0234L10.1504 42.0234C4.54444 42.0232 7.68011e-08 37.4781 6.53131e-08 31.8721L2.08005e-08 10.1504C0.000249598 4.5446 4.5446 0.000249145 10.1504 -2.08005e-08L135.617 -2.77911e-07Z" fill="white"/></svg><b aria-hidden="true" style="left:36.6%;top:73.1%;font-size:12.45cqw;color:var(--orange)">с тобой<br>весело</b></p></div>
+          <p class="say" aria-label="с тобой весело" style="--to:29% 38%"><svg viewBox="0 0 146 96" style="left:27%;top:21%;width:46.4%" aria-hidden="true"><path d="M135.617 -2.77911e-07C141.223 0.000248865 145.767 4.5446 145.768 10.1504L145.768 31.8721C145.768 37.4781 141.223 42.0232 135.617 42.0234L133.732 42.0234L133.732 62.8721C133.732 68.4781 129.188 73.0232 123.582 73.0234L90.7588 73.0234C90.6713 73.095 84.4514 78.1876 81.8477 82.5127C79.2255 86.8685 77.5195 95.9551 77.5195 95.9551L64.2803 73.0234L22.1865 73.0234C16.5806 73.0232 12.0361 68.4781 12.0361 62.8721L12.0361 42.0234L10.1504 42.0234C4.54444 42.0232 7.68011e-08 37.4781 6.53131e-08 31.8721L2.08005e-08 10.1504C0.000249598 4.5446 4.5446 0.000249145 10.1504 -2.08005e-08L135.617 -2.77911e-07Z" fill="white"/></svg><b aria-hidden="true" style="left:26.8%;top:16.6%;font-size:12.45cqw;color:var(--orange)">с тобой<br>весело</b></p></div>
         <h3 class="h3">они скорее<br>встретят<br>своего человека</h3>
         <p class="body">Даже один визит важен: животные учатся доверять человеку, а это помогает в социализации</p>
       </li>
@@ -514,7 +536,7 @@ button{font:inherit;color:inherit}
     <div class="stage">
       <img class="safe-ill" src="assets/safe.webp" width="1518" height="1403" alt="Человек обнимает собаку, рядом ластится кошка" loading="lazy">
       <div class="safe-txt">
-      <div class="slot slot1"><div class="sp sp1"><h3 class="h3">всё под контролем волонтеров</h3><p>Волонтёры знают характер каждого хвостика и будут рядом всю встречу</p></div></div>
+      <div class="slot slot1"><div class="sp sp1"><h3 class="h3">всё под контролем волонтёров</h3><p>Волонтёры знают характер каждого хвостика и будут рядом всю встречу</p></div></div>
       <div class="slot slot2"><div class="sp sp2"><h3 class="h3">дадим поводок и расскажем про правила</h3><p>Всё нужное для прогулки уже есть в приюте. Перед встречей объяснят, чем угощать и как понять настроение питомца</p></div></div>
       <div class="slot slot3"><div class="sp sp3"><h3 class="h3">можно прийти даже без опыта</h3><p>Не нужно быть кинологом. Достаточно желания провести время вместе — остальному научат на месте</p></div></div>
       </div>
@@ -648,18 +670,26 @@ const PETS=[
 /* стикеры: косточка и мячик — только у собак; место и наклон чередуются */
 const ST_DOG=['bone','ball','heart','hearts','sparkle'],ST_CAT=['heart','hearts','sparkle'],SPOTS=['s-tr','s-bl','s-tl','s-br'],ROTS=[-12,10,-8,6,12,-6,14,-10];
 PETS.forEach((p,i)=>{const L=p[1]==='dog'?ST_DOG:ST_CAT;p[6]=L[i%L.length];p[8]=ROTS[i%8]});
+/* «уже дома»: HOME_ON=false отключает статус целиком; у питомца — 10-е поле true. Превью дизайна: ?home=<id>, напр. ?home=jek */
+const HOME_ON=true,DEMO_HOME=new URLSearchParams(location.search).get('home');
+const toast=Object.assign(document.createElement('div'),{className:'toast'});document.body.append(toast);
+const say=t=>{toast.textContent=t;toast.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove('on'),2200)};
+async function sharePet(id,name){const url=location.origin+location.pathname+'#pet-'+id;
+  try{if(navigator.share){await navigator.share({title:name+' ждёт в гости',text:'Познакомься с '+name+' — '+'хвостик из приюта зовёт на прогулку',url});return}
+    await navigator.clipboard.writeText(url);say('ссылка скопирована')}catch(e){}}
 const rail=document.getElementById('rail'),dots=document.getElementById('dots');
 const pin='<svg viewBox="0 0 44 56" width="11" height="14" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg>';
 /* лента: хвостики выбранного города, фильтр по виду; старт с первой карточки, стрелка «назад» неактивна */
 let set=PETS,cards=[],kind='all';
 /* стикеры появляются по очереди на карточках, которые видны на экране */
 let io=null;
-function card(p,i=0){const s=SH[p[5]];const el=document.createElement('article');el.className='card';
+function card(p,i=0){const s=SH[p[5]],home=HOME_ON&&(p[9]||DEMO_HOME===p[0]);const el=document.createElement('article');el.className='card';
   el.innerHTML=`<div class="pw"><div class="photo"><img src="assets/pets/${p[0]}.webp" alt="${p[2]}, ${p[3]}" loading="lazy"></div>
-   <img class="sticker ${SPOTS[i%4]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"></div>
+   <img class="sticker ${SPOTS[i%4]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"><span class="home-tag">уже дома</span></div>
    <h3 class="name">${p[2]}</h3><p class="meta">${p[3]}</p>
    <p class="desc">«${p[4]}»</p>
-   <a class="where" href="#map" data-sh="${s.id}">${pin}${s.n.replace(/^Приют /,'')}, ${s.city.name}</a>`;
+   <div class="c-acts"><a class="btn-soft" href="tel:${s.t}">${home?'уже дома':'связаться с приютом'}</a><button class="share" type="button" aria-label="Отправить другу" title="Отправить другу"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></button></div>`;
+  el.id='pet-'+p[0];if(home)el.classList.add('is-home');el.dataset.sh=s.id;
   nbsp(el.querySelector('.desc'));return el}
 const stepW=()=>cards[1]?cards[1].offsetLeft-cards[0].offsetLeft:300;
 const prev=document.getElementById('prev'),next=document.getElementById('next');
@@ -674,6 +704,10 @@ function renderRail(k=kind){const inCity=PETS.filter(p=>SH[p[5]].city===city);
   set.forEach((p,i)=>rail.append(card(p,i)));
   cards=[...rail.children];io=revealOn(cards,230,.6);rail.scrollLeft=0;arrows();drawDots()}
 rail.addEventListener('scroll',()=>requestAnimationFrame(()=>{arrows();drawDots()}),{passive:true});
+/* клик по карточке → приют этого хвостика в «адресах приютов»; «отправить другу» → системное «поделиться» или копия ссылки */
+rail.addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;
+  const sh=e.target.closest('.share');if(sh){sharePet(c.id.slice(4),c.querySelector('.name').textContent);return}
+  if(e.target.closest('a'))return;const s=SH[c.dataset.sh];setCity(s.city,s);document.getElementById('map').scrollIntoView({behavior:'smooth'})});
 document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>renderRail(b.dataset.f));
 prev.onclick=()=>rail.scrollBy({left:-stepW()*2,behavior:'smooth'});
 next.onclick=()=>rail.scrollBy({left:stepW()*2,behavior:'smooth'});
@@ -737,7 +771,7 @@ const shWrap=document.querySelector('.sh-wrap');
 function shFade(){const l=list,max=l.scrollHeight-l.clientHeight,can=max>4;shWrap.classList.toggle('scroll',can);shWrap.classList.toggle('fade-t',can&&l.scrollTop>4);shWrap.classList.toggle('fade-b',can&&l.scrollTop<max-4);
   if(can){const h=l.clientHeight/l.scrollHeight;shWrap.style.setProperty('--h',h*100+'%');shWrap.style.setProperty('--t',(l.scrollTop/max)*(1-h)*100+'%')}}
 list.addEventListener('scroll',shFade,{passive:true});addEventListener('resize',shFade);
-document.addEventListener('click',e=>{if(e.target.closest('[data-nolink]'))e.preventDefault();const a=e.target.closest('.where');if(!a)return;const s=SH[a.dataset.sh];setCity(s.city,s)});
+document.addEventListener('click',e=>{if(e.target.closest('[data-nolink]'))e.preventDefault()});
 
 /* безопасно и просто: плашки опускаются по очереди, когда их место показалось на экране */
 if(desk.matches)revealGroup(document.querySelector('.stage'),[...document.querySelectorAll('.slot')],220,.35);
@@ -766,6 +800,9 @@ FAQ.forEach((q,i)=>{const d=document.createElement('div');d.className='q'+(i===0
 
 typo();
 render();renderRail();
+/* ссылка «отправить другу» (#pet-id): открываем город питомца и прокручиваем к его карточке */
+(()=>{const m=location.hash.match(/^#pet-(.+)$/);if(!m)return;const p=PETS.find(x=>x[0]===m[1]);if(!p)return;
+  setCity(SH[p[5]].city);requestAnimationFrame(()=>{const c=document.getElementById('pet-'+p[0]);document.getElementById('pets').scrollIntoView();rail.scrollLeft=c.offsetLeft-rail.offsetLeft-20})})();
 </script>
 </body>
 </html>
