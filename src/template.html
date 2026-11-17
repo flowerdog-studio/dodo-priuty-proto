@@ -73,12 +73,12 @@ button{font:inherit;color:inherit}
 
 /* ---------- 01 · хиро + 02 · текст: один фон из макета ---------- */
 .snow{position:relative;background:#E9E8F2 url(assets/snow.webp) center top/cover no-repeat;overflow:hidden}
-/* мобайл: экспорт десктопного кадра (1495×1899) в масштабе 0.42 — иллюстрация (x 63–932 в кадре) целиком влезает в ширину экрана, под баблами */
-.hbg{position:absolute;left:50%;top:u(324);width:u(628);height:auto;margin-left:u(-209.5);pointer-events:none;
-  -webkit-mask-image:linear-gradient(transparent,#000 5%,#000 84%,transparent);mask-image:linear-gradient(transparent,#000 5%,#000 84%,transparent)}
-.hero{position:relative;height:u(760)}
+/* мобайл: экспорт десктопного кадра (1495×1899) в масштабе 0.535 — иллюстрация по мобильному макету (x −180, w 623, y 218), нога уходит за левый край */
+.hbg{position:absolute;left:50%;top:u(177);width:u(800);height:auto;margin-left:u(-318.4);pointer-events:none;
+  -webkit-mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent);mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent)}
+.hero{position:relative;height:u(712)}
 /* главная кнопка первого экрана → анкеты */
-.cta{position:absolute;left:50%;top:u(684);translate:-50% 0;z-index:6;display:inline-flex;align-items:center;justify-content:center;height:u(52);padding:0 u(28);border-radius:999px;background:var(--orange);color:var(--white);font-weight:600;font-size:u(18);letter-spacing:-.02em;text-decoration:none;white-space:nowrap;box-shadow:0 u(8) u(24) rgba(255,95,0,.28);transition:transform .2s,box-shadow .2s}
+.cta{position:absolute;left:50%;top:u(636);translate:-50% 0;z-index:6;display:inline-flex;align-items:center;justify-content:center;height:u(52);padding:0 u(28);border-radius:999px;background:var(--orange);color:var(--white);font-weight:600;font-size:u(18);letter-spacing:-.02em;text-decoration:none;white-space:nowrap;box-shadow:0 u(8) u(24) rgba(255,95,0,.28);transition:transform .2s,box-shadow .2s}
 .cta:hover{transform:translateY(u(-2));box-shadow:0 u(12) u(28) rgba(255,95,0,.34)}
 .logo{position:absolute;left:u(16);top:u(15);width:u(80);z-index:6}
 .logo img{width:100%;height:auto;rotate:-7deg}
@@ -131,13 +131,13 @@ button{font:inherit;color:inherit}
 
 
 /* ---------- первый экран: шаг по скроллу ----------
-   Персонажи идут на месте (цикл 30 кадров, спрайт walk.webp / walk-m.webp, рисуем в canvas),
+   Персонажи идут на месте (цикл 30 кадров, спрайт walk.webp, рисуем в canvas),
    снег (бесшовная полоса snow-tile.webp) едет справа налево. Снег — полоса со склеенными краями (кроссфейд 320px), повторяется без шва. Включается после загрузки спрайта;
    до этого и при «уменьшить движение» — статичная картинка. */
-.walk-cv{position:absolute;left:u(9);top:u(375);width:u(371);height:u(287);z-index:3;pointer-events:none;display:none}
+.walk-cv{position:absolute;left:u(-93.4);top:u(242.3);width:u(472.4);height:u(365.9);z-index:3;pointer-events:none;display:none}
 .wsh{position:absolute;z-index:2;display:none;border-radius:50%;background:radial-gradient(closest-side,rgba(48,48,83,.22),rgba(48,48,83,0));pointer-events:none}
-.wsh1{left:u(30);top:u(648);width:u(150);height:u(16)}
-.wsh2{left:u(250);top:u(650);width:u(120);height:u(14)}
+.wsh1{left:u(-64.5);top:u(591.6);width:u(203);height:u(21)}
+.wsh2{left:u(197.6);top:u(594);width:u(160);height:u(18)}
 .walker{position:absolute;inset:0;z-index:3;pointer-events:none;will-change:transform}
 .walk-on .walk-cv,.walk-on .wsh{display:block}
 .walk-on .hbg{display:none}
@@ -803,12 +803,13 @@ else revealOn([...document.querySelectorAll('.slot')],450,.12);
 /* первый экран: фон статичный; персонажи стартуют чуть левее (на 10% ширины экрана)
    и, шагая, доходят до своего места, пока скроллишь первый экран. Дошли — останавливаются. Скролл назад — возвращаются. */
 (()=>{if(reduce)return;const cv=document.querySelector('.walk-cv'),walker=document.querySelector('.walker'),ctx=cv.getContext('2d'),N=30,COLS=6,ROWS=5;
-  const img=new Image();img.src=desk.matches?'assets/walk.webp':'assets/walk-m.webp';
+  const img=new Image();img.src='assets/walk.webp';
   const SHIFT=.10,RUN=()=>document.querySelector('.hero').offsetHeight*.55; /* путь: первые ~55% высоты первого экрана */
   let fw,fh,cur=0,raf=0,shown=-1;
   const prog=()=>Math.min(1,Math.max(0,scrollY/RUN()));
   const size=()=>{const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);shown=-1;draw()};
-  function draw(){const f=Math.floor(cur*N*2.2)%N; /* за весь путь — чуть больше двух циклов шага */
+  const F0=2; /* стартовый кадр: обе ноги на земле; за весь путь — ровно один цикл (пара шагов), финиш на том же кадре */
+  function draw(){const f=(F0+Math.floor(cur*N))%N;
     if(f!==shown){shown=f;ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(img,(f%COLS)*fw,Math.floor(f/COLS)*fh,fw,fh,0,0,cv.width,cv.height)}
     walker.style.transform=`translateX(${(-(1-cur)*SHIFT*innerWidth).toFixed(1)}px)`}
   function tick(){const t=prog();cur+=(t-cur)*.14;if(Math.abs(t-cur)<.0008)cur=t;draw();raf=cur!==t?requestAnimationFrame(tick):0}
