@@ -223,7 +223,7 @@ button{font:inherit;color:inherit}
 .chip{border:0;background:none;cursor:pointer;font-weight:600;font-size:var(--chip);line-height:1.08;letter-spacing:-.03em;color:var(--text);padding:calc(8*var(--u)) calc(12*var(--u));border-radius:calc(20*var(--u))}
 .chip[aria-pressed="true"]{background:var(--peach);color:var(--orange)}
 .arrows{display:none}
-.rail{display:flex;gap:calc(12*var(--u));overflow-x:auto;scroll-snap-type:x mandatory;margin-top:calc(4*var(--u));padding:calc(34*var(--u)) calc(18*var(--u)) calc(16*var(--u));scroll-padding-inline:calc(18*var(--u));scrollbar-width:none;overscroll-behavior-x:contain}
+.rail{display:flex;gap:calc(12*var(--u));overflow-x:auto;scroll-snap-type:x mandatory;margin-top:calc(4*var(--u));padding:calc(56*var(--u)) calc(18*var(--u)) calc(16*var(--u));scroll-padding-inline:calc(18*var(--u));scrollbar-width:none;overscroll-behavior-x:contain}
 .rail::-webkit-scrollbar{display:none}
 .card{flex:0 0 calc(271*var(--u));scroll-snap-align:start;position:relative;--sw:calc(84*var(--u))}
 .pw{position:relative}
@@ -233,26 +233,28 @@ button{font:inherit;color:inherit}
 .name{margin:calc(13*var(--u)) 0 0;font-family:var(--f-display);font-weight:400;font-size:var(--name);line-height:1;color:var(--ink)}
 .meta{margin:calc(6*var(--u)) 0 0;font-weight:500;font-size:var(--desc);line-height:1.3;color:var(--ink-50)}
 .desc{margin:calc(8*var(--u)) 0 0;font-weight:500;font-size:var(--desc);line-height:1.3;color:var(--ink);max-width:calc(262*var(--u))}
-.c-acts{display:flex;align-items:center;gap:calc(8*var(--u));margin-top:calc(14*var(--u))}
-.c-acts .btn-soft{height:calc(38*var(--u));padding:0 calc(16*var(--u));font-size:var(--desc)}
-.share{flex:none;display:grid;place-items:center;width:calc(38*var(--u));height:calc(38*var(--u));border:0;border-radius:50%;background:var(--cream);color:var(--orange);cursor:pointer;transition:background .2s,color .2s}
-.share:hover{background:var(--orange);color:var(--white)}
-.share svg{width:calc(17*var(--u));height:calc(17*var(--u))}
+/* адрес приюта — той же строкой и кеглем, что текст анкеты */
+.where{display:flex;align-items:flex-start;gap:calc(6*var(--u));margin-top:calc(10*var(--u));font-weight:500;font-size:var(--desc);line-height:1.3;color:var(--ink);text-decoration:none}
+.where svg{flex:none;width:calc(11*var(--u));height:calc(14*var(--u));margin-top:calc((1.3em - calc(14*var(--u)))/2)}
+/* «связаться с приютом» — на фото при наведении (десктоп); на телефоне — тап по карточке ведёт к приюту */
+.c-acts{position:absolute;left:0;right:0;bottom:calc(14*var(--u));z-index:2;display:flex;justify-content:center;opacity:0;translate:0 calc(8*var(--u));transition:opacity .25s,translate .25s;pointer-events:none}
+.c-acts .btn-soft{height:calc(42*var(--u));padding:0 calc(20*var(--u));background:var(--white);color:var(--orange);font-size:var(--desc);box-shadow:0 calc(6*var(--u)) calc(18*var(--u)) rgba(47,32,30,.18)}
+.c-acts .btn-soft:hover{background:var(--orange);color:var(--white)}
+@media (hover:hover) and (pointer:fine){.card:hover .c-acts,.card:focus-within .c-acts{opacity:1;translate:0 0;pointer-events:auto}
+  .card:hover .sticker.s-bl,.card:hover .sticker.s-br{opacity:0!important}}
 .card{cursor:pointer}
 /* «уже дома»: фото приглушено, плашка на фото, вместо кнопки — подпись */
 .home-tag{position:absolute;left:calc(14*var(--u));bottom:calc(14*var(--u));z-index:2;display:none;align-items:center;gap:calc(6*var(--u));height:calc(34*var(--u));padding:0 calc(14*var(--u));border-radius:999px;background:var(--white);color:var(--orange);font-weight:600;font-size:var(--desc)}
 .card.is-home .home-tag{display:inline-flex}
 .card.is-home .photo img{filter:saturate(.35) brightness(1.06)}
-.card.is-home .c-acts .btn-soft{pointer-events:none;background:none;padding:0;color:var(--ink-50)}
+.card.is-home .c-acts{display:none}
 .toast{position:fixed;left:50%;bottom:calc(24*var(--u));translate:-50% calc(20*var(--u));z-index:60;padding:calc(12*var(--u)) calc(20*var(--u));border-radius:999px;background:var(--ink);color:var(--white);font-weight:600;font-size:calc(15*var(--u));opacity:0;transition:opacity .25s,translate .25s;pointer-events:none}
 .toast.on{opacity:1;translate:-50% 0}
-.where{display:inline-flex;align-items:flex-start;gap:calc(6*var(--u));line-height:1.3;margin-top:calc(10*var(--u));font-weight:600;font-size:calc(14*var(--u));color:var(--ink);text-decoration:none}
 .where:hover{text-decoration:underline}
-.where svg{flex:none;margin-top:calc((1.3em - calc(14*var(--u)))/2)}
 /* стикер: один на фото, ~105 в макете; вылезает только вверх или сидит внутри фото — текст не трогает */
 .sticker{position:absolute;width:var(--sw);height:var(--sw);z-index:3;pointer-events:none;opacity:0;scale:.3;rotate:-25deg;transition:opacity .25s ease,scale .5s cubic-bezier(.34,1.56,.64,1),rotate .5s cubic-bezier(.34,1.56,.64,1)}
-.sticker.s-tr{top:calc(var(--sw)*-.55);right:calc(10*var(--u))}
-.sticker.s-tl{top:calc(var(--sw)*-.55);left:calc(10*var(--u))}
+.sticker.s-tr{top:calc(var(--sw)*-.5);right:calc(10*var(--u))}
+.sticker.s-tl{top:calc(var(--sw)*-.5);left:calc(10*var(--u))}
 .sticker.s-tc{top:calc(var(--sw)*-.4);left:calc(50% - var(--sw)/2)}
 .sticker.s-bl{bottom:calc(14*var(--u));left:calc(14*var(--u))}
 .sticker.s-br{bottom:calc(14*var(--u));right:calc(14*var(--u))}
@@ -272,13 +274,13 @@ button{font:inherit;color:inherit}
   .arrow:hover:not(:disabled){transform:scale(1.06)}
   .arrow:disabled{background:var(--cream);color:var(--orange);cursor:default}
   .arrow svg{width:calc(24*var(--u));height:calc(24*var(--u))}
-  .rail{gap:calc(14*var(--u));margin-top:calc(6*var(--u));--side:max(calc(40*var(--u)),calc((calc(1495*var(--u)) - 4*var(--cw) - calc(42*var(--u)))/2));padding:calc(44*var(--u)) var(--side) calc(12*var(--u));scroll-padding-inline:var(--side)}
+  .rail{gap:calc(14*var(--u));margin-top:calc(6*var(--u));--side:max(calc(40*var(--u)),calc((calc(1495*var(--u)) - 4*var(--cw) - calc(42*var(--u)))/2));padding:calc(64*var(--u)) var(--side) calc(12*var(--u));scroll-padding-inline:var(--side)}
   .card{flex-basis:var(--cw);--sw:calc(105*var(--u))}
   .photo{height:var(--ph);border-radius:calc(40*var(--u))}
   .name{margin-top:calc(17*var(--u))}
   .desc{max-width:100%}
-  .c-acts .btn-soft,.home-tag{font-size:calc(16*var(--u))}
-  .c-acts .btn-soft,.share{height:calc(42*var(--u))}.share{width:calc(42*var(--u))}
+  .c-acts .btn-soft,.home-tag,.where{font-size:calc(16*var(--u))}
+  .c-acts .btn-soft{height:calc(48*var(--u));padding:0 calc(24*var(--u))}
   .dots{display:none}
 }
 @media (hover:hover) and (pointer:fine){
@@ -510,7 +512,7 @@ button{font:inherit;color:inherit}
       </li>
       <li class="why-item">
         <div class="tile"><div class="ph" style="--r:-5deg"><img src="assets/why-3.webp" alt="Пса чешут за ухом, он зажмурился" loading="lazy"></div>
-          <p class="say" aria-label="с тобой весело" style="--to:29% 38%"><svg viewBox="0 0 146 96" style="left:27%;top:21%;width:46.4%" aria-hidden="true"><path d="M135.617 -2.77911e-07C141.223 0.000248865 145.767 4.5446 145.768 10.1504L145.768 31.8721C145.768 37.4781 141.223 42.0232 135.617 42.0234L133.732 42.0234L133.732 62.8721C133.732 68.4781 129.188 73.0232 123.582 73.0234L90.7588 73.0234C90.6713 73.095 84.4514 78.1876 81.8477 82.5127C79.2255 86.8685 77.5195 95.9551 77.5195 95.9551L64.2803 73.0234L22.1865 73.0234C16.5806 73.0232 12.0361 68.4781 12.0361 62.8721L12.0361 42.0234L10.1504 42.0234C4.54444 42.0232 7.68011e-08 37.4781 6.53131e-08 31.8721L2.08005e-08 10.1504C0.000249598 4.5446 4.5446 0.000249145 10.1504 -2.08005e-08L135.617 -2.77911e-07Z" fill="white"/></svg><b aria-hidden="true" style="left:26.8%;top:16.6%;font-size:12.45cqw;color:var(--orange)">с тобой<br>весело</b></p></div>
+          <p class="say" aria-label="с тобой весело" style="--to:34% 36%"><svg viewBox="0 0 146 96" style="left:33%;top:23%;width:40%" aria-hidden="true"><path d="M135.617 -2.77911e-07C141.223 0.000248865 145.767 4.5446 145.768 10.1504L145.768 31.8721C145.768 37.4781 141.223 42.0232 135.617 42.0234L133.732 42.0234L133.732 62.8721C133.732 68.4781 129.188 73.0232 123.582 73.0234L90.7588 73.0234C90.6713 73.095 84.4514 78.1876 81.8477 82.5127C79.2255 86.8685 77.5195 95.9551 77.5195 95.9551L64.2803 73.0234L22.1865 73.0234C16.5806 73.0232 12.0361 68.4781 12.0361 62.8721L12.0361 42.0234L10.1504 42.0234C4.54444 42.0232 7.68011e-08 37.4781 6.53131e-08 31.8721L2.08005e-08 10.1504C0.000249598 4.5446 4.5446 0.000249145 10.1504 -2.08005e-08L135.617 -2.77911e-07Z" fill="white"/></svg><b aria-hidden="true" style="left:32.8%;top:19.2%;font-size:10.7cqw;color:var(--orange)">с тобой<br>весело</b></p></div>
         <h3 class="h3">они скорее<br>встретят<br>своего человека</h3>
         <p class="body">Даже один визит важен: животные учатся доверять человеку, а это помогает в социализации</p>
       </li>
@@ -696,9 +698,6 @@ PETS.forEach((p,i)=>{const L=p[1]==='dog'?ST_DOG:ST_CAT;p[6]=L[i%L.length];p[8]=
 const HOME_ON=true,DEMO_HOME=new URLSearchParams(location.search).get('home');
 const toast=Object.assign(document.createElement('div'),{className:'toast'});document.body.append(toast);
 const say=t=>{toast.textContent=t;toast.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove('on'),2200)};
-async function sharePet(id,name){const url=location.origin+location.pathname+'#pet-'+id;
-  try{if(navigator.share){await navigator.share({title:name+' ждёт в гости',text:'Познакомься с '+name+' — '+'хвостик из приюта зовёт на прогулку',url});return}
-    await navigator.clipboard.writeText(url);say('ссылка скопирована')}catch(e){}}
 const rail=document.getElementById('rail'),dots=document.getElementById('dots');
 const pin='<svg viewBox="0 0 44 56" width="11" height="14" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 1 1 36 0c0 13-18 33-18 33z" fill="#FF5F00"/><circle cx="22" cy="21" r="7" fill="#fff"/></svg>';
 /* лента: хвостики выбранного города, фильтр по виду; старт с первой карточки, стрелка «назад» неактивна */
@@ -707,10 +706,10 @@ let set=PETS,cards=[],kind='all';
 let io=null;
 function card(p,i=0){const s=SH[p[5]],home=HOME_ON&&(p[9]||DEMO_HOME===p[0]);const el=document.createElement('article');el.className='card';
   el.innerHTML=`<div class="pw"><div class="photo"><img src="assets/pets/${p[0]}.webp" alt="${p[2]}, ${p[3]}" loading="lazy"></div>
-   <img class="sticker ${SPOTS[i%4]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"><span class="home-tag">уже дома</span></div>
+   <img class="sticker ${SPOTS[i%4]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"><span class="home-tag">уже дома</span><div class="c-acts"><a class="btn-soft" href="tel:${s.t}">связаться с приютом</a></div></div>
    <h3 class="name">${p[2]}</h3><p class="meta">${p[3]}</p>
    <p class="desc">«${p[4]}»</p>
-   <div class="c-acts"><a class="btn-soft" href="tel:${s.t}">${home?'уже дома':'связаться с приютом'}</a><button class="share" type="button" aria-label="Отправить другу" title="Отправить другу"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></button></div>`;
+   <a class="where" href="#map">${pin}<span>${s.n.replace(/^Приют /,'')}, ${s.city.name}</span></a>`;
   el.id='pet-'+p[0];if(home)el.classList.add('is-home');el.dataset.sh=s.id;
   nbsp(el.querySelector('.desc'));return el}
 const stepW=()=>cards[1]?cards[1].offsetLeft-cards[0].offsetLeft:300;
@@ -726,10 +725,9 @@ function renderRail(k=kind){const inCity=PETS.filter(p=>SH[p[5]].city===city);
   set.forEach((p,i)=>rail.append(card(p,i)));
   cards=[...rail.children];io=revealOn(cards,230,.6);rail.scrollLeft=0;arrows();drawDots()}
 rail.addEventListener('scroll',()=>requestAnimationFrame(()=>{arrows();drawDots()}),{passive:true});
-/* клик по карточке → приют этого хвостика в «адресах приютов»; «отправить другу» → системное «поделиться» или копия ссылки */
+/* клик по карточке (и по адресу) → приют этого хвостика в «адресах приютов» */
 rail.addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;
-  const sh=e.target.closest('.share');if(sh){sharePet(c.id.slice(4),c.querySelector('.name').textContent);return}
-  if(e.target.closest('a'))return;const s=SH[c.dataset.sh];setCity(s.city,s);document.getElementById('map').scrollIntoView({behavior:'smooth'})});
+  if(e.target.closest('.c-acts'))return;e.preventDefault();const s=SH[c.dataset.sh];setCity(s.city,s);document.getElementById('map').scrollIntoView({behavior:'smooth'})});
 document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>renderRail(b.dataset.f));
 prev.onclick=()=>rail.scrollBy({left:-stepW()*2,behavior:'smooth'});
 next.onclick=()=>rail.scrollBy({left:stepW()*2,behavior:'smooth'});
