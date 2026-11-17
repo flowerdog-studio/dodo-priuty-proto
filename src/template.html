@@ -227,14 +227,14 @@ button{font:inherit;color:inherit}
 
 /* ---------- как это работает: три шага с рукописными цифрами ---------- */
 .steps{list-style:none;margin:u(32) 0 0;padding:0 u(24);display:grid;gap:u(22)}
-.steps li{display:flex;align-items:flex-start;gap:u(18)}
+.steps li{display:flex;flex-direction:column;align-items:center;gap:u(10);text-align:center}
 .num{flex:none;width:u(32);height:u(44);overflow:visible;filter:url(#rough);animation:boil .42s steps(1,end) infinite}
 .steps li:nth-child(2) .num{animation-delay:.14s}.steps li:nth-child(3) .num{animation-delay:.28s}
 .num path{fill:none;stroke:var(--orange);stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
-.steps p{margin:u(6) 0 0;font-weight:600;font-size:var(--body);line-height:1.3;letter-spacing:-.02em;color:var(--ink)}
+.steps p{margin:0;max-width:u(300);font-weight:600;font-size:var(--body);line-height:1.3;letter-spacing:-.02em;color:var(--ink)}
 @media (min-width:900px){
   .steps{width:u(1080);margin:u(56) auto 0;padding:0;grid-template-columns:repeat(3,1fr);gap:u(48)}
-  .steps li{flex-direction:column;gap:u(18)}
+  .steps li{gap:u(18)}
   .num{width:u(44);height:u(60)}
   .steps p{margin:0;font-size:u(22);line-height:1.25}
 }
@@ -490,9 +490,9 @@ button{font:inherit;color:inherit}
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <filter id="wob1" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="2"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
-  <filter id="wob2" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
-  <filter id="wob3" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="13"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="wob1" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="2"/><feDisplacementMap in="SourceGraphic" scale="1.8" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="wob2" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.8" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="wob3" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="13"/><feDisplacementMap in="SourceGraphic" scale="1.8" xChannelSelector="R" yChannelSelector="G"/></filter>
   <filter id="rough" x="-10%" y="-10%" width="120%" height="120%">
     <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="4" result="n"/>
     <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
@@ -510,7 +510,7 @@ button{font:inherit;color:inherit}
         <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i></i></button>
       </div>
       <div class="walker" aria-hidden="true"><span class="wsh wsh1"></span><span class="wsh wsh2"></span><canvas class="walk-cv"></canvas></div>
-      <a class="cta" href="#pets">выбрать хвостика</a>
+      <a class="cta" href="#how">выбрать хвостика</a>
       <h1 style="margin:0">
         <span class="plate">пицца съедена</span>
         <span class="obub"><svg class="union m-only" viewBox="0 0 267 191" aria-hidden="true"><path d="M38.9227 16.7317C39.632 6.80749 48.2519 -0.6627 58.1761 0.0466102L215.911 11.3203C225.835 12.0296 233.305 20.6495 232.596 30.5737L229.229 77.6707L249.352 79.1093C259.276 79.8186 266.746 88.4385 266.037 98.3626L262.345 150.018C261.635 159.943 253.016 167.413 243.091 166.703L208.596 164.237C208.41 164.675 208.236 165.107 208.079 165.533C204.974 173.98 205.031 190.323 205.031 190.409L180.664 162.241L16.7317 150.525C6.80749 149.816 -0.6627 141.195 0.0466102 131.271L3.73779 79.6153C4.44726 69.6912 13.068 62.2209 22.9922 62.9302L35.556 63.8277L38.9227 16.7317Z" fill="#FF5F00"/></svg><svg class="union d-only" viewBox="0 0 589 393" aria-hidden="true"><path d="M86.0599 36.9982C87.6285 15.0537 106.689 -1.46503 128.634 0.103011L477.424 25.0321C499.368 26.6006 515.887 45.6621 514.319 67.6069L506.876 171.74L551.378 174.921C573.323 176.49 589.841 195.551 588.273 217.496L580.109 331.719C578.541 353.664 559.479 370.182 537.534 368.614L179.436 343.019L103.348 392.65C103.362 392.603 113.403 358.136 112.072 338.204L36.9973 332.839C15.0526 331.271 -1.46538 312.209 0.103067 290.264L8.26642 176.041C9.83515 154.096 28.8967 137.578 50.8412 139.146L78.6164 141.131L86.0599 36.9982Z" fill="#FF5F00"/></svg><span class="ut">пора<br>гулять</span></span>
@@ -664,7 +664,7 @@ const U=()=>parseFloat(getComputedStyle(document.querySelector('.fr')).width)/(d
 const SHORT='в|во|и|а|к|ко|с|со|о|об|у|на|по|за|не|но|из|от|до|для|как|что|это|или|при|про|без|же|ни|да|ее|её|их|мы|вы|я|он|мне|все|всё|так|уже|то';
 const reNb=new RegExp(`(^|[\\s«(—])(${SHORT}) `,'gi');
 function nbsp(el){const tw=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let n;while(n=tw.nextNode()){n.nodeValue=n.nodeValue.replace(reNb,'$1$2 ').replace(reNb,'$1$2 ').replace(/ —/g,' —')}}
-const typo=()=>document.querySelectorAll('.body,.desc,.a p,.addr,.sp p,.sp .h3,.f-txt,.why .h3').forEach(nbsp);
+const typo=()=>document.querySelectorAll('.body,.desc,.a p,.addr,.sp p,.sp .h3,.f-txt,.why .h3,.steps p').forEach(nbsp);
 
 /* меню */
 const menu=document.getElementById('menu'),burger=document.getElementById('burger');
@@ -748,8 +748,8 @@ const ST_DOG=['bone','ball','heart','hearts','sparkle'],ST_CAT=['heart','hearts'
 PETS.forEach((p,i)=>{const L=p[1]==='dog'?ST_DOG:ST_CAT;p[6]=L[i%L.length];p[8]=ROTS[i%8]});
 /* «уже дома»: HOME_ON=false отключает статус целиком; у питомца — 10-е поле true. Превью: ?home=<id>.
    ДЕМО: статус включён у Джека и Моти, чтобы показать дизайн — перед запуском убрать из HOME_DEMO */
-const HOME_DEMO=['jek','moti'];
-const HOME_ON=true,DEMO_HOME=new URLSearchParams(location.search).get('home');
+const HOME_DEMO=[];
+const HOME_ON=false,DEMO_HOME=new URLSearchParams(location.search).get('home');
 const toast=Object.assign(document.createElement('div'),{className:'toast'});document.body.append(toast);
 const say=t=>{toast.textContent=t;toast.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove('on'),2200)};
 const rail=document.getElementById('rail'),dots=document.getElementById('dots');
