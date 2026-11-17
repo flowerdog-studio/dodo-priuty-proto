@@ -9,6 +9,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;800;900&display=swap">
 <link rel="preload" as="image" href="assets/hero-bg.webp" media="(min-width:900px)">
 <link rel="preload" as="image" href="assets/hero-bg-m.webp" media="(max-width:899px)">
+<link rel="preload" as="image" href="assets/walk.webp">
+<script>/* до первой отрисовки: режим «шаг» (без статичной иллюстрации), страница всегда с самого верха */
+if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("walk");
+if("scrollRestoration" in history)history.scrollRestoration="manual";
+if(location.hash)history.replaceState(null,"",location.pathname+location.search);</script>
 <style>
 @font-face{font-family:"Dodo Narrow";src:url(data:font/ttf;base64,__FONT__) format("truetype");font-display:block}
 
@@ -139,15 +144,19 @@ button{font:inherit;color:inherit}
 .wsh1{left:u(-64.5);top:u(591.6);width:u(203);height:u(21)}
 .wsh2{left:u(197.6);top:u(594);width:u(160);height:u(18)}
 .walker{position:absolute;inset:0;z-index:3;pointer-events:none;will-change:transform}
-.walk-on .walk-cv,.walk-on .wsh{display:block}
-.walk-on .hbg{display:none}
-.snow.walk-on{background:url(assets/snow-tile.webp) 0 0/auto 100% repeat-x}
+.walk .walk-cv,.walk .wsh{display:block}
+.walk .hbg{display:none}
+.walk .snow{background:url(assets/snow-tile.webp) 0 0/auto 100% repeat-x}
+/* стартовая позиция задана в CSS сразу (без прыжка); персонажи плавно проявляются, когда загрузились кадры */
+.walk .walker{transform:translateX(-6vw);opacity:0;transition:opacity .35s ease}
+.walk-ready .walker{opacity:1}
 @media (min-width:900px){
   .walk-cv{left:u(56);top:u(126);width:u(883);height:u(684)}
   .wsh1{left:u(110);top:u(775);width:u(380);height:u(40)}
   .wsh2{left:u(600);top:u(780);width:u(300);height:u(34)}
-  .snow.walk-on{background:#E9E8F2}
-  .walk-on::before{left:0;width:100%;translate:none;background:url(assets/snow-tile.webp) 50% 0/u(1175) auto repeat-x;-webkit-mask-image:none;mask-image:none}
+  .walk .snow{background:#E9E8F2}
+  .walk .walker{transform:translateX(-10vw)}
+  .walk .snow::before{left:0;width:100%;translate:none;background:url(assets/snow-tile.webp) 50% 0/u(1175) auto repeat-x;-webkit-mask-image:none;mask-image:none}
 }
 
 /* ---------- 02 · текст на снегу ---------- */
@@ -216,6 +225,20 @@ button{font:inherit;color:inherit}
   .why-item:hover .ph img{transform:scale(1.07)}
 }
 
+/* ---------- как это работает: три шага с рукописными цифрами ---------- */
+.steps{list-style:none;margin:u(32) 0 0;padding:0 u(24);display:grid;gap:u(22)}
+.steps li{display:flex;align-items:flex-start;gap:u(18)}
+.num{flex:none;width:u(32);height:u(44);overflow:visible;filter:url(#rough);animation:boil .42s steps(1,end) infinite}
+.steps li:nth-child(2) .num{animation-delay:.14s}.steps li:nth-child(3) .num{animation-delay:.28s}
+.num path{fill:none;stroke:var(--orange);stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.steps p{margin:u(6) 0 0;font-weight:600;font-size:var(--body);line-height:1.3;letter-spacing:-.02em;color:var(--ink)}
+@media (min-width:900px){
+  .steps{width:u(1080);margin:u(56) auto 0;padding:0;grid-template-columns:repeat(3,1fr);gap:u(48)}
+  .steps li{flex-direction:column;gap:u(18)}
+  .num{width:u(44);height:u(60)}
+  .steps p{margin:0;font-size:u(22);line-height:1.25}
+}
+
 /* ---------- 04 · анкеты ---------- */
 .pets .fr{padding-bottom:u(40)}
 .bar{position:relative;margin-top:u(25);display:flex;justify-content:center;align-items:center}
@@ -236,7 +259,7 @@ button{font:inherit;color:inherit}
 /* адрес приюта — той же строкой и кеглем, что текст анкеты */
 .where{display:flex;align-items:flex-start;gap:u(6);margin-top:u(10);font-weight:500;font-size:var(--desc);line-height:1.3;color:var(--ink);text-decoration:none}
 .where svg{flex:none;width:u(11);height:u(14);margin-top:calc((1.3em - u(14))/2)}
-/* «связаться с приютом» — на фото при наведении (десктоп); на телефоне — тап по карточке ведёт к приюту */
+/* «погулять»/«поиграть» (звонок в приют) — на фото при наведении (десктоп); на телефоне — кнопкой под адресом */
 .c-acts{position:absolute;left:0;right:0;bottom:u(14);z-index:2;display:flex;justify-content:center;opacity:0;translate:0 u(8);transition:opacity .25s,translate .25s;pointer-events:none}
 .c-acts .btn-soft{height:u(42);padding:0 u(20);background:var(--white);color:var(--orange);font-size:var(--desc);box-shadow:0 u(6) u(18) rgba(47,32,30,.18)}
 .c-acts .btn-soft:hover{background:var(--orange);color:var(--white)}
@@ -252,11 +275,11 @@ button{font:inherit;color:inherit}
 .card.is-home .c-acts,.card.is-home .c-btm .btn-soft{display:none}
 .card:not(.is-home) .c-btm .status{display:none}
 .card.is-home .sticker.s-bl,.card.is-home .sticker.s-br{display:none}
-/* мобайл/тач: вместо адреса внизу карточки — кнопка «связаться с приютом» (или статус «уже дома») */
+/* мобайл/тач: под адресом — кнопка «погулять»/«поиграть» (или статус «уже дома») */
 .c-btm{margin-top:u(12)}
 .c-btm .btn-soft{height:u(40);padding:0 u(18);font-size:var(--desc)}
 @media (hover:hover) and (pointer:fine){.c-btm{display:none}.card.is-home .home-tag{display:inline-flex}}
-@media not ((hover:hover) and (pointer:fine)){.where,.c-acts{display:none}}
+@media not ((hover:hover) and (pointer:fine)){.c-acts{display:none}}
 .toast{position:fixed;left:50%;bottom:u(24);translate:-50% u(20);z-index:60;padding:u(12) u(20);border-radius:999px;background:var(--ink);color:var(--white);font-weight:600;font-size:u(15);opacity:0;transition:opacity .25s,translate .25s;pointer-events:none}
 .toast.on{opacity:1;translate:-50% 0}
 .where:hover{text-decoration:underline}
@@ -374,12 +397,9 @@ button{font:inherit;color:inherit}
 .stage{position:relative;margin-top:u(24)}
 .ill-wrap{position:relative;width:u(330);margin:0 auto}
 .safe-ill{display:block;width:100%;height:auto}
-/* лёгкие штрихи вокруг иллюстрации — «дрожат» так же, как почеркушки у текста под первым экраном */
-.sdd{position:absolute;height:auto;pointer-events:none;animation:boil .42s steps(1,end) infinite}
-.sdd.s1{left:19%;top:1%;width:12%;rotate:38deg}
-.sdd.s2{left:79%;top:3%;width:13%;rotate:-52deg;animation-delay:.14s}
-.sdd.s3{left:92%;top:40%;width:10%;rotate:165deg;animation-delay:.28s}
-.sdd.s4{left:3%;top:20%;width:11%;rotate:-118deg;animation-delay:.07s}
+/* лёгкое дребезжание контура иллюстрации — как у почеркушек: три варианта искажения по очереди */
+.safe-ill{animation:wob .45s steps(1,end) infinite}
+@keyframes wob{0%{filter:url(#wob1)}33%{filter:url(#wob2)}66%{filter:url(#wob3)}}
 .slot{margin:u(16) u(24) 0}
 .sp{padding:u(18) u(20) u(20);border-radius:u(24);background:var(--orange);color:var(--white);
   opacity:0;transform:translateY(u(-70)) rotate(calc(var(--r) - 9deg));transition:transform .8s cubic-bezier(.3,1.35,.5,1),opacity .3s ease}
@@ -470,6 +490,9 @@ button{font:inherit;color:inherit}
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="wob1" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="2"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="wob2" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="wob3" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="13"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
   <filter id="rough" x="-10%" y="-10%" width="120%" height="120%">
     <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="4" result="n"/>
     <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
@@ -536,6 +559,17 @@ button{font:inherit;color:inherit}
   </div>
 </section>
 
+<section class="how" id="how" aria-labelledby="how-h">
+  <div class="fr">
+    <h2 class="h2" id="how-h">как это<br class="m-only"><span class="d-only"> </span>работает</h2>
+    <ol class="steps">
+      <li><svg class="num" viewBox="0 0 22 30" aria-hidden="true"><path d="M5 9 L12 3 L11.5 27"/></svg><p>Выберите хвостика, с которым хотели бы провести время</p></li>
+      <li><svg class="num" viewBox="0 0 22 30" aria-hidden="true"><path d="M4 10 C5 2 17 1 17 9 C17 15 9 20 4 26 L19 25"/></svg><p>Нажмите на кнопку под анкетой, чтобы связаться с приютом</p></li>
+      <li><svg class="num" viewBox="0 0 22 30" aria-hidden="true"><path d="M4 6 C10 1 18 3 16 9 C15 12 11 13 9 13 C16 13 19 17 17 22 C15 27 7 27 4 24"/></svg><p>Назовите кличку хвостика и назначьте встречу</p></li>
+    </ol>
+  </div>
+</section>
+
 <section class="pets" id="pets" aria-labelledby="pets-h">
   <div class="fr">
     <h2 class="h2" id="pets-h">анкеты<br class="m-only"><span class="d-only"> </span>хвостиков</h2>
@@ -574,8 +608,7 @@ button{font:inherit;color:inherit}
   <div class="fr">
     <h2 class="h2" id="safe-h">это<br class="m-only"><span class="d-only"> </span>безопасно<br>и просто</h2>
     <div class="stage">
-      <div class="ill-wrap"><img class="safe-ill" src="assets/safe.webp" width="1518" height="1403" alt="Человек обнимает собаку, рядом ластится кошка" loading="lazy">
-        <img class="sdd s1" src="assets/doodle-a.png" alt=""><img class="sdd s2" src="assets/doodle-b.png" alt=""><img class="sdd s3" src="assets/doodle-a.png" alt=""><img class="sdd s4" src="assets/doodle-b.png" alt=""></div>
+      <div class="ill-wrap"><img class="safe-ill" src="assets/safe.webp" width="1518" height="1403" alt="Человек обнимает собаку, рядом ластится кошка" loading="lazy"></div>
       <div class="safe-txt">
       <div class="slot slot1"><div class="sp sp1"><h3 class="h3">всё под контролем волонтёров</h3><p>Волонтёры знают характер каждого хвостика и будут рядом всю встречу</p></div></div>
       <div class="slot slot2"><div class="sp sp2"><h3 class="h3">дадим поводок и расскажем про правила</h3><p>Всё нужное для прогулки уже есть в приюте. Перед встречей объяснят, чем угощать и как понять настроение питомца</p></div></div>
@@ -610,7 +643,9 @@ button{font:inherit;color:inherit}
 <script>
 /* при перезагрузке страница всегда открывается с начала */
 if('scrollRestoration' in history)history.scrollRestoration='manual';
-if(!location.hash)addEventListener('load',()=>scrollTo(0,0));
+scrollTo(0,0);addEventListener('load',()=>scrollTo(0,0));addEventListener('pageshow',()=>scrollTo(0,0));
+/* ссылки-якоря прокручивают плавно, но не оставляют #хэш в адресе — иначе при обновлении браузер прыгнет к блоку */
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a||a.hasAttribute('data-nolink'))return;const id=a.getAttribute('href').slice(1);const t=id?document.getElementById(id):null;e.preventDefault();if(t)t.scrollIntoView({behavior:'smooth'});else if(!id)scrollTo({top:0,behavior:'smooth'})});
 const root=document.documentElement;root.classList.add('js');
 const setVw=()=>root.style.setProperty('--vw',root.clientWidth+'px');setVw();addEventListener('resize',setVw);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -723,13 +758,13 @@ const pin='<svg viewBox="0 0 44 56" width="11" height="14" aria-hidden="true"><p
 let set=PETS,cards=[],kind='all';
 /* стикеры появляются по очереди на карточках, которые видны на экране */
 let io=null;
-function card(p,i=0){const s=SH[p[5]],home=HOME_ON&&(p[9]||DEMO_HOME===p[0]||HOME_DEMO.includes(p[0]));const el=document.createElement('article');el.className='card';
+function card(p,i=0){const act=p[1]==='cat'?'поиграть':'погулять',s=SH[p[5]],home=HOME_ON&&(p[9]||DEMO_HOME===p[0]||HOME_DEMO.includes(p[0]));const el=document.createElement('article');el.className='card';
   el.innerHTML=`<div class="pw"><div class="photo"><img src="assets/pets/${p[0]}.webp" alt="${p[2]}, ${p[3]}" loading="lazy"></div>
-   <img class="sticker ${SPOTS[i%4]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"><span class="status home-tag"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13a.8.8 0 0 1-.8.8H9.8V10H6.2v3.8H3.3a.8.8 0 0 1-.8-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>уже дома</span><div class="c-acts"><a class="btn-soft" href="tel:${s.t}">связаться с приютом</a></div></div>
+   <img class="sticker ${SPOTS[i%4]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"><span class="status home-tag"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13a.8.8 0 0 1-.8.8H9.8V10H6.2v3.8H3.3a.8.8 0 0 1-.8-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>уже дома</span><div class="c-acts"><a class="btn-soft" href="tel:${s.t}">${act}</a></div></div>
    <h3 class="name">${p[2]}</h3><p class="meta">${p[3]}</p>
    <p class="desc">«${p[4]}»</p>
-   <a class="where" href="#map">${pin}<span>${s.n.replace(/^Приют /,'')}, ${s.city.name}</span></a>
-   <div class="c-btm"><a class="btn-soft" href="tel:${s.t}">связаться с приютом</a><span class="status"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13a.8.8 0 0 1-.8.8H9.8V10H6.2v3.8H3.3a.8.8 0 0 1-.8-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>уже дома</span></div>`;
+   <a class="where" href="#map">${pin}<span>${s.n}</span></a>
+   <div class="c-btm"><a class="btn-soft" href="tel:${s.t}">${act}</a><span class="status"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13a.8.8 0 0 1-.8.8H9.8V10H6.2v3.8H3.3a.8.8 0 0 1-.8-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>уже дома</span></div>`;
   el.id='pet-'+p[0];if(home)el.classList.add('is-home');el.dataset.sh=s.id;
   nbsp(el.querySelector('.desc'));return el}
 const stepW=()=>cards[1]?cards[1].offsetLeft-cards[0].offsetLeft:300;
@@ -820,7 +855,7 @@ else revealOn([...document.querySelectorAll('.slot')],450,.12);
 
 /* первый экран: фон статичный; персонажи стартуют чуть левее (10% ширины экрана на десктопе, 6% на мобайле)
    и, шагая, доходят до своего места, пока скроллишь первый экран. Дошли — останавливаются. Скролл назад — возвращаются. */
-(()=>{if(reduce)return;const cv=document.querySelector('.walk-cv'),walker=document.querySelector('.walker'),ctx=cv.getContext('2d'),N=30,COLS=6,ROWS=5;
+(()=>{if(reduce||!root.classList.contains('walk'))return;const cv=document.querySelector('.walk-cv'),walker=document.querySelector('.walker'),ctx=cv.getContext('2d'),N=30,COLS=6,ROWS=5;
   const img=new Image();img.src='assets/walk.webp';
   const SHIFT=desk.matches?.10:.06,RUN=()=>document.querySelector('.hero').offsetHeight*.55; /* путь: первые ~55% высоты первого экрана */
   let fw,fh,cur=0,raf=0,shown=-1;
@@ -832,8 +867,8 @@ else revealOn([...document.querySelectorAll('.slot')],450,.12);
     walker.style.transform=`translateX(${(-(1-cur)*SHIFT*innerWidth).toFixed(1)}px)`}
   function tick(){const t=prog();cur+=(t-cur)*.14;if(Math.abs(t-cur)<.0008)cur=t;draw();raf=cur!==t?requestAnimationFrame(tick):0}
   addEventListener('scroll',()=>{if(!raf&&fw)raf=requestAnimationFrame(tick)},{passive:true});
-  walker.style.transform=`translateX(${(-SHIFT*innerWidth).toFixed(1)}px)`;
-  img.onload=()=>{fw=img.naturalWidth/COLS;fh=img.naturalHeight/ROWS;cur=prog();snow.classList.add('walk-on');requestAnimationFrame(size)};
+  img.onload=()=>{fw=img.naturalWidth/COLS;fh=img.naturalHeight/ROWS;cur=prog();root.classList.add('walk-ready');requestAnimationFrame(size)};
+  img.onerror=()=>root.classList.remove('walk');
   addEventListener('resize',()=>{if(fw)size()});})();
 
 /* почему это важно: баблы всплывают на фото по очереди */
@@ -859,9 +894,6 @@ FAQ.forEach((q,i)=>{const d=document.createElement('div');d.className='q'+(i===0
 
 typo();
 render();renderRail();
-/* ссылка «отправить другу» (#pet-id): открываем город питомца и прокручиваем к его карточке */
-(()=>{const m=location.hash.match(/^#pet-(.+)$/);if(!m)return;const p=PETS.find(x=>x[0]===m[1]);if(!p)return;
-  setCity(SH[p[5]].city);requestAnimationFrame(()=>{const c=document.getElementById('pet-'+p[0]);document.getElementById('pets').scrollIntoView();rail.scrollLeft=c.offsetLeft-rail.offsetLeft-20})})();
 </script>
 </body>
 </html>
