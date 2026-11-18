@@ -692,8 +692,8 @@ let vw0=0;const setVw=()=>{const w=root.clientWidth;root.style.setProperty('--vw
 const topbar=document.getElementById('topbar');/* белая подложка появляется, только когда первый экран почти прокручен — не режет иллюстрацию */
 const onTop=()=>{const past=scrollY>document.querySelector('.hero').offsetHeight-topbar.offsetHeight;
   topbar.classList.toggle('scrolled',past);
-  /* десктоп: пока листаем первый экран, шапка уезжает вверх, чтобы не наезжать на баблы и голову персонажа; дальше — закреплена с подложкой */
-  topbar.classList.toggle('away',innerWidth>=900&&!past&&scrollY>20)};addEventListener('scroll',onTop,{passive:true});onTop();
+  /* пока листаем первый экран (десктоп и мобайл), шапка уезжает вверх, чтобы не наезжать на баблы и голову персонажа; дальше — закреплена с подложкой */
+  topbar.classList.toggle('away',!past&&scrollY>20)};addEventListener('scroll',onTop,{passive:true});onTop();
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine=matchMedia('(hover:hover) and (pointer:fine)');
 const desk=matchMedia('(min-width:900px)');
