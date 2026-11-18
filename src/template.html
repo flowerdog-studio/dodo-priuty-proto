@@ -408,8 +408,8 @@ button{font:inherit;color:inherit}
 .tail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 /* штрихи движения над хвостом собаки — верхним слоем, хвост их не перекрывает; собака машет чаще кошки */
 .tail.strokes{transform-origin:15.3% 67.4%;animation:wags .42s ease-in-out infinite alternate}
-/* штрихи идут за хвостом (в такт, с меньшим размахом) и «вспыхивают» на крайнем взмахе */
-@keyframes wags{from{rotate:-3deg;opacity:.55;scale:.97}to{rotate:4deg;opacity:1;scale:1.03}}
+/* штрихи двигаются вместе с хвостом: тот же поворот от того же основания, размер не меняется */
+@keyframes wags{from{rotate:-5deg}to{rotate:6deg}}
 .t-dog{transform-origin:15.3% 67.4%;animation:wagd .42s ease-in-out infinite alternate}
 .t-cat{transform-origin:91.2% 75.6%;animation:wagc 1.2s ease-in-out infinite alternate}
 @keyframes wagd{from{rotate:-5deg}to{rotate:6deg}}
