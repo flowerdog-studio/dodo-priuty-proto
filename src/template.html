@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;800;900&display=swap">
 <link rel="preload" as="image" href="assets/hero-bg.webp" media="(min-width:900px)">
 <link rel="preload" as="image" href="assets/hero-bg-m.webp" media="(max-width:899px)">
-<link rel="preload" as="image" href="assets/walk.webp">
+<link rel="preload" as="image" href="assets/walk2.webp">
 <script>/* до первой отрисовки: режим «шаг» (без статичной иллюстрации), страница всегда с самого верха */
 if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("walk");
 if("scrollRestoration" in history)history.scrollRestoration="manual";
@@ -157,22 +157,24 @@ section,#top{scroll-margin-top:u(70)}
 
 
 /* ---------- первый экран: шаг по скроллу ----------
-   Персонажи идут на месте (цикл 30 кадров, спрайт walk.webp, рисуем в canvas),
+   Персонажи идут на месте (цикл 22 кадра из видео 18.11, спрайт walk2.webp, рисуем в canvas),
    снег (бесшовная полоса snow-tile.webp) едет справа налево. Снег — полоса со склеенными краями (кроссфейд 320px), повторяется без шва. Включается после загрузки спрайта;
    до этого и при «уменьшить движение» — статичная картинка. */
-.walk-cv{position:absolute;left:u(-93.4);top:u(244.4);width:u(472.4);height:u(365.9);z-index:3;pointer-events:none;display:none}
+.walk-cv{position:absolute;left:u(-100.3);top:u(275.4);width:u(504.2);height:u(337);z-index:3;pointer-events:none;display:none}
 .wsh{position:absolute;z-index:2;display:none;border-radius:50%;background:radial-gradient(closest-side,rgba(48,48,83,.22),rgba(48,48,83,0));pointer-events:none}
 .wsh1{left:u(-64.5);top:u(591.6);width:u(203);height:u(21)}
 .wsh2{left:u(197.6);top:u(594);width:u(160);height:u(18)}
 .walker{position:absolute;inset:0;z-index:3;pointer-events:none;will-change:transform}
 .walk .walk-cv,.walk .wsh{display:block}
+/* персонажи стоят — контур «кипит», как у иллюстраций ниже; во время шага эффект выключен */
+.walk-cv.idle{animation:wob .6s steps(1,end) infinite}
 .walk .hbg{display:none}
 .walk .snow{background:url(assets/snow-tile.webp) 0 0/auto 100% repeat-x}
 /* стартовая позиция задана в CSS сразу (без прыжка); персонажи плавно проявляются, когда загрузились кадры */
 .walk .walker{transform:translateX(-6vw);opacity:0;transition:opacity .35s ease}
 .walk-ready .walker{opacity:1}
 @media (min-width:900px){
-  .walk-cv{left:u(56);top:u(126);width:u(883);height:u(684)}
+  .walk-cv{left:u(43.2);top:u(184);width:u(942.4);height:u(629.9)}
   .wsh1{left:u(110);top:u(775);width:u(380);height:u(40)}
   .wsh2{left:u(600);top:u(780);width:u(300);height:u(34)}
   .walk .snow{background:#E9E8F2}
@@ -903,19 +905,19 @@ else revealOn([...document.querySelectorAll('.slot')],450,.12);
 
 /* первый экран: фон статичный; персонажи стартуют чуть левее (10% ширины экрана на десктопе, 6% на мобайле)
    и, шагая, доходят до своего места, пока скроллишь первый экран. Дошли — останавливаются. Скролл назад — возвращаются. */
-(()=>{if(reduce||!root.classList.contains('walk'))return;const cv=document.querySelector('.walk-cv'),walker=document.querySelector('.walker'),ctx=cv.getContext('2d'),N=30,COLS=6,ROWS=5;
-  const img=new Image();img.src='assets/walk.webp';
+(()=>{if(reduce||!root.classList.contains('walk'))return;const cv=document.querySelector('.walk-cv'),walker=document.querySelector('.walker'),ctx=cv.getContext('2d'),N=22,COLS=6,ROWS=4;
+  const img=new Image();img.src='assets/walk2.webp';
   const SHIFT=desk.matches?.10:.06,RUN=()=>document.querySelector('.hero').offsetHeight*.55; /* путь: первые ~55% высоты первого экрана */
   let fw,fh,cur=0,raf=0,shown=-1;
   const prog=()=>Math.min(1,Math.max(0,scrollY/RUN()));
   const size=()=>{const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);shown=-1;draw()};
-  const F0=21; /* кадр, совпадающий с позой статичной иллюстрации (шаг, обе ноги на земле): с него стартуем и на нём же останавливаемся — за путь ровно один цикл */
+  const F0=0; /* кадр, совпадающий с позой статичной иллюстрации (шаг, обе ноги на земле): с него стартуем и на нём же останавливаемся — за путь ровно один цикл */
   function draw(){const f=(F0+Math.floor(cur*N))%N;
     if(f!==shown){shown=f;ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(img,(f%COLS)*fw,Math.floor(f/COLS)*fh,fw,fh,0,0,cv.width,cv.height)}
     walker.style.transform=`translateX(${(-(1-cur)*SHIFT*innerWidth).toFixed(1)}px)`}
-  function tick(){const t=prog();cur+=(t-cur)*.14;if(Math.abs(t-cur)<.0008)cur=t;draw();raf=cur!==t?requestAnimationFrame(tick):0}
+  function tick(){const t=prog();cur+=(t-cur)*.14;if(Math.abs(t-cur)<.0008)cur=t;draw();raf=cur!==t?requestAnimationFrame(tick):0;cv.classList.toggle('idle',!raf)}
   addEventListener('scroll',()=>{if(!raf&&fw)raf=requestAnimationFrame(tick)},{passive:true});
-  img.onload=()=>{fw=img.naturalWidth/COLS;fh=img.naturalHeight/ROWS;cur=prog();root.classList.add('walk-ready');requestAnimationFrame(size)};
+  img.onload=()=>{fw=img.naturalWidth/COLS;fh=img.naturalHeight/ROWS;cur=prog();root.classList.add('walk-ready');requestAnimationFrame(size);cv.classList.add('idle')};
   img.onerror=()=>root.classList.remove('walk');
   addEventListener('resize',()=>{if(fw)size()});})();
 
