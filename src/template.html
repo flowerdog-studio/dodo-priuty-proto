@@ -82,11 +82,15 @@ button{font:inherit;color:inherit}
 .hbg{position:absolute;left:50%;top:u(177);width:u(800);height:auto;margin-left:u(-318.4);pointer-events:none;
   -webkit-mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent);mask-image:linear-gradient(transparent,#000 9%,#000 84%,transparent)}
 .hero{position:relative;height:u(712)}
+/* мобайл: на невысоком экране вся композиция первого экрана (иллюстрация, баблы, кнопка) пропорционально уменьшается,
+   чтобы кнопка помещалась под иллюстрацией, а не поверх неё */
+@media (max-width:899px){.snow{--u:min(calc(min(var(--vw,100vw),480px)/390),calc(var(--vh0,100svh)/708))}}
 /* главная кнопка первого экрана → анкеты */
-.cta{position:absolute;left:50%;top:min(u(636),calc(var(--vh0,100svh) - u(52) - u(24)));translate:-50% 0;z-index:6;display:inline-flex;align-items:center;justify-content:center;height:u(52);padding:0 u(28);border-radius:999px;background:var(--orange);color:var(--white);font-weight:600;font-size:u(18);letter-spacing:-.02em;text-decoration:none;white-space:nowrap;box-shadow:0 u(8) u(24) rgba(255,95,0,.28);transition:transform .2s,box-shadow .2s}
+.cta{position:absolute;left:50%;top:u(636);translate:-50% 0;z-index:6;display:inline-flex;align-items:center;justify-content:center;height:u(52);padding:0 u(28);border-radius:999px;background:var(--orange);color:var(--white);font-weight:600;font-size:u(18);letter-spacing:-.02em;text-decoration:none;white-space:nowrap;box-shadow:0 u(8) u(24) rgba(255,95,0,.28);transition:transform .2s,box-shadow .2s}
 .cta:hover{transform:translateY(u(-2));box-shadow:0 u(12) u(28) rgba(255,95,0,.34)}
 /* закреплённая шапка: прозрачная над первым экраном, после прокрутки — белая и компактнее */
-.top{position:fixed;top:0;left:0;right:0;z-index:40;height:u(78);transition:background-color .25s,box-shadow .25s}
+.top{position:fixed;top:0;left:0;right:0;z-index:40;height:u(78);transition:background-color .25s,box-shadow .25s,translate .3s ease}
+.top.away{translate:0 -100%}
 .top .fr{height:100%}
 .top.scrolled{background:rgba(255,255,255,.96);box-shadow:0 u(4) u(18) rgba(104,43,0,.08);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .top .logo,.top .hdr-r{transition:width .25s,top .25s}
@@ -685,7 +689,11 @@ document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');i
 const root=document.documentElement;root.classList.add('js');
 /* --vh0 — высота окна, фиксируется при загрузке и при смене ширины/ориентации; панели браузера при скролле её не меняют (кнопка не «едет») */
 let vw0=0;const setVw=()=>{const w=root.clientWidth;root.style.setProperty('--vw',w+'px');if(w!==vw0){vw0=w;root.style.setProperty('--vh0',innerHeight+'px')}};setVw();addEventListener('resize',setVw);
-const topbar=document.getElementById('topbar');const onTop=()=>topbar.classList.toggle('scrolled',scrollY>20);addEventListener('scroll',onTop,{passive:true});onTop();
+const topbar=document.getElementById('topbar');/* белая подложка появляется, только когда первый экран почти прокручен — не режет иллюстрацию */
+const onTop=()=>{const past=scrollY>document.querySelector('.hero').offsetHeight-topbar.offsetHeight;
+  topbar.classList.toggle('scrolled',past);
+  /* десктоп: пока листаем первый экран, шапка уезжает вверх, чтобы не наезжать на баблы и голову персонажа; дальше — закреплена с подложкой */
+  topbar.classList.toggle('away',innerWidth>=900&&!past&&scrollY>20)};addEventListener('scroll',onTop,{passive:true});onTop();
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine=matchMedia('(hover:hover) and (pointer:fine)');
 const desk=matchMedia('(min-width:900px)');
