@@ -91,13 +91,13 @@ button{font:inherit;color:inherit}
 /* закреплённая шапка: прозрачная над первым экраном, после прокрутки — белая и компактнее */
 /* шапка: на первом экране уезжает вместе со страницей; после него — закреплена сверху на белой подложке (выезжает сверху) */
 /* шапка закреплена с самого начала: над снегом едет без подложки; после снежного блока под ней мягкий белый градиент.
-   Логотип плавно уменьшается в первые ~160px скролла (--k: 0→1 из JS). */
+   Логотип плавно уменьшается в первые ~420px скролла (--k: 0→1 из JS). */
 .top{position:fixed;top:0;left:0;right:0;z-index:40;height:calc(78*var(--u))}
 /* мягкий градиент с размытием, сходящий на нет книзу (без жёсткой границы и тени) */
 .top::before{content:"";position:absolute;left:0;right:0;top:0;height:150%;pointer-events:none;opacity:0;transition:opacity .35s;background:linear-gradient(rgba(255,255,255,.95),rgba(255,255,255,.8) 45%,rgba(255,255,255,0));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);-webkit-mask-image:linear-gradient(#000 50%,transparent);mask-image:linear-gradient(#000 50%,transparent)}
 .top.scrolled::before{opacity:1}
 .top .fr{height:100%}
-.top .logo{transform-origin:0 0;scale:calc(1 - var(--k,0)*.4);translate:0 calc(var(--k,0)*calc(-4*var(--u)))}
+.top .logo{transform-origin:0 0;scale:calc(1 - var(--k,0)*.4);translate:0 calc(var(--k,0)*calc(-4*var(--u)));transition:scale .25s ease-out,translate .25s ease-out}
 .top.scrolled .burger{background:var(--cream)}
 section,#top{scroll-margin-top:calc(70*var(--u))}
 .logo{position:absolute;left:calc(16*var(--u));top:calc(15*var(--u));width:calc(80*var(--u));z-index:6}
@@ -690,7 +690,8 @@ const root=document.documentElement;root.classList.add('js');
 /* --vh0 — высота окна, фиксируется при загрузке и при смене ширины/ориентации; панели браузера при скролле её не меняют (кнопка не «едет») */
 let vw0=0;const setVw=()=>{const w=root.clientWidth;root.style.setProperty('--vw',w+'px');if(w!==vw0){vw0=w;root.style.setProperty('--vh0',innerHeight+'px')}};setVw();addEventListener('resize',setVw);
 const topbar=document.getElementById('topbar');/* белая подложка появляется, только когда первый экран почти прокручен — не режет иллюстрацию */
-const onTop=()=>{topbar.style.setProperty('--k',Math.min(1,scrollY/160).toFixed(3));
+/* логотип уменьшается плавно: за ~420px скролла, по кривой ease-in-out, плюс короткое сглаживание в CSS */
+const onTop=()=>{const t=Math.min(1,scrollY/420),k=t*t*(3-2*t);topbar.style.setProperty('--k',k.toFixed(3));
   topbar.classList.toggle('scrolled',scrollY>document.getElementById('snow').offsetHeight-topbar.offsetHeight)};addEventListener('scroll',onTop,{passive:true});onTop();
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine=matchMedia('(hover:hover) and (pointer:fine)');
