@@ -401,8 +401,9 @@ button{font:inherit;color:inherit}
 .ill-wrap{position:relative;width:u(330);margin:0 auto}
 .safe-ill{display:block;width:100%;height:auto}
 /* лёгкое дребезжание контура иллюстрации — как у почеркушек: три варианта искажения по очереди */
-.safe-ill{animation:wob .45s steps(1,end) infinite}
-@keyframes wob{0%{filter:url(#wob1)}33%{filter:url(#wob2)}66%{filter:url(#wob3)}}
+/* «кипящая линия» как в рисованной анимации: 4 перерисовки по 150 мс (≈6–7 кадров/с), контур заметно перерисовывается, фигура чуть сдвигается */
+.safe-ill{animation:wob .6s steps(1,end) infinite}
+@keyframes wob{0%{filter:url(#wob1);transform:none}25%{filter:url(#wob2);transform:translate(.6px,-.5px) rotate(.25deg)}50%{filter:url(#wob3);transform:translate(-.5px,.4px) rotate(-.2deg)}75%{filter:url(#wob4);transform:translate(.3px,.6px) rotate(.15deg)}}
 .slot{margin:u(16) u(24) 0}
 .sp{padding:u(18) u(20) u(20);border-radius:u(24);background:var(--orange);color:var(--white);
   opacity:0;transform:translateY(u(-70)) rotate(calc(var(--r) - 9deg));transition:transform .8s cubic-bezier(.3,1.35,.5,1),opacity .3s ease}
@@ -493,9 +494,10 @@ button{font:inherit;color:inherit}
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <filter id="wob1" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="2"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
-  <filter id="wob2" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
-  <filter id="wob3" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="1" seed="13"/><feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="wob1" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="wob2" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="wob3" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="23"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="wob4" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="37"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter>
   <filter id="rough" x="-10%" y="-10%" width="120%" height="120%">
     <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="4" result="n"/>
     <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
