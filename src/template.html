@@ -93,11 +93,13 @@ button{font:inherit;color:inherit}
 /* шапка закреплена с самого начала: над снегом едет без подложки; после снежного блока под ней мягкий белый градиент.
    Логотип плавно уменьшается в первые ~420px скролла (--k: 0→1 из JS). */
 .top{position:fixed;top:0;left:0;right:0;z-index:40;height:u(78)}
-/* мягкий градиент с размытием, сходящий на нет книзу (без жёсткой границы и тени) */
-.top::before{content:"";position:absolute;left:0;right:0;top:0;height:150%;pointer-events:none;opacity:0;transition:opacity .35s;background:linear-gradient(rgba(255,255,255,.95),rgba(255,255,255,.8) 45%,rgba(255,255,255,0));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);-webkit-mask-image:linear-gradient(#000 50%,transparent);mask-image:linear-gradient(#000 50%,transparent)}
+/* подложка как у shift.dodobrands.io: белый сплошной до 52% высоты, 50% к 74%, прозрачный к низу; без размытия и тени.
+   Высота подобрана так, чтобы сплошная часть закрывала элементы шапки */
+.top::before{content:"";position:absolute;left:0;right:0;top:0;height:u(136);pointer-events:none;opacity:0;transition:opacity .35s;background:linear-gradient(180deg,#fff 52%,rgba(255,255,255,.5) 74%,rgba(255,255,255,.01) 100%)}
 .top.scrolled::before{opacity:1}
 .top .fr{height:100%}
-.top .logo{transform-origin:0 0;scale:calc(1 - var(--k,0)*.4);translate:0 calc(var(--k,0)*u(-4));transition:scale .25s ease-out,translate .25s ease-out}
+/* уменьшенный логотип центрируется по вертикали с городом и меню (центр строки: 44 мобайл / 46 десктоп) */
+.top .logo{transform-origin:0 0;scale:calc(1 - var(--k,0)*.4);translate:0 calc(var(--k,0)*u(4.1));transition:scale .25s ease-out,translate .25s ease-out}
 .top.scrolled .burger{background:var(--cream)}
 section,#top{scroll-margin-top:u(70)}
 .logo{position:absolute;left:u(16);top:u(15);width:u(80);z-index:6}
@@ -132,7 +134,8 @@ section,#top{scroll-margin-top:u(70)}
   .burger{display:none}
   .hdr-r{right:u(35);top:u(24);gap:u(48)}
   .top{height:u(110)}
-  .top .logo{scale:calc(1 - var(--k,0)*.45);translate:0 calc(var(--k,0)*u(-8))}
+  .top .logo{scale:calc(1 - var(--k,0)*.45);translate:0 calc(var(--k,0)*u(-4.5))}
+  .top::before{height:u(142)}
   section,#top{scroll-margin-top:u(80)}
   .pill.pill-s{height:u(44);font-size:u(18);padding:0 u(18);background:rgba(255,255,255,.92)}.pill-s svg{width:u(12);height:u(15)}
   .nav{display:flex;gap:u(48)}
