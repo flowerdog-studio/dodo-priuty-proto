@@ -90,7 +90,7 @@ button{font:inherit;color:inherit}
 .cta:hover{transform:translateY(calc(-2*var(--u)));box-shadow:0 calc(12*var(--u)) calc(28*var(--u)) rgba(255,95,0,.34)}
 /* закреплённая шапка: прозрачная над первым экраном, после прокрутки — белая и компактнее */
 .top{position:fixed;top:0;left:0;right:0;z-index:40;height:calc(78*var(--u));transition:background-color .25s,box-shadow .25s,translate .3s ease}
-.top.away{translate:0 -100%}
+.top.away{translate:0 calc(-100% - calc(60*var(--u)))} /* логотип выше шапки — уводим с запасом */
 .top .fr{height:100%}
 .top.scrolled{background:rgba(255,255,255,.96);box-shadow:0 calc(4*var(--u)) calc(18*var(--u)) rgba(104,43,0,.08);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .top .logo,.top .hdr-r{transition:width .25s,top .25s}
