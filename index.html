@@ -89,11 +89,12 @@ button{font:inherit;color:inherit}
 .cta{position:absolute;left:50%;top:calc(636*var(--u));translate:-50% 0;z-index:6;display:inline-flex;align-items:center;justify-content:center;height:calc(52*var(--u));padding:0 calc(28*var(--u));border-radius:999px;background:var(--orange);color:var(--white);font-weight:600;font-size:calc(18*var(--u));letter-spacing:-.02em;text-decoration:none;white-space:nowrap;box-shadow:0 calc(8*var(--u)) calc(24*var(--u)) rgba(255,95,0,.28);transition:transform .2s,box-shadow .2s}
 .cta:hover{transform:translateY(calc(-2*var(--u)));box-shadow:0 calc(12*var(--u)) calc(28*var(--u)) rgba(255,95,0,.34)}
 /* закреплённая шапка: прозрачная над первым экраном, после прокрутки — белая и компактнее */
-.top{position:fixed;top:0;left:0;right:0;z-index:40;height:calc(78*var(--u));transition:background-color .25s,box-shadow .25s,translate .3s ease}
-.top.away{translate:0 calc(-100% - calc(60*var(--u)))} /* логотип выше шапки — уводим с запасом */
+/* шапка: на первом экране уезжает вместе со страницей; после него — закреплена сверху на белой подложке (выезжает сверху) */
+.top{position:absolute;top:0;left:0;right:0;z-index:40;height:calc(78*var(--u))}
+.top.scrolled{position:fixed;animation:topin .3s ease both}
+@keyframes topin{from{translate:0 -100%}to{translate:0 0}}
 .top .fr{height:100%}
 .top.scrolled{background:rgba(255,255,255,.96);box-shadow:0 calc(4*var(--u)) calc(18*var(--u)) rgba(104,43,0,.08);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.top .logo,.top .hdr-r{transition:width .25s,top .25s}
 .top.scrolled .logo{width:calc(52*var(--u));top:calc(12*var(--u))}
 .top.scrolled .hdr-r{top:calc(15*var(--u))}
 .top.scrolled .burger{background:var(--cream)}
@@ -691,9 +692,7 @@ const root=document.documentElement;root.classList.add('js');
 let vw0=0;const setVw=()=>{const w=root.clientWidth;root.style.setProperty('--vw',w+'px');if(w!==vw0){vw0=w;root.style.setProperty('--vh0',innerHeight+'px')}};setVw();addEventListener('resize',setVw);
 const topbar=document.getElementById('topbar');/* белая подложка появляется, только когда первый экран почти прокручен — не режет иллюстрацию */
 const onTop=()=>{const past=scrollY>document.querySelector('.hero').offsetHeight-topbar.offsetHeight;
-  topbar.classList.toggle('scrolled',past);
-  /* пока листаем первый экран (десктоп и мобайл), шапка уезжает вверх, чтобы не наезжать на баблы и голову персонажа; дальше — закреплена с подложкой */
-  topbar.classList.toggle('away',!past&&scrollY>20)};addEventListener('scroll',onTop,{passive:true});onTop();
+  topbar.classList.toggle('scrolled',past);};addEventListener('scroll',onTop,{passive:true});onTop();
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine=matchMedia('(hover:hover) and (pointer:fine)');
 const desk=matchMedia('(min-width:900px)');
