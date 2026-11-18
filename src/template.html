@@ -401,13 +401,13 @@ button{font:inherit;color:inherit}
 .ill-wrap{position:relative;width:u(330);margin:0 auto}
 .safe-ill{display:block;width:100%;height:auto}
 /* лёгкое дребезжание контура иллюстрации — как у почеркушек: три варианта искажения по очереди */
-/* «кипящая линия»: 4 перерисовки по ~83 мс (12 кадров/с, как в референсе). Шум мелкий (высокая частота) — дрожит только контур,
+/* «кипящая линия»: 4 перерисовки по 150 мс. Шум мелкий (высокая частота) — дрожит только контур,
    фигуры и части тела не смещаются; без сдвигов и поворотов */
-.ill-wrap{animation:wob .33s steps(1,end) infinite}
+.ill-wrap{animation:wob .6s steps(1,end) infinite}
 /* хвосты — отдельные слои поверх иллюстрации, мягко покачиваются от основания */
 .tail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.t-dog{transform-origin:15.3% 67.4%;animation:wagd 1.6s ease-in-out infinite alternate}
-.t-cat{transform-origin:91.2% 75.6%;animation:wagc 2.2s ease-in-out infinite alternate}
+.t-dog{transform-origin:15.3% 67.4%;animation:wagd .8s ease-in-out infinite alternate}
+.t-cat{transform-origin:91.2% 75.6%;animation:wagc 1.2s ease-in-out infinite alternate}
 @keyframes wagd{from{rotate:-5deg}to{rotate:6deg}}
 @keyframes wagc{from{rotate:-3deg}to{rotate:4deg}}
 @keyframes wob{0%{filter:url(#wob1)}25%{filter:url(#wob2)}50%{filter:url(#wob3)}75%{filter:url(#wob4)}}
