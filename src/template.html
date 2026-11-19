@@ -201,8 +201,8 @@ section,#top{scroll-margin-top:u(70)}
 @keyframes boil{0%{filter:url(#bf1)}25%{filter:url(#bf2)}50%{filter:url(#bf3)}75%{filter:url(#bf4)}}
 .dl1{left:u(63.5);top:u(11.5);width:u(52);rotate:9.5deg}
 .dl2{left:u(39);top:u(31);width:u(60);rotate:-13.6deg}
-.dr1{left:u(291.5);top:u(406);width:u(66);rotate:-9.3deg;transition-delay:.1s}
-.dr2{left:u(279);top:u(423);width:u(42);transition-delay:.25s}
+.dr1{left:u(291.5);top:u(424);width:u(66);rotate:-9.3deg;transition-delay:.1s}
+.dr2{left:u(279);top:u(441);width:u(42);transition-delay:.25s}
 @media (min-width:900px){
   .lead-sec{height:u(1034)}
   .lead-sec::before{background:radial-gradient(ellipse 42% 44% at 50% 45%,rgba(255,255,255,.62),rgba(255,255,255,.36) 55%,rgba(255,255,255,0) 100%)}
@@ -256,7 +256,10 @@ section,#top{scroll-margin-top:u(70)}
 @media (min-width:900px){.how .fr{padding-bottom:u(64)}}
 .steps{list-style:none;margin:u(32) 0 0;padding:0 u(24);display:grid;gap:u(22)}
 .steps li{display:flex;flex-direction:column;align-items:center;gap:u(10);text-align:center}
-.num{flex:none;width:u(32);height:u(44);overflow:visible;animation:boil .5s steps(1,end) infinite}
+/* цифры «кипят» через атрибут filter (JS): CSS filter:url() у SVG в Safari на iPhone не анимируется */
+.num{flex:none;width:u(32);height:u(44);overflow:visible}
+/* мобайл: длинный заголовок в две строки с полями по бокам */
+@media (max-width:899px){.h2-fit{font-size:calc(var(--h2)*.88);white-space:nowrap}}
 .steps li:nth-child(2) .num{animation-delay:-.125s}.steps li:nth-child(3) .num{animation-delay:-.25s}
 .num path{fill:none;stroke:var(--orange);stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
 .steps p{margin:0;max-width:u(300);font-weight:600;font-size:var(--body);line-height:1.3;letter-spacing:-.02em;color:var(--ink)}
@@ -601,7 +604,7 @@ section,#top{scroll-margin-top:u(70)}
       </li>
       <li class="why-item">
         <div class="tile"><div class="ph" style="--r:-5deg"><img src="assets/why-3.webp" alt="Пса чешут за ухом, он зажмурился" loading="lazy"></div>
-          <p class="say" aria-label="с тобой весело" style="--to:34% 36%"><svg viewBox="0 0 146 96" style="left:33%;top:23%;width:43%" aria-hidden="true"><path d="M135.617 -2.77911e-07C141.223 0.000248865 145.767 4.5446 145.768 10.1504L145.768 31.8721C145.768 37.4781 141.223 42.0232 135.617 42.0234L133.732 42.0234L133.732 62.8721C133.732 68.4781 129.188 73.0232 123.582 73.0234L90.7588 73.0234C90.6713 73.095 84.4514 78.1876 81.8477 82.5127C79.2255 86.8685 77.5195 95.9551 77.5195 95.9551L64.2803 73.0234L22.1865 73.0234C16.5806 73.0232 12.0361 68.4781 12.0361 62.8721L12.0361 42.0234L10.1504 42.0234C4.54444 42.0232 7.68011e-08 37.4781 6.53131e-08 31.8721L2.08005e-08 10.1504C0.000249598 4.5446 4.5446 0.000249145 10.1504 -2.08005e-08L135.617 -2.77911e-07Z" fill="white"/></svg><b aria-hidden="true" style="left:32.8%;top:18.9%;font-size:12.6cqw;color:var(--orange)">с тобой<br>весело</b></p></div>
+          <p class="say" aria-label="с тобой весело" style="--to:34% 36%"><svg viewBox="0 0 146 96" style="left:33%;top:23%;width:48%" aria-hidden="true"><path d="M135.617 -2.77911e-07C141.223 0.000248865 145.767 4.5446 145.768 10.1504L145.768 31.8721C145.768 37.4781 141.223 42.0232 135.617 42.0234L133.732 42.0234L133.732 62.8721C133.732 68.4781 129.188 73.0232 123.582 73.0234L90.7588 73.0234C90.6713 73.095 84.4514 78.1876 81.8477 82.5127C79.2255 86.8685 77.5195 95.9551 77.5195 95.9551L64.2803 73.0234L22.1865 73.0234C16.5806 73.0232 12.0361 68.4781 12.0361 62.8721L12.0361 42.0234L10.1504 42.0234C4.54444 42.0232 7.68011e-08 37.4781 6.53131e-08 31.8721L2.08005e-08 10.1504C0.000249598 4.5446 4.5446 0.000249145 10.1504 -2.08005e-08L135.617 -2.77911e-07Z" fill="white"/></svg><b aria-hidden="true" style="left:32.8%;top:18.9%;font-size:12.6cqw;color:var(--orange)">с тобой<br>весело</b></p></div>
         <h3 class="h3">они скорее<br>встретят<br>своего человека</h3>
         <p class="body">Даже один визит важен: животные учатся доверять человеку, а это помогает в социализации</p>
       </li>
@@ -641,7 +644,7 @@ section,#top{scroll-margin-top:u(70)}
 
 <section class="map-sec" id="map" aria-labelledby="map-h">
   <div class="fr">
-    <h2 class="h2" id="map-h">адреса приютов<br>в вашем городе</h2>
+    <h2 class="h2 h2-fit" id="map-h">адреса приютов<br>в вашем городе</h2>
     <div class="map-grid">
       <div class="mapbox" id="mapbox"></div>
       <div class="sh-wrap"><ul class="shelters" id="shelters"></ul><span class="sh-bar" aria-hidden="true"><i></i></span></div>
@@ -943,6 +946,9 @@ FAQ.forEach((q,i)=>{const d=document.createElement('div');d.className='q'+(i===0
 
 /* ссылки-заглушки в футере никуда не ведут */
 
+/* «кипение» цифр: по кругу переключаем один из 4 фильтров через атрибут (работает и в Safari на iPhone) */
+(()=>{if(reduce)return;const ps=[...document.querySelectorAll('.num path')];let k=0;
+  setInterval(()=>{k=(k+1)%4;ps.forEach((p,i)=>p.setAttribute('filter',`url(#bf${(k+i)%4+1})`))},125)})();
 typo();
 render();renderRail();
 </script>
