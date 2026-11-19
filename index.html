@@ -40,7 +40,7 @@ if(location.hash)history.replaceState(null,"",location.pathname+location.search)
   --f-text:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --u:calc(min(var(--vw,100vw),480px)/390);
   /* типографика · мобайл */
-  --h2:calc(60*var(--u));    --h3:calc(37.7*var(--u));  --lead:calc(36*var(--u));
+  --h2:calc(53*var(--u));    --h3:calc(37.7*var(--u));  --lead:calc(36*var(--u));
   --body:calc(17*var(--u));  --body-lh:1.35;
   --name:calc(25*var(--u));  --meta:calc(18.8*var(--u)); --desc:calc(15*var(--u));   --chip:calc(19.7*var(--u));
   --q:calc(17*var(--u));     --a:calc(16*var(--u));
@@ -258,8 +258,8 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
 .steps li{display:flex;flex-direction:column;align-items:center;gap:calc(10*var(--u));text-align:center}
 /* цифры «кипят» через атрибут filter (JS): CSS filter:url() у SVG в Safari на iPhone не анимируется */
 .num{flex:none;width:calc(32*var(--u));height:calc(44*var(--u));overflow:visible}
-/* мобайл: длинный заголовок в две строки с полями по бокам */
-@media (max-width:899px){.h2-fit{font-size:calc(var(--h2)*.88);white-space:nowrap}}
+/* мобайл: заголовок адресов строго в две строки; кегль общий для всех заголовков разделов */
+@media (max-width:899px){.h2-fit{white-space:nowrap}}
 .steps li:nth-child(2) .num{animation-delay:-.125s}.steps li:nth-child(3) .num{animation-delay:-.25s}
 .num path{fill:none;stroke:var(--orange);stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
 .steps p{margin:0;max-width:calc(300*var(--u));font-weight:600;font-size:var(--body);line-height:1.3;letter-spacing:-.02em;color:var(--ink)}
@@ -604,7 +604,7 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
       </li>
       <li class="why-item">
         <div class="tile"><div class="ph" style="--r:-5deg"><img src="assets/why-3.webp" alt="Пса чешут за ухом, он зажмурился" loading="lazy"></div>
-          <p class="say" aria-label="с тобой весело" style="--to:34% 36%"><svg viewBox="0 0 146 96" style="left:33%;top:23%;width:48%" aria-hidden="true"><path d="M135.617 -2.77911e-07C141.223 0.000248865 145.767 4.5446 145.768 10.1504L145.768 31.8721C145.768 37.4781 141.223 42.0232 135.617 42.0234L133.732 42.0234L133.732 62.8721C133.732 68.4781 129.188 73.0232 123.582 73.0234L90.7588 73.0234C90.6713 73.095 84.4514 78.1876 81.8477 82.5127C79.2255 86.8685 77.5195 95.9551 77.5195 95.9551L64.2803 73.0234L22.1865 73.0234C16.5806 73.0232 12.0361 68.4781 12.0361 62.8721L12.0361 42.0234L10.1504 42.0234C4.54444 42.0232 7.68011e-08 37.4781 6.53131e-08 31.8721L2.08005e-08 10.1504C0.000249598 4.5446 4.5446 0.000249145 10.1504 -2.08005e-08L135.617 -2.77911e-07Z" fill="white"/></svg><b aria-hidden="true" style="left:32.8%;top:18.9%;font-size:12.6cqw;color:var(--orange)">с тобой<br>весело</b></p></div>
+          <p class="say" aria-label="с тобой весело" style="--to:34% 36%"><svg viewBox="0 0 146 96" style="left:33%;top:27%;width:48%" aria-hidden="true"><path d="M135.617 -2.77911e-07C141.223 0.000248865 145.767 4.5446 145.768 10.1504L145.768 31.8721C145.768 37.4781 141.223 42.0232 135.617 42.0234L133.732 42.0234L133.732 62.8721C133.732 68.4781 129.188 73.0232 123.582 73.0234L90.7588 73.0234C90.6713 73.095 84.4514 78.1876 81.8477 82.5127C79.2255 86.8685 77.5195 95.9551 77.5195 95.9551L64.2803 73.0234L22.1865 73.0234C16.5806 73.0232 12.0361 68.4781 12.0361 62.8721L12.0361 42.0234L10.1504 42.0234C4.54444 42.0232 7.68011e-08 37.4781 6.53131e-08 31.8721L2.08005e-08 10.1504C0.000249598 4.5446 4.5446 0.000249145 10.1504 -2.08005e-08L135.617 -2.77911e-07Z" fill="white"/></svg><b aria-hidden="true" style="left:32.8%;top:22.9%;font-size:12.6cqw;color:var(--orange)">с тобой<br>весело</b></p></div>
         <h3 class="h3">они скорее<br>встретят<br>своего человека</h3>
         <p class="body">Даже один визит важен: животные учатся доверять человеку, а это помогает в социализации</p>
       </li>
