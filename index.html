@@ -692,7 +692,10 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
 <script>
 /* при перезагрузке страница всегда открывается с начала */
 if('scrollRestoration' in history)history.scrollRestoration='manual';
-scrollTo(0,0);addEventListener('load',()=>scrollTo(0,0));addEventListener('pageshow',()=>scrollTo(0,0));
+/* сброс наверх — только пока человек сам не начал листать (иначе позднее событие load, которое ждёт догрузку кадров анимации,
+   откидывало страницу в начало посреди чтения) */
+let touched=false;['wheel','touchstart','keydown','pointerdown'].forEach(t=>addEventListener(t,()=>{touched=true},{passive:true,once:true}));
+const toTop=()=>{if(!touched)scrollTo(0,0)};toTop();addEventListener('load',toTop);addEventListener('pageshow',e=>{if(e.persisted)toTop()});
 /* ссылки-якоря прокручивают плавно, но не оставляют #хэш в адресе — иначе при обновлении браузер прыгнет к блоку */
 document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a||a.hasAttribute('data-nolink'))return;const id=a.getAttribute('href').slice(1);const t=id?document.getElementById(id):null;e.preventDefault();if(t)t.scrollIntoView({behavior:'smooth'});else if(!id)scrollTo({top:0,behavior:'smooth'})});
 const root=document.documentElement;root.classList.add('js');
@@ -921,7 +924,7 @@ else revealOn([...document.querySelectorAll('.slot')],450,.12);
   const prog=()=>Math.min(1,Math.max(0,scrollY/RUN()));
   const size=()=>{const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);shown=-1;draw()};
   function draw(){let f=(F0+Math.floor(cur*N))%N,u=SEQ[f];
-    if(!fr[u])u=SEQ[F0]; /* кадр ещё не загрузился — держим стартовый */
+    if(!fr[u]){for(let d=1;d<U;d++){const a=(u-d+U)%U,b=(u+d)%U;if(fr[a]){u=a;break}if(fr[b]){u=b;break}}} /* кадр ещё грузится — берём ближайший готовый */
     if(u!==shown&&fr[u]){shown=u;ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(fr[u],0,0,cv.width,cv.height)}
     walker.style.transform=`translate3d(${(-(1-cur)*SHIFT*innerWidth).toFixed(1)}px,0,0)`}
   function tick(){const t=prog();cur+=(t-cur)*.18;if(Math.abs(t-cur)<.0008)cur=t;draw();raf=cur!==t?requestAnimationFrame(tick):0;cv.classList.toggle('idle',!raf)}
@@ -930,7 +933,10 @@ else revealOn([...document.querySelectorAll('.slot')],450,.12);
   load(SEQ[F0]).then(ok=>{if(!ok){root.classList.remove('walk');return}
     ready=true;cur=prog();root.classList.add('walk-ready');size();cv.classList.add('idle');
     /* остальные кадры — по очереди, чтобы не забивать сеть и память разом */
-    (async()=>{for(let i=0;i<U;i++)if(!fr[i])await load(i);shown=-1;draw()})()});
+    /* остальные кадры — параллельно по 6, в порядке шага от стартового: к первому скроллу почти всё уже готово */
+    const order=[...Array(U).keys()].map(k=>SEQ[(F0+k)%N]).filter((v,i,a)=>a.indexOf(v)===i&&!fr[v]);
+    const worker=async()=>{while(order.length){await load(order.shift());if(!raf){shown=-1;draw()}}};
+    for(let k=0;k<6;k++)worker()});
   addEventListener('resize',()=>{if(ready)size()});})();
 
 /* почему это важно: баблы всплывают на фото по очереди */
