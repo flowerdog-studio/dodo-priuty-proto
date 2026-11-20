@@ -173,7 +173,7 @@ section,#top{scroll-margin-top:u(70)}
 .walk .hbg{display:none}
 .walk .snow{background:url(assets/snow-tile.webp) 0 0/auto 100% repeat-x}
 /* стартовая позиция задана в CSS сразу (без прыжка); персонажи плавно проявляются, когда загрузились кадры */
-.walk .walker{transform:translateX(-14vw);opacity:0;transition:opacity .35s ease}
+.walk .walker{transform:translateX(-10vw);opacity:0;transition:opacity .35s ease}
 .walk-ready .walker{opacity:1}
 @media (min-width:900px){
   .walk-cv{left:u(60);top:u(136);width:u(879.5);height:u(665.6)}
@@ -910,7 +910,7 @@ if(desk.matches)revealGroup(document.querySelector('.stage'),[...document.queryS
 else revealOn([...document.querySelectorAll('.slot')],450,.12);
 
 
-/* первый экран: фон статичный; персонажи стартуют чуть левее (6% ширины экрана на десктопе, 14% на мобайле — на узком экране нужен больший сдвиг, чтобы шаг читался)
+/* первый экран: фон статичный; персонажи стартуют чуть левее (6% ширины экрана на десктопе, 10% на мобайле — на узком экране нужен больший сдвиг, чтобы шаг читался)
    и, шагая, доходят до своего места, пока скроллишь первый экран. Дошли — останавливаются. Скролл назад — возвращаются.
    Кадры — отдельными файлами (assets/walk/d|mNN.webp: десктоп 1955px, мобайл 1000px), а не одним огромным спрайтом:
    так Safari на iPhone не падает по памяти. Стартовый кадр грузится первым и рисуется сразу, остальные — следом;
@@ -919,7 +919,7 @@ else revealOn([...document.querySelectorAll('.slot')],450,.12);
   const SEQ=[0,1,2,3,4,5,6,7,8,9,10,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],N=SEQ.length,U=31,F0=27; /* F0: широкий шаг, обе ноги на земле — старт и финиш */
   const P=desk.matches?'d':'m',src=i=>`assets/walk/${P}${String(i).padStart(2,'0')}.webp?v=5`;
   const fr=new Array(U);
-  const SHIFT=desk.matches?.06:.14,RUN=()=>document.querySelector('.hero').offsetHeight*.55;
+  const SHIFT=desk.matches?.06:.10,RUN=()=>document.querySelector('.hero').offsetHeight*.55;
   let cur=0,raf=0,shown=-1,ready=false;
   const prog=()=>Math.min(1,Math.max(0,scrollY/RUN()));
   const size=()=>{const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);shown=-1;draw()};
