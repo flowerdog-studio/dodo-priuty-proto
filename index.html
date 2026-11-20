@@ -11,6 +11,8 @@
 <link rel="preload" as="image" href="assets/hero-bg-m.webp" media="(max-width:899px)">
 <link rel="preload" as="image" href="assets/walk/d27.webp?v=5" media="(min-width:900px)">
 <link rel="preload" as="image" href="assets/walk/m27.webp?v=5" media="(max-width:899px)">
+<script>/* если картинка не догрузилась (сбой сети/деплоя) — одна повторная попытка с новым адресом */
+addEventListener('error',e=>{const i=e.target;if(i.tagName!=='IMG'||i.dataset.retry||i.src.startsWith('data:'))return;i.dataset.retry=1;setTimeout(()=>{i.src=i.src.replace(/([?&])r=\d+/,'').replace(/[?&]$/,'')+(i.src.includes('?')?'&':'?')+'r='+Date.now()},800)},true);</script>
 <script>/* до первой отрисовки: режим «шаг» (без статичной иллюстрации), страница всегда с самого верха */
 if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("walk");
 if("scrollRestoration" in history)history.scrollRestoration="manual";
