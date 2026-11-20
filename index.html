@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<meta name="format-detection" content="telephone=no">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Пицца съедена, пора гулять</title>
 <meta name="theme-color" content="#FFFFFF">
@@ -547,7 +548,9 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
 .cm.open{background:rgba(47,32,30,.45);visibility:visible}
 .cm-box{position:relative;width:100%;max-width:calc(440*var(--u));box-sizing:border-box;background:var(--white);border-radius:calc(28*var(--u)) calc(28*var(--u)) 0 0;padding:calc(28*var(--u)) calc(20*var(--u)) calc(calc(24*var(--u)) + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
 .cm.open .cm-box{transform:none}
-.cm-x{position:absolute;top:calc(16*var(--u));right:calc(16*var(--u));width:calc(40*var(--u));height:calc(40*var(--u));border:0;border-radius:50%;background:var(--peach);color:var(--orange);display:grid;place-items:center;cursor:pointer}
+.cm-box{outline:none}
+.cm-x:focus-visible{box-shadow:0 0 0 2px var(--orange)}
+.cm-x{position:absolute;top:calc(21*var(--u));right:calc(20*var(--u));outline:none;-webkit-tap-highlight-color:transparent;width:calc(40*var(--u));height:calc(40*var(--u));border:0;border-radius:50%;background:var(--peach);color:var(--orange);display:grid;place-items:center;cursor:pointer}
 .cm-x svg{width:calc(14*var(--u));height:calc(14*var(--u))}
 .cm h3{margin:0 calc(48*var(--u)) 0 0;font-family:var(--f-display);font-weight:400;font-size:calc(32*var(--u));line-height:.85;letter-spacing:-.02em;color:var(--orange);text-transform:lowercase}
 .cm-sh{margin:calc(10*var(--u)) calc(48*var(--u)) calc(20*var(--u)) 0;font-weight:600;font-size:calc(15*var(--u));line-height:1.3;color:var(--ink)}
@@ -560,7 +563,7 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
 .cm-list small{display:block;font-weight:500;font-size:calc(13*var(--u));color:var(--ink-50);margin-top:calc(2*var(--u))}
 .cm-list a:hover small{color:inherit}
 .cm-ar{margin-left:auto;font-size:calc(18*var(--u))}
-@media (min-width:900px){.cm{align-items:center}.cm-box{max-width:calc(560*var(--u));border-radius:calc(28*var(--u));padding:calc(36*var(--u)) calc(32*var(--u)) calc(32*var(--u));transform:translateY(calc(30*var(--u)));opacity:0;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s}.cm.open .cm-box{transform:none;opacity:1}.cm h3{font-size:calc(40*var(--u))}}
+@media (min-width:900px){.cm{align-items:center}.cm-box{max-width:calc(560*var(--u));border-radius:calc(28*var(--u));padding:calc(36*var(--u)) calc(32*var(--u)) calc(32*var(--u));transform:translateY(calc(30*var(--u)));opacity:0;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s}.cm.open .cm-box{transform:none;opacity:1}.cm h3{font-size:calc(40*var(--u))}.cm-x{top:calc(34*var(--u));right:calc(32*var(--u))}}
 </style>
 </head>
 <body>
@@ -726,7 +729,7 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
 </footer>
 
 <div class="cm" id="cm" role="dialog" aria-modal="true" aria-labelledby="cmT" aria-hidden="true">
-  <div class="cm-box">
+  <div class="cm-box" tabindex="-1">
     <button class="cm-x" id="cmX" aria-label="Закрыть"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>
     <h3 id="cmT">связаться с приютом</h3>
     <p class="cm-sh" id="cmSh"></p>
@@ -963,7 +966,7 @@ function openContact(s){cmSh.textContent=s.n;
   let h=`<li><a href="tel:${s.t}"><span class="cm-ic"><svg viewBox="0 0 24 24" aria-hidden="true">${IC.tel}</svg></span><span>позвонить<small>${fmtTel(s.t)}</small></span><span class="cm-ar" aria-hidden="true">→</span></a></li>`;
   for(const k of ['site','vk','tg'])if(s.l&&s.l[k])h+=row(k,s.l[k],LBL[k],s.l[k]==='#'?'ссылка появится позже':'');
   cmList.innerHTML=h;cmBack=document.activeElement;cm.classList.add('open');cm.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';
-  setTimeout(()=>document.getElementById('cmX').focus({preventScroll:true}),50)}
+  setTimeout(()=>cm.querySelector('.cm-box').focus({preventScroll:true}),50)}
 function closeContact(){if(!cm.classList.contains('open'))return;cm.classList.remove('open');cm.setAttribute('aria-hidden','true');document.documentElement.style.overflow='';if(cmBack)cmBack.focus({preventScroll:true})}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-contact]');if(!a)return;const s=SH[a.dataset.contact];if(!s)return;e.preventDefault();e.stopPropagation();openContact(s)},true);
 cm.addEventListener('click',e=>{if(e.target===cm)closeContact()});document.getElementById('cmX').onclick=closeContact;
