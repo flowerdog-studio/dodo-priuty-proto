@@ -529,6 +529,10 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
   html{scroll-behavior:auto}
   .sp{opacity:1;transform:rotate(var(--r))}.say{opacity:1;scale:1}.sticker{opacity:1;scale:1;rotate:var(--sr)}
 }
+
+/* ровный набор: многострочные тексты без рваного края */
+.body,.desc,.sp p,.a p,.f-txt{text-wrap:pretty}
+.h3,.steps p,.q button>span:first-child,.meta{text-wrap:balance}
 </style>
 </head>
 <body>
@@ -592,7 +596,7 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
     <ul class="why-list">
       <li class="why-item">
         <div class="tile"><div class="ph" style="--r:-3deg"><img src="assets/why-1.webp" alt="Пёс нюхает камеру на заснеженной поляне" loading="lazy"></div>
-          <p class="say" aria-label="пахнет хорошим днём!" style="--to:40% 50%"><svg viewBox="-32 -25 64 50" style="left:64.5%;top:23%;width:64%;rotate:8.8deg" aria-hidden="true"><g fill="#FF5F00"><rect x="-19.40" y="-15.50" width="43.60" height="13.20" rx="3.6"/><rect x="-28.70" y="-5.70" width="54.20" height="13.20" rx="3.6"/><rect x="-15.65" y="4.10" width="37.70" height="13.20" rx="3.6"/><path d="M-21.70 16.00L-13.70 16.00L-23.50 23.80C-22.30 20.60 -21.50 18.50 -21.70 16.00Z"/></g></svg><b aria-hidden="true" style="left:64.5%;top:23%;font-size:12.9cqw;rotate:8.8deg">пахнет<br>хорошим<br>днём!</b></p></div>
+          <p class="say" aria-label="пахнет хорошим днём!" style="--to:50.6% 41%"><svg viewBox="0 0 288.77 288.77" style="left:50%;top:50%;width:100%" aria-hidden="true"><g fill="#FF5F00"><path transform="matrix(0.99505 0.09938 -0.09938 0.99505 32.78 9.939)" d="M185.808 0C190.227 0 193.809 3.582 193.808 8L193.808 29.731L244.11 29.732C248.528 29.732 252.11 33.313 252.11 37.732L252.111 68.451C252.111 72.87 248.529 76.452 244.111 76.452L8 76.452C3.582 76.452 0 72.87 0 68.452L0 37.732C0 33.314 3.582 29.732 8 29.732L55.094 29.732L55.095 8C55.095 3.582 58.677 0.001 63.095 0.001L185.808 0Z"/><path transform="matrix(-0.99876 -0.04972 0.04972 -0.99876 158.88 119.49)" d="M13.24 0L26.48 22.932L0 22.932C0 22.932 6.29 17.798 8.912 13.442C11.534 9.086 13.24 0 13.24 0Z"/></g></svg><b aria-hidden="true" style="left:53.05%;top:19.58%;font-size:13.53cqw;rotate:5.7deg">пахнет<br>хорошим днём!</b></p></div>
         <h3 class="h3">собаки узнают<br>мир через запахи</h3>
         <p class="body">Каждая прогулка — это новые места со своими запахами и впечатлениями. Чем их больше — тем спокойнее и радостнее пёс!</p>
       </li>
@@ -718,10 +722,10 @@ const revealOn=(els,gap,thr=.55)=>{const q=queue(gap),o=new IntersectionObserver
 const U=()=>parseFloat(getComputedStyle(document.querySelector('.fr')).width)/(desk.matches?1495:390);
 
 /* типографика: не оставляем предлоги и союзы в конце строки */
-const SHORT='в|во|и|а|к|ко|с|со|о|об|у|на|по|за|не|но|из|от|до|для|как|что|это|или|при|про|без|же|ни|да|ее|её|их|мы|вы|я|он|мне|все|всё|так|уже|то';
+const SHORT='в|во|и|а|к|ко|с|со|о|об|обо|у|на|по|за|не|ни|но|да|из|от|до|для|как|что|чем|или|либо|при|про|без|под|над|через|перед|если|чтобы|когда|где|это';
 const reNb=new RegExp(`(^|[\\s«(—])(${SHORT}) `,'gi');
-function nbsp(el){const tw=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let n;while(n=tw.nextNode()){n.nodeValue=n.nodeValue.replace(reNb,'$1$2 ').replace(reNb,'$1$2 ').replace(/ —/g,' —')}}
-const typo=()=>document.querySelectorAll('.body,.desc,.a p,.addr,.sp p,.sp .h3,.f-txt,.why .h3,.steps p').forEach(nbsp);
+function nbsp(el){const tw=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let n;while(n=tw.nextNode()){n.nodeValue=n.nodeValue.replace(reNb,'$1$2 ').replace(reNb,'$1$2 ').replace(/ —/g,' —').replace(/([а-яё])-([а-яё])/gi,'$1\u2011$2')}}
+const typo=()=>document.querySelectorAll('.body,.desc,.a p,.addr,.sp p,.h3,.f-txt,.steps p,.q button>span:first-child,.meta').forEach(nbsp);
 
 /* меню */
 const menu=document.getElementById('menu'),burger=document.getElementById('burger');
