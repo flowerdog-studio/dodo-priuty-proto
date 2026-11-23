@@ -573,9 +573,11 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
 .soon p{margin:0 auto;max-width:calc(300*var(--u));font-weight:500;font-size:calc(16*var(--u));line-height:1.35;color:var(--ink-50);text-wrap:balance}
 .soon-st{display:block;width:calc(64*var(--u));height:auto;margin:0 auto calc(12*var(--u));rotate:-8deg}
 .soon-sh{cursor:default}
-.soon .btn-soft{margin-top:calc(20*var(--u))}
-@media (min-width:900px){.soon{margin:calc(40*var(--u)) 0 0;padding:calc(56*var(--u)) calc(40*var(--u))}.soon .h3,.soon p{max-width:calc(560*var(--u))}.soon p{font-size:calc(20*var(--u))}.soon-st{width:calc(88*var(--u))}}
-.soon .btn-soft:focus:not(:focus-visible){outline:none}
+.soon-btn{display:inline-flex;align-items:center;justify-content:center;margin-top:calc(22*var(--u));height:calc(48*var(--u));padding:0 calc(26*var(--u));border:0;border-radius:999px;background:var(--orange);color:var(--white);font:inherit;font-weight:600;font-size:calc(16*var(--u));letter-spacing:-.02em;cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;transition:transform .2s,box-shadow .2s}
+.soon-btn:hover{transform:translateY(calc(-2*var(--u)));box-shadow:0 calc(12*var(--u)) calc(28*var(--u)) rgba(255,95,0,.34)}
+.soon-btn:focus:not(:focus-visible){outline:none}
+.soon-btn:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+@media (min-width:900px){.soon{margin:calc(40*var(--u)) 0 0;padding:calc(56*var(--u)) calc(40*var(--u))}.soon .h3,.soon p{max-width:calc(560*var(--u))}.soon p{font-size:calc(20*var(--u))}.soon-st{width:calc(88*var(--u))}.soon-btn{height:calc(56*var(--u));padding:0 calc(32*var(--u));font-size:calc(18*var(--u))}}
 </style>
 </head>
 <body>
@@ -685,7 +687,7 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
       </div>
     </div>
     <div class="rail" id="rail" aria-label="Анкеты"></div>
-    <div class="soon" id="petsSoon" hidden><img src="assets/st2-hearts.png" alt="" class="soon-st"><h3 class="h3">хвостики <span class="cityIn"></span> появятся совсем скоро</h3><p>Приюты города уже готовят анкеты. А пока можно посмотреть, кто ждёт встречи в других городах</p><button class="btn-soft" id="soonCity" type="button">выбрать другой город</button></div>
+    <div class="soon" id="petsSoon" hidden><img src="assets/st2-hearts.png" alt="" class="soon-st"><h3 class="h3">хвостики <span class="cityIn"></span> появятся совсем скоро</h3><p>Приюты города уже готовят анкеты. А пока можно посмотреть, кто ждёт встречи в других городах</p><button class="soon-btn" id="soonCity" type="button">выбрать другой город</button></div>
     <div class="dots" id="dots" aria-hidden="true"></div>
   </div>
 </section>
@@ -873,13 +875,12 @@ const PETS=[
 /* стикеры: косточка и мячик — только у собак; место и наклон чередуются */
 const ST_DOG=['bone','ball','heart','hearts','sparkle'],ST_CAT=['heart','hearts','sparkle'],SPOTS=['s-tr','s-bl','s-tl','s-br'],ROTS=[-12,10,-8,6,12,-6,14,-10];
 PETS.forEach((p,i)=>{const L=p[1]==='dog'?ST_DOG:ST_CAT;p[6]=L[i%L.length];p[8]=ROTS[i%8]});
-/* ХВОСТИКА ЗАБРАЛИ ДОМОЙ — два сценария (подробно в README → «Хвостика приютили»):
-   А) просто убрать анкету: удалить строку хвостика из PETS (фото в assets/pets/ можно оставить или удалить);
-   Б) показать радостную новость: HOME_ON=true и добавить id в HOME — карточка станет «уже дома» (фото приглушено,
-      кнопки «погулять/поиграть» нет) и уедет в конец карусели. Если HOME_ON=false, список HOME игнорируется.
-   Предпросмотр без правок кода: ?home=<id> (например ?city=peterburg&home=jek) — работает при любом HOME_ON. */
+/* ХВОСТИКА ЗАБРАЛИ ДОМОЙ: анкета остаётся, на ней появляется плашка «уже дома».
+   Добавьте id хвостика в HOME — фото приглушится, кнопка «погулять/поиграть» пропадёт, карточка уедет в конец карусели.
+   HOME_ON=false выключает статус целиком (список HOME игнорируется).
+   Предпросмотр без правок кода: ?home=<id> (например ?city=peterburg&home=jek). Подробно — README → «Хвостика приютили». */
 const HOME=[];                                  /* id хвостиков, которые уже дома, например ['jek','moti'] */
-const HOME_ON=false,DEMO_HOME=new URLSearchParams(location.search).get('home');
+const HOME_ON=true,DEMO_HOME=new URLSearchParams(location.search).get('home');
 const isHome=p=>(HOME_ON&&HOME.includes(p[0]))||DEMO_HOME===p[0];
 const toast=Object.assign(document.createElement('div'),{className:'toast'});document.body.append(toast);
 const say=t=>{toast.textContent=t;toast.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove('on'),2200)};
