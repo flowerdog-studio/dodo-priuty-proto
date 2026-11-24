@@ -590,6 +590,7 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
 .food-bar i{position:absolute;inset:0 auto 0 0;width:0;border-radius:999px;background:var(--orange);transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
 .food-goal{margin:calc(12*var(--u)) 0 0;font-weight:500;font-size:calc(15*var(--u));color:var(--ink-50)}
 @media (min-width:900px){.food .fr{width:calc(760*var(--u));padding:calc(24*var(--u)) 0 calc(40*var(--u))}.food-box{padding:calc(44*var(--u)) calc(64*var(--u)) calc(40*var(--u))}.food-st{width:calc(80*var(--u));top:calc(-26*var(--u));right:calc(40*var(--u))}.food-t{max-width:none;font-size:calc(22*var(--u))}.food-n{font-size:calc(104*var(--u));margin:calc(12*var(--u)) 0 calc(24*var(--u))}.food-bar{height:calc(24*var(--u))}.food-goal{font-size:calc(18*var(--u));margin-top:calc(16*var(--u))}}
+.meta.tbd,.desc.tbd{font-style:italic;opacity:.75}
 </style>
 </head>
 <body>
@@ -857,6 +858,8 @@ let city=bySlug(new URLSearchParams(location.search).get('city'))||bySlug(DEFAUL
 const SH={};CITIES.forEach(c=>c.list.forEach(s=>{s.city=c;SH[s.id]=s}));
 
 /* хвостики из анкет приютов: [id, вид, кличка, пол и возраст, цитата, приют] — цитаты написаны по анкетам */
+/* пустой текст → на карточке «Информация скоро появится»; пустой возраст — строка просто не выводится */
+const TBD='Информация скоро появится';
 const PETS=[
  ['mayya','dog','Майя','девочка, 5 лет','Я заводная и смелая — всё новое мне интересно! Будем вместе исследовать всё вокруг','togo'],
  ['banni','dog','Банни','мальчик, 6 лет','Я сделан из 100% нежности. Охранник из меня так себе, зато если хочется погладить — я тут как тут!','togo'],
@@ -904,7 +907,8 @@ const PETS=[
  ['logan','dog','Логан','мальчик, 6 лет','Обожаю, когда вокруг люди, особенно дети — с ними можно как следует поиграть','lapa'],
  ['jerri','dog','Джерри','мальчик, 6 лет','Я компанейский пёс и с удовольствием играю с детьми','lapa'],
  ['alisa','dog','Алиса','девочка, 1,5 года','Дружу с другими собаками и обожаю играть с детишками','lapa'],
- ['fanta','dog','Фанта','девочка, 5 лет','Я бородатая, как чёрный терьер, а от ласки сразу оттаиваю и проникаюсь доверием','lapa']];
+ ['fanta','dog','Фанта','девочка, 5 лет','Я бородатая, как чёрный терьер, а от ласки сразу оттаиваю и проникаюсь доверием','lapa'],
+ ['lis','dog','Лис','','','lapa']];
 /* стикеры: косточка и мячик — только у собак; место и наклон чередуются */
 const ST_DOG=['bone','ball','heart','hearts','sparkle'],ST_CAT=['heart','hearts','sparkle'],SPOTS=['s-tr','s-bl','s-tl','s-br'],ROTS=[-12,10,-8,6,12,-6,14,-10];
 PETS.forEach((p,i)=>{const L=p[1]==='dog'?ST_DOG:ST_CAT;p[6]=L[i%L.length];p[8]=ROTS[i%8]});
@@ -924,10 +928,10 @@ let set=PETS,cards=[],kind='all';
 /* стикеры появляются по очереди на карточках, которые видны на экране */
 let io=null;
 function card(p,i=0){const act=p[1]==='cat'?'поиграть':'погулять',s=SH[p[5]],home=isHome(p);const el=document.createElement('article');el.className='card';
-  el.innerHTML=`<div class="pw"><div class="photo"><img src="assets/pets/${p[0]}.webp" alt="${p[2]}, ${p[3]}" loading="lazy"></div>
+  el.innerHTML=`<div class="pw"><div class="photo"><img src="assets/pets/${p[0]}.webp" alt="${p[2]}${p[3]?', '+p[3]:''}" loading="lazy"></div>
    <img class="sticker ${SPOTS[i%4]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"><span class="status home-tag"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13a.8.8 0 0 1-.8.8H9.8V10H6.2v3.8H3.3a.8.8 0 0 1-.8-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>уже дома</span><div class="c-acts"><a class="btn-soft" href="tel:${s.t}" data-contact="${s.id}">${act}</a></div></div>
-   <h3 class="name">${p[2]}</h3><p class="meta">${p[3]}</p>
-   <p class="desc">${p[4]}</p>
+   <h3 class="name">${p[2]}</h3>${p[3]?`<p class="meta">${p[3]}</p>`:''}
+   <p class="desc${p[4]?'':' tbd'}">${p[4]||TBD}</p>
    <a class="where" href="#map">${pin}<span>${s.n}</span></a>
    <div class="c-btm"><a class="btn-soft" href="tel:${s.t}" data-contact="${s.id}">${act}</a><span class="status"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13a.8.8 0 0 1-.8.8H9.8V10H6.2v3.8H3.3a.8.8 0 0 1-.8-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>уже дома</span></div>`;
   el.id='pet-'+p[0];if(home)el.classList.add('is-home');el.dataset.sh=s.id;
