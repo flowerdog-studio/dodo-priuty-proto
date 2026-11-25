@@ -591,6 +591,16 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
 .food-goal{margin:calc(12*var(--u)) 0 0;font-weight:500;font-size:calc(15*var(--u));color:var(--ink-50)}
 @media (min-width:900px){.food .fr{width:calc(760*var(--u));padding:calc(24*var(--u)) 0 calc(40*var(--u))}.food-box{padding:calc(44*var(--u)) calc(64*var(--u)) calc(40*var(--u))}.food-st{width:calc(80*var(--u));top:calc(-26*var(--u));right:calc(40*var(--u))}.food-t{max-width:none;font-size:calc(22*var(--u))}.food-n{font-size:calc(104*var(--u));margin:calc(12*var(--u)) 0 calc(24*var(--u))}.food-bar{height:calc(24*var(--u))}.food-goal{font-size:calc(18*var(--u));margin-top:calc(16*var(--u))}}
 .meta.tbd,.desc.tbd{font-style:italic;opacity:.75}
+
+/* плашка cookies: показывается один раз, согласие хранится в localStorage (ключ ck_ok) */
+.ck{position:fixed;z-index:55;left:calc(12*var(--u));right:calc(12*var(--u));bottom:calc(calc(12*var(--u)) + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:calc(12*var(--u));padding:calc(14*var(--u)) calc(14*var(--u)) calc(14*var(--u)) calc(18*var(--u));border-radius:calc(24*var(--u));background:var(--white);box-shadow:0 calc(8*var(--u)) calc(32*var(--u)) rgba(104,43,0,.18);transform:translateY(calc(100% + calc(40*var(--u))));transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.ck.show{transform:none}
+.ck[hidden]{display:none}
+.ck p{margin:0;font-weight:500;font-size:calc(13*var(--u));line-height:1.35;color:var(--ink)}
+.ck a{color:var(--orange);text-decoration:underline;text-underline-offset:.15em}
+.ck button{flex:none;height:calc(44*var(--u));padding:0 calc(20*var(--u));border:0;border-radius:999px;background:var(--orange);color:var(--white);font:inherit;font-weight:600;font-size:calc(15*var(--u));cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}
+.ck button:focus:not(:focus-visible){outline:none}
+@media (min-width:900px){.ck{left:50%;right:auto;bottom:calc(24*var(--u));width:calc(720*var(--u));margin-left:calc(-360*var(--u));padding:calc(16*var(--u)) calc(16*var(--u)) calc(16*var(--u)) calc(28*var(--u));gap:calc(24*var(--u))}.ck p{font-size:calc(15*var(--u))}.ck button{height:calc(48*var(--u));padding:0 calc(28*var(--u));font-size:calc(16*var(--u))}}
 </style>
 </head>
 <body>
@@ -768,6 +778,10 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
   </div>
 </footer>
 
+<div class="ck" id="ck" role="region" aria-label="Файлы cookies" hidden>
+  <p>Мы используем файлы cookies, чтобы сайт работал лучше. Оставаясь на&nbsp;сайте, вы соглашаетесь с&nbsp;<a href="cookies.html">политикой использования файлов cookies</a></p>
+  <button type="button" id="ckOk">хорошо</button>
+</div>
 <div class="cm" id="cm" role="dialog" aria-modal="true" aria-labelledby="cmT" aria-hidden="true">
   <div class="cm-box" tabindex="-1">
     <button class="cm-x" id="cmX" aria-label="Закрыть"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>
@@ -1022,6 +1036,11 @@ function shFade(){const l=list,max=l.scrollHeight-l.clientHeight,can=max>4;shWra
   if(can){const h=l.clientHeight/l.scrollHeight;shWrap.style.setProperty('--h',h*100+'%');shWrap.style.setProperty('--t',(l.scrollTop/max)*(1-h)*100+'%')}}
 list.addEventListener('scroll',shFade,{passive:true});addEventListener('resize',shFade);
 document.addEventListener('click',e=>{if(e.target.closest('[data-nolink]'))e.preventDefault()});
+/* cookies: плашка до нажатия «хорошо» */
+(function(){const ck=document.getElementById('ck');let ok=false;try{ok=localStorage.getItem('ck_ok')==='1'}catch(e){}
+  if(ok)return;ck.hidden=false;setTimeout(()=>ck.classList.add('show'),1200);
+  document.getElementById('ckOk').onclick=()=>{try{localStorage.setItem('ck_ok','1')}catch(e){}ck.classList.remove('show');setTimeout(()=>ck.hidden=true,500)}})();
+
 /* СЧЁТЧИК КОРМА. Источник — Google Таблица (доступ «все, у кого есть ссылка» → читатель).
    В столбце A ищутся строки «собрано_кг» и «цель_кг», цифры берутся из столбца B.
    Чтобы перейти на свой источник: замените FOOD_URL на адрес, который отдаёт CSV в том же виде,
