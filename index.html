@@ -930,7 +930,7 @@ PETS.forEach((p,i)=>{const L=p[1]==='dog'?ST_DOG:ST_CAT;p[6]=L[i%L.length];p[8]=
    Добавьте id хвостика в HOME — фото приглушится, кнопка «погулять/поиграть» пропадёт, карточка уедет в конец карусели.
    HOME_ON=false выключает статус целиком (список HOME игнорируется).
    Предпросмотр без правок кода: ?home=<id> (например ?city=peterburg&home=jek). Подробно — README → «Хвостика приютили». */
-const HOME=[];                                  /* id хвостиков, которые уже дома, например ['jek','moti'] */
+const HOME=['jerri'];                                  /* id хвостиков, которые уже дома, например ['jek','moti'] */
 const HOME_ON=true,DEMO_HOME=new URLSearchParams(location.search).get('home');
 const isHome=p=>(HOME_ON&&HOME.includes(p[0]))||DEMO_HOME===p[0];
 const toast=Object.assign(document.createElement('div'),{className:'toast'});document.body.append(toast);
