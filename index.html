@@ -579,18 +579,6 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
 .soon-btn:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
 @media (min-width:900px){.soon{margin:calc(40*var(--u)) 0 0;padding:calc(56*var(--u)) calc(40*var(--u))}.soon .h3,.soon p{max-width:calc(560*var(--u))}.soon p{font-size:calc(20*var(--u))}.soon-st{width:calc(88*var(--u))}.soon-btn{height:calc(56*var(--u));padding:0 calc(32*var(--u));font-size:calc(18*var(--u))}}
 
-/* счётчик корма: данные из Google Таблицы (FOOD_SHEET), при сбое — последнее известное значение */
-.food .fr{padding:calc(8*var(--u)) calc(16*var(--u)) calc(24*var(--u))}
-.food-box{position:relative;padding:calc(28*var(--u)) calc(24*var(--u)) calc(26*var(--u));border-radius:calc(28*var(--u));background:var(--cream);text-align:center}
-.food-st{position:absolute;top:calc(-18*var(--u));right:calc(18*var(--u));width:calc(56*var(--u));rotate:10deg}
-.food-t{margin:0 auto;max-width:calc(280*var(--u));font-weight:600;font-size:calc(17*var(--u));line-height:1.25;color:var(--ink);text-wrap:balance}
-.food-n{margin:calc(8*var(--u)) 0 calc(16*var(--u));font-family:var(--f-display);font-weight:400;font-size:calc(64*var(--u));line-height:.85;letter-spacing:-.02em;color:var(--orange)}
-.food-n b{font-weight:400}
-.food-bar{position:relative;height:calc(18*var(--u));border-radius:999px;background:var(--peach);overflow:hidden}
-.food-bar i{position:absolute;inset:0 auto 0 0;width:0;border-radius:999px;background:var(--orange);transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
-.food-goal{margin:calc(12*var(--u)) 0 0;font-weight:500;font-size:calc(15*var(--u));color:var(--ink-50)}
-@media (min-width:900px){.food .fr{width:calc(760*var(--u));padding:calc(24*var(--u)) 0 calc(40*var(--u))}.food-box{padding:calc(44*var(--u)) calc(64*var(--u)) calc(40*var(--u))}.food-st{width:calc(80*var(--u));top:calc(-26*var(--u));right:calc(40*var(--u))}.food-t{max-width:none;font-size:calc(22*var(--u))}.food-n{font-size:calc(104*var(--u));margin:calc(12*var(--u)) 0 calc(24*var(--u))}.food-bar{height:calc(24*var(--u))}.food-goal{font-size:calc(18*var(--u));margin-top:calc(16*var(--u))}}
-.meta.tbd,.desc.tbd{font-style:italic;opacity:.75}
 
 /* плашка cookies: показывается один раз, согласие хранится в localStorage (ключ ck_ok) */
 .ck{position:fixed;z-index:55;left:calc(12*var(--u));right:calc(12*var(--u));bottom:calc(calc(12*var(--u)) + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:calc(12*var(--u));padding:calc(14*var(--u)) calc(14*var(--u)) calc(14*var(--u)) calc(18*var(--u));border-radius:calc(24*var(--u));background:var(--white);box-shadow:0 calc(8*var(--u)) calc(32*var(--u)) rgba(104,43,0,.18);transform:translateY(calc(100% + calc(40*var(--u))));transition:transform .45s cubic-bezier(.2,.8,.2,1)}
@@ -762,18 +750,6 @@ section,#top{scroll-margin-top:calc(70*var(--u))}
   </div></div>
 </section>
 
-<section class="food" id="food" aria-labelledby="food-h">
-  <div class="fr">
-    <div class="food-box">
-      <img src="assets/st2-hearts.png" alt="" class="food-st" aria-hidden="true">
-      <h2 class="food-t" id="food-h">собрали корма для&nbsp;хвостиков</h2>
-      <p class="food-n"><b id="foodKg">1&nbsp;240</b>&nbsp;кг</p>
-      <div class="food-bar" role="progressbar" aria-labelledby="food-h" aria-valuemin="0" aria-valuemax="3000" aria-valuenow="1240" id="foodBar"><i id="foodFill"></i></div>
-      <p class="food-goal">цель — <span id="foodGoal">3&nbsp;000</span>&nbsp;кг</p>
-    </div>
-  </div>
-</section>
-
 <section class="faq" id="faq" aria-labelledby="faq-h">
   <div class="fr">
     <h2 class="h2" id="faq-h">если<br class="m-only"><span class="d-only"> </span>остались<br>вопросы</h2>
@@ -879,7 +855,7 @@ const CITIES=[
  {slug:'chelyabinsk',name:'Челябинск',in:'в Челябинске',c:[55.2413,61.4521],z:13,list:[
   {id:'togo',exact:1,n:'Приют «Того»',a:'Челябинск, СНТ «Электродчик», 4-я улица',note:'Точная точка есть в 2ГИС, ориентир — мост в сторону аэропорта',
    h:'График гибкий, по договорённости',book:'Только по записи по телефону +7 951 776-80-04 (Елена, руководитель приюта)',rules:'Возрастных ограничений нет',
-   t:'+79517768004',ph:[['Елена, запись на визит','+79517768004']],msg:[['wa','Мария, WhatsApp','https://wa.me/79068606667'],['tg','Мария, Telegram','https://t.me/+79068606667']],mail:'priuttogo@gmail.com',
+   t:'+79517768004',ph:[['Елена, запись на визит','+79517768004'],['Мария','+79068606667']],mail:'priuttogo@gmail.com',
    links:{vk:'https://vk.ru/priuttogo'},p:[55.241348,61.452071]}]},
  {slug:'peterburg',name:'Санкт-Петербург',in:'в Санкт-Петербурге',c:[59.8716,30.2629],z:13,list:[
   {id:'ps',exact:1,n:'Приют «Преданное сердце»',a:'Санкт-Петербург, ул. Автовская, 31, лит. И',note:'Метро «Кировский завод»',
@@ -892,7 +868,7 @@ const CITIES=[
    h:'Ежедневно 12:00–16:00, по записи',book:'По телефону +7 988 505-25-05 — на этот номер можно написать в MAX. Или сообщением в группе VK',
    rules:'К собакам — с 18 лет, с 15 лет — со взрослым. Возьмите сменную одежду. Группа — до 10 человек на час',
    t:'+79885052505',ph:[['Приют, можно написать в MAX','+79885052505']],
-   links:{},p:[45.03033,39.00979]}]},
+   links:{vk:'https://vk.ru/club6322452'},p:[45.03033,39.00979]}]},
  {slug:'moscow',name:'Москва',in:'в Москве',c:[55.576,36.704],z:10,list:[
   {id:'ray',n:'Фонд «Рэй»',a:'Московская обл., Одинцовский г.о., близ г. Кубинка',note:'Полный адрес сообщат в переписке при записи',
    h:'12:00–16:00',book:'Строго по предварительной записи: заявку можно отправить на почту info@rayfund.ru',
@@ -930,8 +906,7 @@ let city=bySlug(new URLSearchParams(location.search).get('city'))||bySlug(DEFAUL
 const SH={};CITIES.forEach(c=>c.list.forEach(s=>{s.city=c;SH[s.id]=s}));
 
 /* хвостики из анкет приютов: [id, вид, кличка, пол и возраст, цитата, приют] — цитаты написаны по анкетам */
-/* пустой текст → на карточке «Информация скоро появится»; пустой возраст — строка просто не выводится */
-const TBD='Информация скоро появится';
+/* пустой текст или возраст — строка на карточке просто не выводится */
 /* Карточки-заглушки (id начинается с 'tbd-'): вместо фото — плашка «фото скоро появится». Когда придут данные,
    замените id на настоящий (фото в assets/pets/<id>.webp), впишите кличку, вид, возраст и текст. */
 const PETS=[
@@ -988,21 +963,16 @@ const PETS=[
  ['alisa','dog','Алиса','девочка, 1,5 года','Дружу с другими собаками и обожаю играть с детишками','lapa'],
  ['fanta','dog','Фанта','девочка, 5 лет','От ласковых слов и нежных прикосновений моё сердечко расцветает','lapa'],
  ['lis','dog','Лис','','','lapa'],
- ['tbd-omsk1','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk2','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk3','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk4','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk5','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk6','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk7','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk8','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk9','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk10','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk11','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk12','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk13','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk14','dog','Новый хвостик','','','hvostik'],
- ['tbd-omsk15','dog','Новый хвостик','','','hvostik'],
+ ['chemal','dog','Чемал','мальчик, 2,5 года','Обожаю обнимашки и весёлые игры! А ещё умею так мило улыбаться, что невозможно не улыбнуться в ответ','hvostik'],
+ ['rimma','dog','Римма','девочка, 5 лет','Обожаю нежности и ласку, а ещё с радостью даю лапку по команде','hvostik'],
+ ['alfa','dog','Альфа','девочка, 6,5–7 лет','Мой рецепт счастья — щепотка приключений, побольше нежности и что-нибудь вкусненькое','hvostik'],
+ ['bruno','cat','Бруно','мальчик, около 5 лет','Обожаю нежиться на ручках, а ещё умею очаровывать своим нежным «мяу»','hvostik'],
+ ['arktika','dog','Арктика','девочка, около 3 лет','У меня морозное имя, тёплое сердечко и бесконечный запас поцелуйчиков','hvostik'],
+ ['yunga','dog','Юнга','мальчик, 1,5 года','Я настоящий пёс-улыбака! А когда рядом люди, моя улыбка становится ещё шире','hvostik'],
+ ['sever','dog','Север','мальчик, 3 года','Люблю бегать наперегонки, веселиться и делиться своим солнечным настроением','hvostik'],
+ ['rebekka','dog','Ребекка','девочка, 4,5 года','Когда-то меня нашли среди снега, а теперь во мне столько тепла, что хватит на всех!','hvostik'],
+ ['gerts','dog','Герц','мальчик, 4 месяца','Я ещё щенок, но уже знаю главный секрет счастья — вместе веселее!','hvostik'],
+ ['veyl','cat','Вэйл','мальчик, 5 лет','У меня янтарные глазки и нежное сердечко. Обожаю спать на спинке и дарить сладкие мурчалки','hvostik'],
  ['burbon','dog','Бурбон','мальчик, 6 лет','Обнимашки — моё всё! А на прогулке поводок не тяну, честное собачье','ray'],
  ['lyusen','dog','Люсьен','девочка, 2 года','Когда хочу внимания, трогаю тебя лапой: эй, я тут, погладь меня!','ray'],
  ['friz','dog','Фриз','мальчик, 5–6 лет','Моё любимое приключение — отправиться на прогулку и посмотреть, куда приведёт дорога','ray'],
@@ -1079,11 +1049,11 @@ function card(p,i=0){const act=p[1]==='cat'?'поиграть':'погулять
   el.innerHTML=`<div class="pw">${p[0].startsWith('tbd-')?`<div class="photo ph-tbd"><img src="assets/st2-hearts.png" alt=""><span>фото скоро появится</span></div>`:`<div class="photo"><img src="assets/pets/${p[0]}.webp" alt="${p[2]}${p[3]?', '+p[3]:''}" loading="lazy"></div>`}
    <img class="sticker ${SPOTS[i%4]}" src="assets/st2-${p[6]}.png" alt="" style="--sr:${p[8]}deg"><span class="status home-tag"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13a.8.8 0 0 1-.8.8H9.8V10H6.2v3.8H3.3a.8.8 0 0 1-.8-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>уже дома</span><div class="c-acts"><a class="btn-soft" href="tel:${s.t}" data-contact="${s.id}">${act}</a></div></div>
    <h3 class="name">${p[2]}</h3>${p[3]?`<p class="meta">${p[3]}</p>`:''}
-   <p class="desc${p[4]?'':' tbd'}">${p[4]||TBD}</p>
+   ${p[4]?`<p class="desc">${p[4]}</p>`:''}
    <a class="where" href="#map">${pin}<span>${s.n}</span></a>
    <div class="c-btm"><a class="btn-soft" href="tel:${s.t}" data-contact="${s.id}">${act}</a><span class="status"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7.5 8 3l5.5 4.5V13a.8.8 0 0 1-.8.8H9.8V10H6.2v3.8H3.3a.8.8 0 0 1-.8-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>уже дома</span></div>`;
   el.id='pet-'+p[0];if(home)el.classList.add('is-home');el.dataset.sh=s.id;
-  nbsp(el.querySelector('.desc'));return el}
+  const d=el.querySelector('.desc');if(d)nbsp(d);return el}
 const stepW=()=>cards[1]?cards[1].offsetLeft-cards[0].offsetLeft:300;
 const prev=document.getElementById('prev'),next=document.getElementById('next');
 function arrows(){prev.disabled=rail.scrollLeft<8;next.disabled=rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-8}
@@ -1175,34 +1145,6 @@ document.addEventListener('click',e=>{if(e.target.closest('[data-nolink]'))e.pre
 (function(){const ck=document.getElementById('ck');let ok=false;try{ok=localStorage.getItem('ck_ok')==='1'}catch(e){}
   if(ok)return;ck.hidden=false;setTimeout(()=>ck.classList.add('show'),1200);
   document.getElementById('ckOk').onclick=()=>{try{localStorage.setItem('ck_ok','1')}catch(e){}ck.classList.remove('show');setTimeout(()=>ck.hidden=true,500)}})();
-
-/* СЧЁТЧИК КОРМА. Источник — Google Таблица (доступ «все, у кого есть ссылка» → читатель).
-   В столбце A ищутся строки «собрано_кг» и «цель_кг», цифры берутся из столбца B.
-   Чтобы перейти на свой источник: замените FOOD_URL на адрес, который отдаёт CSV в том же виде,
-   или JSON {"kg":1240,"goal":3000}. FOOD_FALLBACK — что показать, если источник недоступен. */
-const FOOD_SHEET='1cNQ8JZBUp8-GQUuFfcN2F0sCOQDZbXmUVx6HpvxYzFA';
-const FOOD_URL=`https://docs.google.com/spreadsheets/d/${FOOD_SHEET}/gviz/tq?tqx=out:csv`;
-const FOOD_FALLBACK={kg:1240,goal:3000};
-(function(){
-  const kgEl=document.getElementById('foodKg'),goalEl=document.getElementById('foodGoal'),bar=document.getElementById('foodBar'),fill=document.getElementById('foodFill');
-  const fmt=n=>Math.round(n).toLocaleString('ru-RU').replace(/\s/g,' ');
-  const num=v=>{const n=parseFloat(String(v??'').replace(/[\s ]/g,'').replace(',','.'));return isFinite(n)&&n>=0?n:null};
-  let data=FOOD_FALLBACK,shown=false;
-  try{const c=JSON.parse(localStorage.getItem('food')||'null');if(c&&num(c.kg)!=null&&num(c.goal))data=c}catch(e){}
-  function paint(){const kg=num(data.kg),goal=num(data.goal)||1,pct=Math.min(100,kg/goal*100);
-    kgEl.textContent=fmt(kg);goalEl.textContent=fmt(goal);bar.setAttribute('aria-valuenow',kg);bar.setAttribute('aria-valuemax',goal);
-    if(shown)fill.style.width=Math.max(pct,kg>0?3:0)+'%'}
-  function parseCSV(t){const rows=t.trim().split(/\r?\n/).map(l=>(l.match(/("([^"]|"")*"|[^,]*)(,|$)/g)||[]).map(x=>x.replace(/,$/,'').replace(/^"|"$/g,'').replace(/""/g,'"').trim()));
-    const get=k=>{const r=rows.find(r=>(r[0]||'').toLowerCase().replace(/\s/g,'')===k);return r?num(r[1]):null};
-    return {kg:get('собрано_кг'),goal:get('цель_кг')}}
-  paint();
-  new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){shown=true;paint();o.disconnect()}},{threshold:.4}).observe(bar);
-  const ctl=new AbortController();setTimeout(()=>ctl.abort(),6000);
-  fetch(FOOD_URL,{signal:ctl.signal,cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{
-    let d;try{const j=JSON.parse(t);d={kg:num(j.kg),goal:num(j.goal)}}catch(e){d=parseCSV(t)}
-    if(d.kg==null||!d.goal)return;data=d;paint();try{localStorage.setItem('food',JSON.stringify(d))}catch(e){}
-  }).catch(()=>{});
-})();
 
 /* окно «связаться с приютом»: главная кнопка — сайт, если есть, иначе VK, иначе Telegram; ниже — все контакты приюта */
 const cm=document.getElementById('cm'),cmList=document.getElementById('cmList'),cmSh=document.getElementById('cmSh');
