@@ -25,10 +25,12 @@ if(location.hash)history.replaceState(null,"",location.pathname+location.search)
 /* Inter — локальные файлы (assets/fonts, лицензия OFL), без Google Fonts */
 @font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url(assets/fonts/inter-cyrillic-500-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/inter-cyrillic-600-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/inter-cyrillic-700-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:"Inter";font-style:normal;font-weight:800;font-display:swap;src:url(assets/fonts/inter-cyrillic-800-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:"Inter";font-style:normal;font-weight:900;font-display:swap;src:url(assets/fonts/inter-cyrillic-900-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url(assets/fonts/inter-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/inter-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/inter-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Inter";font-style:normal;font-weight:800;font-display:swap;src:url(assets/fonts/inter-latin-800-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Inter";font-style:normal;font-weight:900;font-display:swap;src:url(assets/fonts/inter-latin-900-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Dodo Narrow";src:url(data:font/woff2;base64,__FONT__) format("woff2");font-display:block}
@@ -611,6 +613,15 @@ section,#top{scroll-margin-top:u(70)}
 .cm-soc svg{width:u(18);height:u(18);fill:currentColor;flex:none}
 .ph-tbd{display:grid;place-content:center;justify-items:center;gap:u(10);background:var(--cream);color:var(--ink-50);font-weight:600;font-size:u(15);text-align:center}
 .ph-tbd img{width:u(72)!important;height:auto!important;position:static!important;object-fit:contain!important;rotate:-8deg;opacity:.9}
+/* плашка cookies: показывается один раз, согласие хранится в localStorage (ключ ck_ok) */
+.ck{position:fixed;z-index:55;left:u(12);right:u(12);bottom:calc(u(12) + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:u(12);padding:u(14) u(14) u(14) u(18);border-radius:u(24);background:var(--white);box-shadow:0 u(8) u(32) rgba(104,43,0,.18);transform:translateY(calc(100% + u(40)));transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.ck.show{transform:none}
+.ck[hidden]{display:none}
+.ck p{margin:0;font-weight:500;font-size:u(13);line-height:1.35;color:var(--ink)}
+.ck a{color:var(--orange);text-decoration:underline;text-underline-offset:.15em}
+.ck button{flex:none;height:u(44);padding:0 u(20);border:0;border-radius:999px;background:var(--orange);color:var(--white);font:inherit;font-weight:600;font-size:u(15);cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}
+.ck button:focus:not(:focus-visible){outline:none}
+@media (min-width:900px){.ck{left:50%;right:auto;bottom:u(24);width:u(720);margin-left:u(-360);padding:u(16) u(16) u(16) u(28);gap:u(24)}.ck p{font-size:u(15)}.ck button{height:u(48);padding:0 u(28);font-size:u(16)}}
 </style>
 </head>
 <body>
@@ -769,12 +780,17 @@ section,#top{scroll-margin-top:u(70)}
       </ul>
       <div class="f-legal">
         <p>© 2026 ООО «Додо Франчайзинг»<br>ОГРН 1131101001844, ИНН 1101140415<br>167001, Республика Коми, г. Сыктывкар, Октябрьский проспект, д. 16</p>
+        <a href="cookies.html">Политика использования файлов cookies</a>
       </div>
     </div>
     <picture><source media="(min-width:900px)" srcset="assets/footer-pets.webp"><img class="f-pets" src="assets/footer-pets-m.webp" width="1170" height="840" alt="Из-за края выглядывают кошки и собаки" loading="lazy"></picture>
   </div>
 </footer>
 
+<div class="ck" id="ck" role="region" aria-label="Файлы cookies" hidden>
+  <p>Мы используем файлы cookies, чтобы сайт работал лучше. Оставаясь на&nbsp;сайте, вы соглашаетесь с&nbsp;<a href="cookies.html">политикой использования файлов cookies</a></p>
+  <button type="button" id="ckOk">хорошо</button>
+</div>
 <div class="cm" id="cm" role="dialog" aria-modal="true" aria-labelledby="cmT" aria-hidden="true">
   <div class="cm-box" tabindex="-1">
     <button class="cm-x" id="cmX" aria-label="Закрыть"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>
@@ -1142,6 +1158,11 @@ function shFade(){const l=list,max=l.scrollHeight-l.clientHeight,can=max>4;shWra
   if(can){const h=l.clientHeight/l.scrollHeight;shWrap.style.setProperty('--h',h*100+'%');shWrap.style.setProperty('--t',(l.scrollTop/max)*(1-h)*100+'%')}}
 list.addEventListener('scroll',shFade,{passive:true});addEventListener('resize',shFade);
 document.addEventListener('click',e=>{if(e.target.closest('[data-nolink]'))e.preventDefault()});
+
+/* cookies: плашка до нажатия «хорошо» */
+(function(){const ck=document.getElementById('ck');let ok=false;try{ok=localStorage.getItem('ck_ok')==='1'}catch(e){}
+  if(ok)return;ck.hidden=false;setTimeout(()=>ck.classList.add('show'),1200);
+  document.getElementById('ckOk').onclick=()=>{try{localStorage.setItem('ck_ok','1')}catch(e){}ck.classList.remove('show');setTimeout(()=>ck.hidden=true,500)}})();
 
 /* окно «связаться с приютом»: главная кнопка — сайт, если есть, иначе VK, иначе Telegram; ниже — все контакты приюта */
 const cm=document.getElementById('cm'),cmList=document.getElementById('cmList'),cmSh=document.getElementById('cmSh');
